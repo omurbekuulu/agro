@@ -12,8 +12,10 @@ class AppTheme {
     );
 
     return defaultTheme.copyWith(
-        textTheme: defaultTheme.textTheme
-            .copyWith(bodyMedium: AppTypography.p1.regular));
+      textTheme: defaultTheme.textTheme.copyWith(
+        bodyMedium: AppTypography.p1.regular.copyWith(color: Colors.black),
+      ),
+    );
   }
 
   static final _typography = AppTypographyExtension(
@@ -40,7 +42,7 @@ class AppTheme {
     final baseTheme = _base(Brightness.light);
     return baseTheme.copyWith(
       colorScheme: baseTheme.colorScheme.copyWith(
-        primary: _appColors.primary,
+        primary: _appColors.background,
         surface: _appColors.background,
       ),
       scaffoldBackgroundColor: _appColors.background,
