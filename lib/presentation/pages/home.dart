@@ -1,3 +1,5 @@
+import 'package:agro/presentation/pages/expense_page.dart';
+import 'package:agro/presentation/pages/income_page.dart';
 import 'package:agro/presentation/theme/theme.dart';
 import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:flutter/material.dart';
@@ -237,7 +239,14 @@ class _HomepageScreenState extends State<HomepageScreen> {
                     style: typography.p1.bold,
                   ),
                   InkWell(
-                    onTap: () {},
+                    overlayColor:
+                        const WidgetStatePropertyAll(Colors.transparent),
+                    splashColor: colors.onBackground,
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const ExpensePage(),
+                      ));
+                    },
                     child: Image.asset('assets/add_icon.png'),
                   )
                 ],
@@ -250,12 +259,18 @@ class _HomepageScreenState extends State<HomepageScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Кошумча чыгаша кошуу',
+                    'Жаңы киреше кошуу',
                     style: typography.p1.bold,
                   ),
                   InkWell(
-                    // TODO: inplemenat background splash color
-                    onTap: () {},
+                    overlayColor:
+                        const WidgetStatePropertyAll(Colors.transparent),
+                    splashColor: colors.onBackground,
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const IncomePage(),
+                      ));
+                    },
                     child: Image.asset('assets/add_icon.png'),
                   )
                 ],

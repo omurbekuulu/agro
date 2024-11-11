@@ -10,6 +10,7 @@ class AppColorExtantion extends ThemeExtension<AppColorExtantion> {
     required this.secondary4,
     required this.background,
     required this.onBackground,
+    required this.onBackground2,
   });
 
   final Color primary;
@@ -20,6 +21,7 @@ class AppColorExtantion extends ThemeExtension<AppColorExtantion> {
 
   final Color background;
   final Color onBackground;
+  final Color onBackground2;
 
   AppColorExtantion copyWith({
     Color? primary,
@@ -29,6 +31,7 @@ class AppColorExtantion extends ThemeExtension<AppColorExtantion> {
     Color? secondary4,
     Color? background,
     Color? onBackground,
+    Color? onBackground2,
   }) {
     return AppColorExtantion(
       primary: primary ?? this.primary,
@@ -38,6 +41,7 @@ class AppColorExtantion extends ThemeExtension<AppColorExtantion> {
       secondary4: secondary4 ?? this.secondary4,
       background: background ?? this.background,
       onBackground: onBackground ?? this.onBackground,
+      onBackground2: onBackground2 ?? this.onBackground2,
     );
   }
 
@@ -55,6 +59,7 @@ class AppColorExtantion extends ThemeExtension<AppColorExtantion> {
       secondary4: Color.lerp(secondary4, other.secondary4, t)!,
       background: Color.lerp(background, other.background, t)!,
       onBackground: Color.lerp(onBackground, other.onBackground, t)!,
+      onBackground2: Color.lerp(onBackground2, other.onBackground2, t)!,
     );
   }
 }

@@ -36,6 +36,7 @@ class AppTheme {
     secondary4: AppPalette.semiTransparentRed,
     background: AppPalette.white,
     onBackground: AppPalette.lightGray,
+    onBackground2: AppPalette.blackGray,
   );
 
   ThemeData light() {
