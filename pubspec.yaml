@@ -36,6 +36,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
   flutter_svg: ^2.0.11
+  buttons_tabbar: ^1.3.13
 
 dev_dependencies:
   flutter_test:
@@ -65,7 +66,9 @@ flutter:
     - assets/sign_in.jpg
     - assets/cow.jpg
     - assets/farm.jpg
-    - assets/home_back_img.svg
+    - assets/add_icon.png
+    - assets/thunderstorm.svg
+    - assets/sunny.svg
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

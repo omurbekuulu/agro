@@ -13,7 +13,7 @@ class AppTheme {
 
     return defaultTheme.copyWith(
       textTheme: defaultTheme.textTheme.copyWith(
-        bodyMedium: AppTypography.p1.regular.copyWith(color: Colors.black),
+        bodyMedium: AppTypography.p1.medium.copyWith(color: Colors.black),
       ),
     );
   }

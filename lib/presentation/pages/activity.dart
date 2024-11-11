@@ -1,3 +1,4 @@
+import 'package:agro/presentation/pages/home.dart';
 import 'package:agro/presentation/theme/theme.dart';
 import 'package:flutter/material.dart';
 
@@ -61,7 +62,12 @@ class Activity extends StatelessWidget {
                   ),
                   const SizedBox(height: 12),
                   FilledButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                            builder: (context) => HomepageScreen()),
+                      );
+                    },
                     child: Text(
                       'Өсүмдүк өстүрүү',
                       style: typography.h3.bold,
