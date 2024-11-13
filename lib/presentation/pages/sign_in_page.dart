@@ -1,10 +1,10 @@
-import 'package:agro/presentation/pages/activity.dart';
+import 'package:agro/presentation/pages/activity_page.dart';
 import 'package:agro/presentation/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class SignIn extends StatelessWidget {
-  const SignIn({super.key});
+class SignInPage extends StatelessWidget {
+  const SignInPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +60,7 @@ class SignIn extends StatelessWidget {
                         onPressed: () {
                           Navigator.of(context)
                               .pushReplacement(MaterialPageRoute(
-                            builder: (context) => const Activity(),
+                            builder: (context) => const ActivityPage(),
                           ));
                         },
                         child: const Text('Кирүү'),

@@ -1,9 +1,9 @@
-import 'package:agro/presentation/pages/home.dart';
+import 'package:agro/presentation/pages/home/home_page.dart';
 import 'package:agro/presentation/theme/theme.dart';
 import 'package:flutter/material.dart';
 
-class Activity extends StatelessWidget {
-  const Activity({super.key});
+class ActivityPage extends StatelessWidget {
+  const ActivityPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -64,8 +64,7 @@ class Activity extends StatelessWidget {
                   FilledButton(
                     onPressed: () {
                       Navigator.of(context).push(
-                        MaterialPageRoute(
-                            builder: (context) => HomepageScreen()),
+                        MaterialPageRoute(builder: (context) => HomePage()),
                       );
                     },
                     child: Text(

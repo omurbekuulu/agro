@@ -25,12 +25,14 @@ final date = [
   '18.11',
 ];
 
-class HomepageScreen extends StatefulWidget {
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
   @override
-  State<HomepageScreen> createState() => _HomepageScreenState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _HomepageScreenState extends State<HomepageScreen> {
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).appColors;
