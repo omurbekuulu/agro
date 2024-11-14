@@ -4,14 +4,14 @@ import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:flutter/material.dart';
 
 final tabss = [
-  'Mestnyi',
-  'Shved',
+  'Местный',
+  'Швед',
   'Голланд',
-  'Mestnyi',
-  'Shved',
+  'Местный',
+  'Швед',
   'Голланд',
-  'Mestnyi',
-  'Shved',
+  'Местный',
+  'Швед',
   'Голланд',
   'Голланд',
 ];

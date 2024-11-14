@@ -1,13 +1,121 @@
+import 'package:agro/presentation/pages/profil/widgets/custom_tile_widget.dart';
+import 'package:agro/presentation/theme/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class ProfilPage extends StatelessWidget {
   const ProfilPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text('Profil Page'),
+    final colors = Theme.of(context).appColors;
+    final typography = Theme.of(context).appTypography;
+
+    return Scaffold(
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Column(
+            children: [
+              const SizedBox(height: 24),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Профиль',
+                    style: typography.h2.bold,
+                  ),
+                  SvgPicture.asset('assets/log-out-icon.svg')
+                ],
+              ),
+              const SizedBox(height: 24),
+              Container(
+                decoration: BoxDecoration(
+                  color: colors.onBackground,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          left: 4, right: 25, top: 4, bottom: 4),
+                      child: SvgPicture.asset('assets/human-icon.svg'),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Иванов Иван',
+                          style: typography.h3.bold
+                              .copyWith(color: colors.secondary1),
+                        ),
+                        Text(
+                          '+996 505 00 12 45',
+                          style: typography.p3.regular,
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+              const SizedBox(height: 26),
+              Container(
+                decoration: BoxDecoration(
+                  color: colors.onBackground,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      customTileWidget(
+                        context,
+                        'assets/human-icon-green.svg',
+                        'Профилдин маалыматы',
+                      ),
+                      const SizedBox(height: 12),
+                      customTileWidget(
+                        context,
+                        'assets/trail-sign-icon.svg',
+                        'Багытыңыздын түрүн өзгөртү',
+                      ),
+                      const SizedBox(height: 12),
+                      customTileWidget(
+                        context,
+                        'assets/bar-chart-icon.svg',
+                        'Насыя алуу үчүн калькулятор',
+                      ),
+                      const SizedBox(height: 12),
+                      customTileWidget(
+                        context,
+                        'assets/plus-icon.svg',
+                        'Жаңы пароданы кошуу',
+                      ),
+                      const SizedBox(height: 12),
+                      customTileWidget(
+                        context,
+                        'assets/chatbubble-ellipses-icon.svg',
+                        'Байланышуу',
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const Spacer(),
+              Row(
+                children: [
+                  const Spacer(),
+                  SvgPicture.asset(
+                    'assets/logo.svg',
+                    width: 57,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 24),
+            ],
+          ),
+        ),
       ),
     );
   }
