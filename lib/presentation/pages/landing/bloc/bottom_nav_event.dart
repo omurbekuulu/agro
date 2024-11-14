@@ -6,7 +6,7 @@ sealed class BottomNavEvent {
 }
 
 final class PageTappedEvent extends BottomNavEvent {
-  const PageTappedEvent(this.tap);
+  const PageTappedEvent(this.tab);
 
-  final LandingTap tap;
+  final LandingTap tab;
 }

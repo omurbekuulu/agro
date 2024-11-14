@@ -1,8 +1,12 @@
+import 'package:agro/presentation/pages/calculator/calculator_page.dart';
 import 'package:agro/presentation/pages/home/home_page.dart';
 import 'package:agro/presentation/pages/landing/bloc/bottom_nav_bloc.dart';
+import 'package:agro/presentation/pages/landing/widgets/bottom_nav_widget.dart';
+import 'package:agro/presentation/pages/notification/notification_page.dart';
+import 'package:agro/presentation/pages/profil/profil_page.dart';
+import 'package:agro/presentation/pages/statistics/statistics_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class LandingPage extends StatelessWidget {
   const LandingPage({super.key});
@@ -29,18 +33,14 @@ class _LandingViewState extends State<LandingView> {
     return BlocBuilder<BottomNavBloc, BottomNavState>(
       builder: (context, state) {
         return Scaffold(
-          body: switch (state.tap) {
+          body: switch (state.tab) {
             LandingTap.home => const HomePage(),
-            LandingTap.statistics => throw UnimplementedError(),
-            LandingTap.calculator => throw UnimplementedError(),
-            LandingTap.notification => throw UnimplementedError(),
-            LandingTap.profil => throw UnimplementedError(),
+            LandingTap.statistics => const StatisticsPage(),
+            LandingTap.calculator => const CalculatorPage(),
+            LandingTap.notification => const NotificationPage(),
+            LandingTap.profil => const ProfilPage(),
           },
-          bottomNavigationBar: BottomNavigationBar(
-            items: [
-                BottomNavigationBarItem(icon: SvgPicture.asset('assets/home-icon.svg'))
-            ],
-          ),
+          bottomNavigationBar: const BottomNavWidget(),
         );
       },
     );

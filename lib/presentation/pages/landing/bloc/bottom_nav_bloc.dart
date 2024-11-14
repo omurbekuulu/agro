@@ -8,7 +8,7 @@ class BottomNavBloc extends Bloc<BottomNavEvent, BottomNavState> {
   BottomNavBloc() : super(const BottomNavState()) {
     on<PageTappedEvent>((event, emit) {
       emit(
-        BottomNavState(tap: event.tap),
+        BottomNavState(tab: event.tab),
       );
     });
   }

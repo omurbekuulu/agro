@@ -39,6 +39,7 @@ dependencies:
   buttons_tabbar: ^1.3.13
   flutter_bloc: ^8.1.6
   bloc: ^8.1.4
+  meta: ^1.15.0
 
 dev_dependencies:
   flutter_test:
@@ -81,6 +82,7 @@ flutter:
     - assets/calculator-icon-green.svg
     - assets/notification-icon-green.svg
     - assets/profil-icon-green.svg
+    - assets/farm-clipped.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
