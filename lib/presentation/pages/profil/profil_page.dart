@@ -1,4 +1,8 @@
+import 'package:agro/presentation/pages/calculator/calculator_page.dart';
+import 'package:agro/presentation/pages/change_diraction/change_diraction_page.dart';
+import 'package:agro/presentation/pages/communicate/communicate_page.dart';
 import 'package:agro/presentation/pages/profil/widgets/custom_tile_widget.dart';
+import 'package:agro/presentation/pages/profil_data/profil_data_page.dart';
 import 'package:agro/presentation/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -71,32 +75,67 @@ class ProfilPage extends StatelessWidget {
                     children: [
                       customTileWidget(
                         context,
-                        'assets/human-icon-green.svg',
-                        'Профилдин маалыматы',
+                        icon: 'assets/human-icon-green.svg',
+                        title: 'Профилдин маалыматы',
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const ProfilDataPage(),
+                            ),
+                          );
+                        },
                       ),
                       const SizedBox(height: 12),
                       customTileWidget(
                         context,
-                        'assets/trail-sign-icon.svg',
-                        'Багытыңыздын түрүн өзгөртү',
+                        icon: 'assets/trail-sign-icon.svg',
+                        title: 'Багытыңыздын түрүн өзгөртү',
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const ChangeDiractionPage(),
+                            ),
+                          );
+                        },
                       ),
                       const SizedBox(height: 12),
                       customTileWidget(
                         context,
-                        'assets/bar-chart-icon.svg',
-                        'Насыя алуу үчүн калькулятор',
+                        icon: 'assets/bar-chart-icon.svg',
+                        title: 'Насыя алуу үчүн калькулятор',
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const CalculatorPage(),
+                            ),
+                          );
+                        },
                       ),
                       const SizedBox(height: 12),
                       customTileWidget(
                         context,
-                        'assets/plus-icon.svg',
-                        'Жаңы пароданы кошуу',
+                        icon: 'assets/add-icon-green.svg',
+                        title: 'Жаңы пароданы кошуу',
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const ProfilPage(),
+                            ),
+                          );
+                        },
                       ),
                       const SizedBox(height: 12),
                       customTileWidget(
                         context,
-                        'assets/chatbubble-ellipses-icon.svg',
-                        'Байланышуу',
+                        icon: 'assets/chatbubble-ellipses-icon.svg',
+                        title: 'Байланышуу',
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const CommunicatePage(),
+                            ),
+                          );
+                        },
                       ),
                     ],
                   ),

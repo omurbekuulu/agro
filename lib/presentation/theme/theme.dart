@@ -70,7 +70,7 @@ class AppTheme {
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
           backgroundColor: _appColors.primary,
-          textStyle: _typography.p1.bold.copyWith(color: _appColors.background),
+          textStyle: _typography.h3.bold.copyWith(color: _appColors.background),
           minimumSize: const Size.fromHeight(50),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),

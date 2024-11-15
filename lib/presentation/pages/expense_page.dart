@@ -46,33 +46,44 @@ class _ExpensePageState extends State<ExpensePage> {
                     )
                   ],
                 ),
-                const SizedBox(height: 14),
-                Text(
-                  'Сумма',
-                  style: typography.p1.medium.copyWith(
-                    color: colors.secondary1,
+                SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 14),
+                      Text(
+                        'Сумма',
+                        style: typography.p1.medium.copyWith(
+                          color: colors.secondary1,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      customTextFormField(context,
+                          inputType: TextInputType.number, hintText: '0 с'),
+                      const SizedBox(height: 24),
+                      Text(
+                        'Комментарий (Аты)',
+                        style: typography.p1.medium.copyWith(
+                          color: colors.secondary1,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      customTextFormField(context,
+                          inputType: TextInputType.text,
+                          hintText: 'Кошумча сөздөр'),
+                      const SizedBox(height: 24),
+                      Text(
+                        'Саны',
+                        style: typography.p1.medium.copyWith(
+                          color: colors.secondary1,
+                        ),
+                      ),
+                      customTextFormField(context,
+                          inputType: TextInputType.number, hintText: '0'),
+                      const SizedBox(height: 4),
+                    ],
                   ),
                 ),
-                const SizedBox(height: 4),
-                customTextFormField(context, hintText: '0 с'),
-                const SizedBox(height: 24),
-                Text(
-                  'Комментарий (Аты)',
-                  style: typography.p1.medium.copyWith(
-                    color: colors.secondary1,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                customTextFormField(context, hintText: 'Сумма'),
-                const SizedBox(height: 24),
-                Text(
-                  'Саны',
-                  style: typography.p1.medium.copyWith(
-                    color: colors.secondary1,
-                  ),
-                ),
-                customTextFormField(context, hintText: '0'),
-                const SizedBox(height: 4),
                 const Spacer(),
                 Row(
                   children: [
@@ -86,10 +97,7 @@ class _ExpensePageState extends State<ExpensePage> {
                 const SizedBox(height: 24),
                 FilledButton(
                   onPressed: () {},
-                  child: Text(
-                    'Кошуу',
-                    style: typography.h3.bold,
-                  ),
+                  child: const Text('Кошуу'),
                 ),
                 const SizedBox(height: 12),
               ],

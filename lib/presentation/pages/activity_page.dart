@@ -1,4 +1,4 @@
-import 'package:agro/presentation/pages/home/home_page.dart';
+import 'package:agro/presentation/pages/landing/landing_page.dart';
 import 'package:agro/presentation/theme/theme.dart';
 import 'package:flutter/material.dart';
 
@@ -54,23 +54,23 @@ class ActivityPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 49),
                   FilledButton(
-                    onPressed: () {},
-                    child: Text(
-                      'Мал чарбасы',
-                      style: typography.h3.bold,
-                    ),
+                    onPressed: () {
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                            builder: (context) => const LandingPage()),
+                      );
+                    },
+                    child: const Text('Мал чарбасы'),
                   ),
                   const SizedBox(height: 12),
                   FilledButton(
                     onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => HomePage()),
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                            builder: (context) => const LandingPage()),
                       );
                     },
-                    child: Text(
-                      'Өсүмдүк өстүрүү',
-                      style: typography.h3.bold,
-                    ),
+                    child: const Text('Өсүмдүк өстүрүү'),
                   ),
                 ],
               ),

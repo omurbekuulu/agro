@@ -57,7 +57,7 @@ Widget breedTabBarViewWidget(BuildContext context) {
                       builder: (context) => const ExpensePage(),
                     ));
                   },
-                  child: Image.asset('assets/add_icon.png'),
+                  child: Image.asset('assets/add-icon.png'),
                 )
               ],
             ),
@@ -81,7 +81,7 @@ Widget breedTabBarViewWidget(BuildContext context) {
                       builder: (context) => const IncomePage(),
                     ));
                   },
-                  child: Image.asset('assets/add_icon.png'),
+                  child: Image.asset('assets/add-icon.png'),
                 )
               ],
             ),

@@ -2,11 +2,17 @@ import 'package:flutter/material.dart';
 
 import 'package:agro/presentation/theme/theme.dart';
 
-Widget customTextFormField(BuildContext context, {required String hintText}) {
+Widget customTextFormField(
+  BuildContext context, {
+  required TextInputType inputType,
+  required String hintText,
+  bool hasValue = false,
+}) {
   final colors = Theme.of(context).appColors;
   final typography = Theme.of(context).appTypography;
 
   return TextFormField(
+    initialValue: hasValue ? hintText : '',
     autovalidateMode: AutovalidateMode.onUnfocus,
     validator: (value) {
       if (value == null || value.isEmpty) {
@@ -15,7 +21,7 @@ Widget customTextFormField(BuildContext context, {required String hintText}) {
       return null;
     },
     cursorColor: Colors.black,
-    keyboardType: TextInputType.number,
+    keyboardType: inputType,
     decoration: InputDecoration(
       filled: true,
       fillColor: colors.onBackground,
