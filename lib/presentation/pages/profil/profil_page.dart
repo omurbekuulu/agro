@@ -2,6 +2,8 @@ import 'package:agro/presentation/pages/calculator/calculator_page.dart';
 import 'package:agro/presentation/pages/change_diraction/change_diraction_page.dart';
 import 'package:agro/presentation/pages/communicate/communicate_page.dart';
 import 'package:agro/presentation/pages/profil/widgets/custom_tile_widget.dart';
+import 'package:agro/presentation/pages/profil/widgets/profil_view_widget.dart';
+import 'package:agro/presentation/pages/profil/widgets/show_dialog_widget.dart';
 import 'package:agro/presentation/pages/profil_data/profil_data_page.dart';
 import 'package:agro/presentation/theme/theme.dart';
 import 'package:flutter/material.dart';
@@ -29,39 +31,15 @@ class ProfilPage extends StatelessWidget {
                     'Профиль',
                     style: typography.h2.bold,
                   ),
-                  SvgPicture.asset('assets/log-out-icon.svg')
+                  InkWell(
+                    onTap: () {
+                      showDialogWidget(context);
+                    },
+                    child: SvgPicture.asset('assets/log-out-icon.svg'),
+                  ),
                 ],
               ),
-              const SizedBox(height: 24),
-              Container(
-                decoration: BoxDecoration(
-                  color: colors.onBackground,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          left: 4, right: 25, top: 4, bottom: 4),
-                      child: SvgPicture.asset('assets/human-icon.svg'),
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Иванов Иван',
-                          style: typography.h3.bold
-                              .copyWith(color: colors.secondary1),
-                        ),
-                        Text(
-                          '+996 505 00 12 45',
-                          style: typography.p3.regular,
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              ),
+              profilViewWidget(context),
               const SizedBox(height: 26),
               Container(
                 decoration: BoxDecoration(
