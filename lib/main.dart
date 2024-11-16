@@ -1,4 +1,5 @@
-import 'package:agro/presentation/pages/sign_in.dart';
+import 'package:agro/presentation/pages/profil/profil_page.dart';
+import 'package:agro/presentation/pages/sign_in_page.dart';
 import 'package:agro/presentation/theme/theme.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
       theme: theme.light(),
       themeMode: ThemeMode.light,
       debugShowCheckedModeBanner: false,
-      home: const SignIn(),
+      home: const ProfilPage(),
     );
   }
 }

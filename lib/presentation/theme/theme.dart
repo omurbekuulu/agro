@@ -12,8 +12,10 @@ class AppTheme {
     );
 
     return defaultTheme.copyWith(
-        textTheme: defaultTheme.textTheme
-            .copyWith(bodyMedium: AppTypography.p1.regular));
+      textTheme: defaultTheme.textTheme.copyWith(
+        bodyMedium: AppTypography.p1.medium.copyWith(color: Colors.black),
+      ),
+    );
   }
 
   static final _typography = AppTypographyExtension(
@@ -34,13 +36,14 @@ class AppTheme {
     secondary4: AppPalette.semiTransparentRed,
     background: AppPalette.white,
     onBackground: AppPalette.lightGray,
+    onBackground2: AppPalette.blackGray,
   );
 
   ThemeData light() {
     final baseTheme = _base(Brightness.light);
     return baseTheme.copyWith(
       colorScheme: baseTheme.colorScheme.copyWith(
-        primary: _appColors.primary,
+        primary: _appColors.background,
         surface: _appColors.background,
       ),
       scaffoldBackgroundColor: _appColors.background,
@@ -67,7 +70,7 @@ class AppTheme {
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
           backgroundColor: _appColors.primary,
-          textStyle: _typography.p1.bold.copyWith(color: _appColors.background),
+          textStyle: _typography.h3.bold.copyWith(color: _appColors.background),
           minimumSize: const Size.fromHeight(50),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),

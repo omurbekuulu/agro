@@ -36,6 +36,10 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
   flutter_svg: ^2.0.11
+  buttons_tabbar: ^1.3.13
+  flutter_bloc: ^8.1.6
+  bloc: ^8.1.4
+  meta: ^1.15.0
 
 dev_dependencies:
   flutter_test:
@@ -63,6 +67,31 @@ flutter:
   assets:
     - assets/logo.svg
     - assets/sign_in.jpg
+    - assets/cow.jpg
+    - assets/farm.jpg
+    - assets/add-icon.png
+    - assets/thunderstorm.svg
+    - assets/sunny.svg
+    - assets/home-icon.svg
+    - assets/statistics-icon.svg
+    - assets/calculator-icon.svg
+    - assets/notification-icon.svg
+    - assets/profil-icon.svg
+    - assets/home-icon-green.svg
+    - assets/statistics-icon-green.svg
+    - assets/calculator-icon-green.svg
+    - assets/notification-icon-green.svg
+    - assets/profil-icon-green.svg
+    - assets/farm-clipped.png
+    - assets/human-icon.svg
+    - assets/log-out-icon.svg
+    - assets/human-icon-green.svg
+    - assets/trail-sign-icon.svg
+    - assets/bar-chart-icon.svg
+    - assets/add-icon-green.svg
+    - assets/chatbubble-ellipses-icon.svg
+    - assets/radio-button-icon.svg
+    - assets/arrow-right-fill-icon.svg
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -76,17 +105,19 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
+  fonts:
+    - family: Montserrat
+      fonts:
+        - asset: fonts/Montserrat-Bold.ttf
+          weight: 700
+        - asset: fonts/Montserrat-SemiBold.ttf
+          weight: 600
+        - asset: fonts/Montserrat-Medium.ttf
+          weight: 500
+        - asset: fonts/Montserrat-Regular.ttf
+          weight: 400
+        - asset: fonts/Montserrat-Light.ttf
+          weight: 300
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
