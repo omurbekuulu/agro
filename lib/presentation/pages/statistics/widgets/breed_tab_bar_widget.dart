@@ -1,4 +1,4 @@
-import 'package:agro/presentation/pages/home/widgets/breed_tab_bar_view_widget.dart';
+import 'package:agro/presentation/pages/statistics/widgets/breed_tab_bar_view_widget.dart';
 import 'package:agro/presentation/theme/theme.dart';
 import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +25,7 @@ Widget breedTabBapWidget(BuildContext context) {
       initialIndex: 0,
       length: 10,
       child: Column(
-        children: [     
+        children: [
           SizedBox(
             height: 35,
             child: Padding(

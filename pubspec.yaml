@@ -83,6 +83,7 @@ flutter:
     - assets/notification-icon-green.svg
     - assets/profil-icon-green.svg
     - assets/farm-clipped.png
+    - assets/cow-clipped.png
     - assets/human-icon.svg
     - assets/log-out-icon.svg
     - assets/human-icon-green.svg
@@ -92,6 +93,7 @@ flutter:
     - assets/chatbubble-ellipses-icon.svg
     - assets/radio-button-icon.svg
     - assets/arrow-right-fill-icon.svg
+    - assets/calendar-icon.svg 
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

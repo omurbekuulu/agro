@@ -22,7 +22,7 @@ Widget weatherProfitStack(BuildContext context) {
           right: 0,
           left: 0,
           child: Image.asset(
-            'assets/farm-clipped.png',
+            'assets/cow-clipped.png',
             fit: BoxFit.cover,
           ),
         ),

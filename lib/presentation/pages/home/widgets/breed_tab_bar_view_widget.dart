@@ -1,5 +1,7 @@
+import 'package:agro/presentation/pages/animal_amount/animal_amount_page.dart';
 import 'package:agro/presentation/pages/expense_page.dart';
 import 'package:agro/presentation/pages/income_page.dart';
+import 'package:agro/presentation/pages/profil/widgets/show_dialog_widget.dart';
 import 'package:agro/presentation/theme/theme.dart';
 import 'package:flutter/material.dart';
 
@@ -12,6 +14,15 @@ Widget breedTabBarViewWidget(BuildContext context) {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
         children: [
+          FilledButton(
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const AnimalAmountPage()),
+              );
+            },
+            child: const Text('Малдын санын көрсөтүңүз'),
+          ),
+          const SizedBox(height: 24),
           Container(
             height: 84,
             decoration: BoxDecoration(
@@ -118,7 +129,7 @@ Widget breedTabBarViewWidget(BuildContext context) {
                       Text('Новый корм', style: typography.p1.bold),
                       InkWell(
                         onTap: () {
-                          _showDialog(context);
+                          showDialogWidget(context);
                         },
                         child: Container(
                           height: 28,
@@ -136,66 +147,6 @@ Widget breedTabBarViewWidget(BuildContext context) {
               );
             }),
           ),
-        ],
-      ),
-    ),
-  );
-}
-
-Future _showDialog(BuildContext context) {
-  final colors = Theme.of(context).appColors;
-  final typography = Theme.of(context).appTypography;
-
-  return showDialog(
-    context: context,
-    builder: (context) => AlertDialog(
-      actions: [
-        FilledButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          child: Text(
-            'Кошуу',
-            style: typography.h3.bold.copyWith(color: colors.background),
-          ),
-        )
-      ],
-      title: Text(
-        'Сумма',
-        style: typography.h3.bold,
-      ),
-      content: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          TextField(
-            keyboardType: TextInputType.number,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(
-                borderSide: BorderSide(color: colors.secondary1),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: colors.secondary1),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: colors.secondary1),
-                borderRadius: BorderRadius.circular(12),
-              ),
-            ),
-          ),
-          const SizedBox(height: 12),
-          Text(
-            'Канча сом кеткенин жазыңыз',
-            style: typography.p2.medium.copyWith(color: colors.onBackground2),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            'Эгер 0 с болсо жөн эле кошууну басыңыз',
-            style: typography.p2.medium.copyWith(color: colors.onBackground2),
-          ),
-          const SizedBox(height: 10),
         ],
       ),
     ),
