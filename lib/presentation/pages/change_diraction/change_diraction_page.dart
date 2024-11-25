@@ -1,5 +1,6 @@
 import 'package:agro/presentation/theme/theme.dart';
 import 'package:agro/presentation/uikit/customAppBarWithBack.dart';
+import 'package:agro/presentation/uikit/customLogo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -58,6 +59,8 @@ class ChangeDiractionPage extends StatelessWidget {
                       ],
                     ),
                   ),
+                  const Spacer(),
+                  customLogo(),
                 ],
               ),
             ),

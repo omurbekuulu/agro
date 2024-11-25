@@ -7,6 +7,7 @@ Widget customTextFormField(
   required TextInputType inputType,
   required String hintText,
   bool hasValue = false,
+  bool hasUnderLine = false,
 }) {
   final colors = Theme.of(context).appColors;
   final typography = Theme.of(context).appTypography;
@@ -37,7 +38,7 @@ Widget customTextFormField(
         borderSide: BorderSide.none,
       ),
       hintText: hintText,
-      hintStyle: typography.p1.medium.copyWith(color: colors.onBackground2),
+      hintStyle: typography.p1.medium.copyWith(color: colors.onBackground2,),
     ),
   );
 }

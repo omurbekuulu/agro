@@ -1,6 +1,7 @@
-import 'package:agro/presentation/pages/statistics/widgets/breed_tab_bar_widget.dart';
+import 'package:agro/presentation/pages/statistics/widgets/breed_tab_bar_view_widget.dart';
 import 'package:agro/presentation/pages/statistics/widgets/direction_tab_bar_widget.dart';
 import 'package:agro/presentation/theme/theme.dart';
+import 'package:agro/presentation/uikit/customBreedTabBar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -41,7 +42,10 @@ class StatisticsPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 24),
-            breedTabBapWidget(context),
+            customBreedTabBar(
+              context,
+              tabBarViews: breedTabBarViewWidget(context),
+            )
           ],
         ),
       ),

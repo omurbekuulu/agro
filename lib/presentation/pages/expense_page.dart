@@ -1,7 +1,7 @@
 import 'package:agro/presentation/theme/theme.dart';
+import 'package:agro/presentation/uikit/customLogo.dart';
 import 'package:agro/presentation/uikit/customTextFormField.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class ExpensePage extends StatefulWidget {
   const ExpensePage({super.key});
@@ -85,15 +85,7 @@ class _ExpensePageState extends State<ExpensePage> {
                   ),
                 ),
                 const Spacer(),
-                Row(
-                  children: [
-                    const Spacer(),
-                    SvgPicture.asset(
-                      'assets/logo.svg',
-                      width: 57,
-                    ),
-                  ],
-                ),
+                customLogo(),
                 const SizedBox(height: 24),
                 FilledButton(
                   onPressed: () {},

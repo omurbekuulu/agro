@@ -27,13 +27,6 @@ class CustomCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: colors.onBackground,
         borderRadius: BorderRadius.circular(12),
-        boxShadow: const [
-          BoxShadow(
-            color: Color.fromARGB(25, 0, 0, 0),
-            blurRadius: 10,
-            offset: Offset(0, 4),
-          ),
-        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

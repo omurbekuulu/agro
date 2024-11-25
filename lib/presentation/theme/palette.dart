@@ -11,3 +11,4 @@ abstract class AppPalette {
   static const semiTransparentOrange = Color(0x50F19831);
   static const semiTransparentRed = Color(0x50F13131);
 }
+

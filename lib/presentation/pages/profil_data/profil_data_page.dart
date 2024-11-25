@@ -1,8 +1,8 @@
 import 'package:agro/presentation/theme/theme.dart';
 import 'package:agro/presentation/uikit/customAppBarWithBack.dart';
+import 'package:agro/presentation/uikit/customLogo.dart';
 import 'package:agro/presentation/uikit/customTextFormField.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 class ProfilDataPage extends StatefulWidget {
   const ProfilDataPage({super.key});
@@ -61,19 +61,17 @@ class _ProfilDataPageState extends State<ProfilDataPage> {
                 ),
               ),
               const Spacer(),
-              Row(
-                children: [
-                  const Spacer(),
-                  SvgPicture.asset(
-                    'assets/logo.svg',
-                    width: 57,
-                  ),
-                ],
+              Padding(
+                padding: const EdgeInsets.only(right: 16),
+                child: customLogo(),
               ),
               const SizedBox(height: 24),
-              FilledButton(
-                onPressed: () {},
-                child: const Text('Кошуу'),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: FilledButton(
+                  onPressed: () {},
+                  child: const Text('Кошуу'),
+                ),
               ),
               const SizedBox(height: 12),
             ],

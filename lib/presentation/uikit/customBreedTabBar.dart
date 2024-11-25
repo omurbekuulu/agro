@@ -1,4 +1,3 @@
-import 'package:agro/presentation/pages/statistics/widgets/breed_tab_bar_view_widget.dart';
 import 'package:agro/presentation/theme/theme.dart';
 import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +15,8 @@ final tabss = [
   'Голланд',
 ];
 
-Widget breedTabBapWidget(BuildContext context) {
+Widget customBreedTabBar(BuildContext context,
+    {required Widget tabBarViews}) {
   final colors = Theme.of(context).appColors;
   final typography = Theme.of(context).appTypography;
 
@@ -36,7 +36,7 @@ Widget breedTabBapWidget(BuildContext context) {
                 buttonMargin: const EdgeInsets.only(right: 5),
                 contentPadding:
                     const EdgeInsets.symmetric(vertical: 0, horizontal: 8),
-                backgroundColor: colors.primary,
+                backgroundColor: colors.secondary1,
                 unselectedBackgroundColor: colors.onBackground,
                 unselectedLabelStyle:
                     typography.p1.bold.copyWith(color: Colors.black),
@@ -54,7 +54,7 @@ Widget breedTabBapWidget(BuildContext context) {
           Expanded(
             child: TabBarView(
               children: [
-                breedTabBarViewWidget(context),
+                tabBarViews,
                 Center(child: Text('Shved')),
                 Center(child: Text('Голланд')),
                 Center(child: Text('Mestnyi')),

@@ -6,6 +6,7 @@ import 'package:agro/presentation/pages/profil/widgets/profil_view_widget.dart';
 import 'package:agro/presentation/pages/profil/widgets/show_dialog_widget.dart';
 import 'package:agro/presentation/pages/profil_data/profil_data_page.dart';
 import 'package:agro/presentation/theme/theme.dart';
+import 'package:agro/presentation/uikit/customLogo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -120,16 +121,7 @@ class ProfilPage extends StatelessWidget {
                 ),
               ),
               const Spacer(),
-              Row(
-                children: [
-                  const Spacer(),
-                  SvgPicture.asset(
-                    'assets/logo.svg',
-                    width: 57,
-                  ),
-                ],
-              ),
-              const SizedBox(height: 24),
+              customLogo(),
             ],
           ),
         ),

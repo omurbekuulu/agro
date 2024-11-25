@@ -1,5 +1,6 @@
 import 'package:agro/presentation/theme/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 Widget customAppBarWithBack(BuildContext context, {required String title}) {
   final typography = Theme.of(context).appTypography;
@@ -9,10 +10,11 @@ Widget customAppBarWithBack(BuildContext context, {required String title}) {
       const SizedBox(height: 24),
       Row(
         children: [
-          BackButton(
+          IconButton(
             onPressed: () {
               Navigator.of(context).pop();
             },
+            icon: SvgPicture.asset('assets/back-icon.svg'),
           ),
           const SizedBox(width: 14),
           Text(
