@@ -1,12 +1,13 @@
 import 'package:agro/presentation/theme/theme.dart';
 import 'package:flutter/material.dart';
 
-Widget notificationWidget(
+Widget notificationCard(
     BuildContext context, String title, String description) {
   final colors = Theme.of(context).appColors;
   final typography = Theme.of(context).appTypography;
 
   return Container(
+    width: double.infinity,
     decoration: BoxDecoration(
       color: colors.onBackground,
       borderRadius: BorderRadius.circular(12),

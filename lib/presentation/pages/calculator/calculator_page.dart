@@ -30,115 +30,118 @@ class _CalculatorPageState extends State<CalculatorPage> {
                 style: typography.h2.bold,
               ),
               const SizedBox(height: 29),
-              SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Насыянын суммасы',
-                      style: typography.p1.medium.copyWith(
-                        color: colors.secondary1,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    customTextFormField(
-                      context,
-                      inputType: TextInputType.number,
-                      hintText: '0 с',
-                    ),
-                    const SizedBox(height: 16),
-                    Row(
-                      children: [
-                        Text(
-                          'Насыянын проценти',
-                          style: typography.p1.medium.copyWith(
-                            color: colors.secondary1,
-                          ),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Насыянын суммасы',
+                        style: typography.p1.medium.copyWith(
+                          color: colors.secondary1,
                         ),
-                        const Spacer(),
-                        Text(
-                          'Аннуитетный',
-                          style: typography.p2.medium,
-                        )
-                      ],
-                    ),
-                    const SizedBox(height: 4),
-                    customTextFormField(
-                      context,
-                      inputType: TextInputType.number,
-                      hintText: '0',
-                    ),
-                    const SizedBox(height: 16),
-                    Text(
-                      'Насыянын убактысы',
-                      style: typography.p1.medium.copyWith(
-                        color: colors.secondary1,
                       ),
-                    ),
-                    const SizedBox(height: 4),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: customTextFormField(
-                            context,
-                            inputType: TextInputType.number,
-                            hintText: '0',
+                      const SizedBox(height: 4),
+                      customTextFormField(
+                        context,
+                        inputType: TextInputType.number,
+                        hintText: '0 с',
+                      ),
+                      const SizedBox(height: 16),
+                      Row(
+                        children: [
+                          Text(
+                            'Насыянын проценти',
+                            style: typography.p1.medium.copyWith(
+                              color: colors.secondary1,
+                            ),
                           ),
+                          const Spacer(),
+                          Text(
+                            'Аннуитетный',
+                            style: typography.p2.medium,
+                          )
+                        ],
+                      ),
+                      const SizedBox(height: 4),
+                      customTextFormField(
+                        context,
+                        inputType: TextInputType.number,
+                        hintText: '0',
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        'Насыянын убактысы',
+                        style: typography.p1.medium.copyWith(
+                          color: colors.secondary1,
                         ),
-                        const SizedBox(width: 5),
-                        Expanded(
-                          child: Container(
-                            height: 56,
-                            decoration: BoxDecoration(
-                              color: colors.onBackground,
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            alignment: Alignment.center,
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 12,
-                              vertical: 16,
-                            ),
-                            child: DropdownButton(
-                              value: dropdownButtonValue,
-                              dropdownColor: colors.onBackground,
-                              isExpanded: true,
-                              underline: Container(),
-                              items: const [
-                                DropdownMenuItem(
-                                  value: 'Ай',
-                                  child: Text('Ай'),
-                                ),
-                                DropdownMenuItem(
-                                  value: 'Жыл',
-                                  child: Text('Жыл'),
-                                ),
-                              ],
-                              onChanged: (newValue) {
-                                setState(() {
-                                  dropdownButtonValue = newValue!;
-                                });
-                              },
+                      ),
+                      const SizedBox(height: 4),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: customTextFormField(
+                              context,
+                              inputType: TextInputType.number,
+                              hintText: '0',
                             ),
                           ),
-                        )
-                      ],
-                    ),
-                    listTileData(
-                      context,
-                      title: 'Бир айдын суммасы',
-                      data: '0 с',
-                    ),
-                    listTileData(
-                      context,
-                      title: 'Бериле турчу баардык сумма',
-                      data: '0 с',
-                    ),
-                    listTileData(
-                      context,
-                      title: 'Ашыкча төлөм',
-                      data: '0 с',
-                    ),
-                  ],
+                          const SizedBox(width: 5),
+                          Expanded(
+                            child: Container(
+                              height: 56,
+                              decoration: BoxDecoration(
+                                color: colors.onBackground,
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              alignment: Alignment.center,
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                                vertical: 16,
+                              ),
+                              child: DropdownButton(
+                                value: dropdownButtonValue,
+                                dropdownColor: colors.onBackground,
+                                isExpanded: true,
+                                underline: Container(),
+                                items: const [
+                                  DropdownMenuItem(
+                                    value: 'Ай',
+                                    child: Text('Ай'),
+                                  ),
+                                  DropdownMenuItem(
+                                    value: 'Жыл',
+                                    child: Text('Жыл'),
+                                  ),
+                                ],
+                                onChanged: (newValue) {
+                                  setState(() {
+                                    dropdownButtonValue = newValue!;
+                                  });
+                                },
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                      listTileData(
+                        context,
+                        title: 'Бир айдын суммасы',
+                        data: '0 с',
+                      ),
+                      listTileData(
+                        context,
+                        title: 'Бериле турчу баардык сумма',
+                        data: '0 с',
+                      ),
+                      listTileData(
+                        context,
+                        title: 'Ашыкча төлөм',
+                        data: '0 с',
+                      ),
+                      const SizedBox(height: 24),
+                    ],
+                  ),
                 ),
               ),
             ],

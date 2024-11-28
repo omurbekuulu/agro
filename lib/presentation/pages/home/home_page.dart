@@ -1,6 +1,6 @@
 import 'package:agro/presentation/pages/home/widgets/breed_tab_bar_view_widget.dart';
 import 'package:agro/presentation/pages/home/widgets/main_tabs_widget.dart';
-import 'package:agro/presentation/pages/home/widgets/weather_profit_stack_widget.dart';
+import 'package:agro/presentation/pages/home/widgets/stack_weather_profit_widget.dart';
 import 'package:agro/presentation/uikit/customBreedTabBar.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +18,7 @@ class _HomePageState extends State<HomePage> {
       body: SafeArea(
         child: Column(
           children: [
-            weatherProfitStack(context),
+            stackWeatherProfit(context),
             mainTabsWidget(context),
             const SizedBox(height: 24),
             customBreedTabBar(
