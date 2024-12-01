@@ -1,4 +1,4 @@
-import 'package:agro/presentation/pages/animal_amount/add_new_breed_page.dart';
+import 'package:agro/presentation/pages/add_new_breed/add_new_breed_page.dart';
 import 'package:agro/presentation/theme/theme.dart';
 import 'package:flutter/material.dart';
 

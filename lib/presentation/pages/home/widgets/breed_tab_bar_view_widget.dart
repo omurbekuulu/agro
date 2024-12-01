@@ -1,4 +1,4 @@
-import 'package:agro/presentation/pages/animal_amount/add_new_breed_page.dart';
+import 'package:agro/presentation/pages/add_new_breed/add_new_breed_page.dart';
 import 'package:agro/presentation/pages/expense_page.dart';
 import 'package:agro/presentation/pages/income_page.dart';
 import 'package:agro/presentation/pages/profil/widgets/show_dialog_widget.dart';

@@ -11,99 +11,105 @@ Widget breedTabBarViewWidget(BuildContext context) {
   final colors = Theme.of(context).appColors;
   final typography = Theme.of(context).appTypography;
 
-  return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 16),
-    child: CustomScrollView(
-      slivers: [
-        SliverToBoxAdapter(
-          child: Column(
-            children: [
-              Row(
+  return Stack(
+    children: [
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: Column(
                 children: [
-                  _sumCard(
-                    context,
-                    title: 'Киреше',
-                    subTitle: 'Сумма',
-                    sum: '552 000 с',
-                    onTap: () {
+                  Row(
+                    children: [
+                      _sumCard(
+                        context,
+                        title: 'Киреше',
+                        subTitle: 'Сумма',
+                        sum: '552 000 с',
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const IncomeDataPage(),
+                          ));
+                        },
+                      ),
+                      const SizedBox(width: 21),
+                      _sumCard(
+                        context,
+                        title: 'Чыгаша',
+                        subTitle: 'Сумма',
+                        sum: '112 000 с',
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const ExpenseDataPage(),
+                          ));
+                        },
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 24),
+                  FilledButton(
+                    onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const IncomeDataPage(),
+                        builder: (context) => const IncomePage(),
                       ));
                     },
+                    style: ButtonStyle(
+                      backgroundColor:
+                          WidgetStatePropertyAll(colors.secondary1),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Жаңы киреше кошуу',
+                          style: typography.h3.bold
+                              .copyWith(color: colors.background),
+                        ),
+                        Image.asset('assets/add-icon.png'),
+                      ],
+                    ),
                   ),
-                  const SizedBox(width: 21),
-                  _sumCard(
-                    context,
-                    title: 'Чыгаша',
-                    subTitle: 'Сумма',
-                    sum: '112 000 с',
-                    onTap: () {
+                  const SizedBox(height: 24),
+                  FilledButton(
+                    onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const ExpenseDataPage(),
+                        builder: (context) => const ExpensePage(),
                       ));
                     },
+                    style: ButtonStyle(
+                      backgroundColor:
+                          WidgetStatePropertyAll(colors.secondary1),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Кошумча чыгаша кошуу',
+                          style: typography.h3.bold
+                              .copyWith(color: colors.background),
+                        ),
+                        Image.asset('assets/add-icon.png'),
+                      ],
+                    ),
                   ),
+                  const SizedBox(height: 24),
                 ],
               ),
-              const SizedBox(height: 24),
-              FilledButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const IncomePage(),
-                  ));
-                },
-                style: ButtonStyle(
-                  backgroundColor: WidgetStatePropertyAll(colors.secondary1),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Жаңы киреше кошуу',
-                      style:
-                          typography.h3.bold.copyWith(color: colors.background),
-                    ),
-                    Image.asset('assets/add-icon.png'),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 24),
-              FilledButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const ExpensePage(),
-                  ));
-                },
-                style: ButtonStyle(
-                  backgroundColor: WidgetStatePropertyAll(colors.secondary1),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Кошумча чыгаша кошуу',
-                      style:
-                          typography.h3.bold.copyWith(color: colors.background),
-                    ),
-                    Image.asset('assets/add-icon.png'),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 24), 
-            ],
-          ),
+            ),
+            const CustomGrid(),
+            const SliverToBoxAdapter(
+              child: SizedBox(height: 24),
+            ),
+          ],
         ),
-        const CustomGrid(),
-        SliverToBoxAdapter(
-          child: Column(
-            children: [
-              const SizedBox(height: 40),
-              customLogo(),
-            ],
-          ),
-        )
-      ],
-    ),
+      ),
+      Positioned(
+        bottom: 24,
+        right: 16,
+        child: customLogo(),
+      )
+    ],
   );
 }
 

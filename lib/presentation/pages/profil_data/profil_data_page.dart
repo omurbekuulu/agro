@@ -20,62 +20,67 @@ class _ProfilDataPageState extends State<ProfilDataPage> {
 
     return Scaffold(
       body: SafeArea(
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              customAppBarWithBack(context, title: 'Профилдин маалыматы'),
-              SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 31),
-                      Text(
-                        'Аты жөнү:',
-                        style: TextStyle(color: colors.secondary1),
+        child: Stack(
+          children: [
+            Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  customAppBarWithBack(context, title: 'Профилдин маалыматы'),
+                  SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 31),
+                          Text(
+                            'Аты жөнү:',
+                            style: TextStyle(color: colors.secondary1),
+                          ),
+                          const SizedBox(height: 4),
+                          customTextFormField(
+                            context,
+                            inputType: TextInputType.text,
+                            hintText: 'Иванов Иван',
+                            hasValue: true,
+                          ),
+                          const SizedBox(height: 16),
+                          Text(
+                            'Телефон:',
+                            style: TextStyle(color: colors.secondary1),
+                          ),
+                          const SizedBox(height: 4),
+                          customTextFormField(
+                            context,
+                            inputType: TextInputType.text,
+                            hintText: '0505 00 12 45',
+                            hasValue: true,
+                          ),
+                          const SizedBox(height: 125),
+                        ],
                       ),
-                      const SizedBox(height: 4),
-                      customTextFormField(
-                        context,
-                        inputType: TextInputType.text,
-                        hintText: 'Иванов Иван',
-                        hasValue: true,
-                      ),
-                      const SizedBox(height: 16),
-                      Text(
-                        'Телефон:',
-                        style: TextStyle(color: colors.secondary1),
-                      ),
-                      const SizedBox(height: 4),
-                      customTextFormField(
-                        context,
-                        inputType: TextInputType.text,
-                        hintText: '0505 00 12 45',
-                        hasValue: true,
-                      ),
-                    ],
+                    ),
                   ),
-                ),
+                ],
               ),
-              const Spacer(),
-              Padding(
-                padding: const EdgeInsets.only(right: 16),
-                child: customLogo(),
+            ),
+            Positioned(
+              bottom: 74,
+              right: 16,
+              child: customLogo(),
+            ),
+            Positioned(
+              bottom: 12,
+              right: 16,
+              left: 16,
+              child: FilledButton(
+                onPressed: () {},
+                child: const Text('Кошуу'),
               ),
-              const SizedBox(height: 24),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: FilledButton(
-                  onPressed: () {},
-                  child: const Text('Кошуу'),
-                ),
-              ),
-              const SizedBox(height: 12),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

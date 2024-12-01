@@ -3,30 +3,76 @@ import 'package:agro/presentation/uikit/customLogo.dart';
 import 'package:flutter/material.dart';
 
 Widget breedTabBarViewWidget(BuildContext context) {
-  return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 16),
-    child: Column(
-      children: [
-        notificationCard(
-          context,
-          'Новая порода коровы',
-          'Новая порода коровы улудшить ваш доход рврроврморворор ошокшуомшо шкошмокшом  кшо мшко окшаомшо',
+  return Stack(
+    children: [
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              notificationCard(
+                context,
+                'Новая порода коровы',
+                'Новая порода коровы улудшить ваш доход рврроврморворор ошокшуомшо шкошмокшом  кшо мшко окшаомшо',
+              ),
+              const SizedBox(height: 24),
+              notificationCard(
+                context,
+                'Новая порода коровы',
+                'Новая порода коровы улудшить ваш доход рврроврморворор ошокшуомшо шкошмокшом  кшо мшко окшаомшо',
+              ),
+              const SizedBox(height: 24),
+              notificationCard(
+                context,
+                'Новая порода коровы',
+                'Новая порода коровы улудшить ваш',
+              ),
+              const SizedBox(height: 24),
+              notificationCard(
+                context,
+                'Новая порода коровы',
+                'Новая порода коровы улудшить ваш доход рврроврморворор ошокшуомшо шкошмокшом  кшо мшко окшаомшо',
+              ),
+              const SizedBox(height: 24),
+              notificationCard(
+                context,
+                'Новая порода коровы',
+                'Новая порода коровы улудшить ваш доход рврроврморворор ошокшуомшо шкошмокшом  кшо мшко окшаомшо',
+              ),
+              const SizedBox(height: 24),
+              notificationCard(
+                context,
+                'Новая порода коровы',
+                'Новая порода коровы улудшить ваш',
+              ),
+              const SizedBox(height: 24),
+              notificationCard(
+                context,
+                'Новая порода коровы',
+                'Новая порода коровы улудшить ваш доход рврроврморворор ошокшуомшо шкошмокшом  кшо мшко окшаомшо',
+              ),
+              const SizedBox(height: 24),
+              notificationCard(
+                context,
+                'Новая порода коровы',
+                'Новая порода коровы улудшить ваш доход рврроврморворор ошокшуомшо шкошмокшом  кшо мшко окшаомшо',
+              ),
+              const SizedBox(height: 24),
+              notificationCard(
+                context,
+                'Новая порода коровы',
+                'Новая порода коровы улудшить ваш',
+              ),
+              const SizedBox(height: 24),
+            ],
+          ),
         ),
-        const SizedBox(height: 24),
-        notificationCard(
-          context,
-          'Новая порода коровы',
-          'Новая порода коровы улудшить ваш доход рврроврморворор ошокшуомшо шкошмокшом  кшо мшко окшаомшо',
-        ),
-        const SizedBox(height: 24),
-        notificationCard(
-          context,
-          'Новая порода коровы',
-          'Новая порода коровы улудшить ваш',
-        ),
-        const Spacer(),
-        customLogo(),
-      ],
-    ),
+      ),
+      Positioned(
+        bottom: 24,
+        right: 16,
+        child: customLogo(),
+      ),
+    ],
   );
 }

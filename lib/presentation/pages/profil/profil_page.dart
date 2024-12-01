@@ -21,110 +21,121 @@ class ProfilPage extends StatelessWidget {
 
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Column(
-            children: [
-              const SizedBox(height: 24),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Stack(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
                 children: [
-                  Text(
-                    'Профиль',
-                    style: typography.h2.bold,
-                  ),
-                  InkWell(
-                    onTap: () {
-                      showDialogWidget(context);
-                    },
-                    child: SvgPicture.asset('assets/log-out-icon.svg'),
-                  ),
-                ],
-              ),
-              Column(
-                children: [
-                  profilViewWidget(context),
-                  const SizedBox(height: 26),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: colors.onBackground,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(12),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          customTileWidget(
-                            context,
-                            icon: 'assets/human-icon-green.svg',
-                            title: 'Профилдин маалыматы',
-                            onTap: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => const ProfilDataPage(),
-                                ),
-                              );
-                            },
-                          ),
-                          const SizedBox(height: 12),
-                          customTileWidget(
-                            context,
-                            icon: 'assets/trail-sign-icon.svg',
-                            title: 'Багытыңыздын түрүн өзгөртү',
-                            onTap: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const ChangeDiractionPage(),
-                                ),
-                              );
-                            },
-                          ),
-                          const SizedBox(height: 12),
-                          BlocProvider(
-                            create: (context) => BottomNavBloc(),
-                            child: customTileWidget(
-                              context,
-                              icon: 'assets/bar-chart-icon.svg',
-                              title: 'Насыя алуу үчүн калькулятор',
-                              onTap: () {
-                                BlocProvider.of<BottomNavBloc>(context).add(
-                                  const PageTappedEvent(LandingTap.calculator),
-                                );
-                              },
-                            ),
-                          ),
-                          const SizedBox(height: 12),
-                          customTileWidget(
-                            context,
-                            icon: 'assets/add-icon-green.svg',
-                            title: 'Жаңы пароданы кошуу',
-                            onTap: () {},
-                          ),
-                          const SizedBox(height: 12),
-                          customTileWidget(
-                            context,
-                            icon: 'assets/chatbubble-ellipses-icon.svg',
-                            title: 'Байланышуу',
-                            onTap: () {
-                              Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(
-                                  builder: (context) => const CommunicatePage(),
-                                ),
-                              );
-                            },
-                          ),
-                        ],
+                  const SizedBox(height: 24),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Профиль',
+                        style: typography.h2.bold,
                       ),
-                    ),
+                      InkWell(
+                        onTap: () {
+                          showDialogWidget(context);
+                        },
+                        child: SvgPicture.asset('assets/log-out-icon.svg'),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      profilViewWidget(context),
+                      const SizedBox(height: 26),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: colors.onBackground,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(12),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              customTileWidget(
+                                context,
+                                icon: 'assets/human-icon-green.svg',
+                                title: 'Профилдин маалыматы',
+                                onTap: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const ProfilDataPage(),
+                                    ),
+                                  );
+                                },
+                              ),
+                              const SizedBox(height: 12),
+                              customTileWidget(
+                                context,
+                                icon: 'assets/trail-sign-icon.svg',
+                                title: 'Багытыңыздын түрүн өзгөртү',
+                                onTap: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const ChangeDiractionPage(),
+                                    ),
+                                  );
+                                },
+                              ),
+                              const SizedBox(height: 12),
+                              BlocProvider(
+                                create: (context) => BottomNavBloc(),
+                                child: customTileWidget(
+                                  context,
+                                  icon: 'assets/bar-chart-icon.svg',
+                                  title: 'Насыя алуу үчүн калькулятор',
+                                  onTap: () {
+                                    BlocProvider.of<BottomNavBloc>(context).add(
+                                      const PageTappedEvent(
+                                          LandingTap.calculator),
+                                    );
+                                  },
+                                ),
+                              ),
+                              const SizedBox(height: 12),
+                              customTileWidget(
+                                context,
+                                icon: 'assets/add-icon-green.svg',
+                                title: 'Жаңы пароданы кошуу',
+                                onTap: () {},
+                              ),
+                              const SizedBox(height: 12),
+                              customTileWidget(
+                                context,
+                                icon: 'assets/chatbubble-ellipses-icon.svg',
+                                title: 'Байланышуу',
+                                onTap: () {
+                                  Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const CommunicatePage(),
+                                    ),
+                                  );
+                                },
+                              ),
+                              const SizedBox(height: 24),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
-              const Spacer(),
-              customLogo(),
-            ],
-          ),
+            ),
+            Positioned(
+              bottom: 24,
+              right: 16,
+              child: customLogo(),
+            ),
+          ],
         ),
       ),
     );
