@@ -73,7 +73,10 @@ flutter:
     - assets/farm.jpg
     - assets/add-icon.png
     - assets/thunderstorm.svg
+    - assets/thunderstorm_grey.svg
     - assets/sunny.svg
+    - assets/sunny_grey.svg
+    - assets/cloudy_grey.svg
     - assets/home-icon.svg
     - assets/statistics-icon.svg
     - assets/calculator-icon.svg
