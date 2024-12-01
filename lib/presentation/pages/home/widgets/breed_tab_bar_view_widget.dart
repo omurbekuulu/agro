@@ -1,4 +1,4 @@
-import 'package:agro/presentation/pages/animal_amount/animal_amount_page.dart';
+import 'package:agro/presentation/pages/animal_amount/add_new_breed_page.dart';
 import 'package:agro/presentation/pages/expense_page.dart';
 import 'package:agro/presentation/pages/income_page.dart';
 import 'package:agro/presentation/pages/profil/widgets/show_dialog_widget.dart';
@@ -17,10 +17,11 @@ Widget breedTabBarViewWidget(BuildContext context) {
           FilledButton(
             onPressed: () {
               Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const AnimalAmountPage()),
+                MaterialPageRoute(
+                    builder: (context) => const AddNewBreedPage()),
               );
             },
-            child: const Text('Малдын санын көрсөтүңүз'),
+            child: const Text('Жаңы парода кошуу'),
           ),
           const SizedBox(height: 24),
           Container(

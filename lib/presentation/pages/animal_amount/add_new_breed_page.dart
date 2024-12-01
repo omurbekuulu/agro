@@ -1,15 +1,17 @@
+import 'package:agro/presentation/pages/landing/landing_page.dart';
 import 'package:agro/presentation/theme/theme.dart';
 import 'package:agro/presentation/uikit/customAppBarWithBack.dart';
+import 'package:agro/presentation/uikit/customLogo.dart';
 import 'package:flutter/material.dart';
 
-class AnimalAmountPage extends StatefulWidget {
-  const AnimalAmountPage({super.key});
+class AddNewBreedPage extends StatefulWidget {
+  const AddNewBreedPage({super.key});
 
   @override
-  State<AnimalAmountPage> createState() => _AnimalAmountPageState();
+  State<AddNewBreedPage> createState() => _AddNewBreedPageState();
 }
 
-class _AnimalAmountPageState extends State<AnimalAmountPage> {
+class _AddNewBreedPageState extends State<AddNewBreedPage> {
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -24,7 +26,7 @@ class _AnimalAmountPageState extends State<AnimalAmountPage> {
             children: [
               customAppBarWithBack(
                 context,
-                title: 'Малдын санын көрсөтүңүз',
+                title: 'Жаңы парода кошуу',
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -108,6 +110,15 @@ class _AnimalAmountPageState extends State<AnimalAmountPage> {
                           ),
                         ),
                       ),
+                      customLogo(),
+                      FilledButton(
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                  builder: (context) => LandingPage()),
+                            );
+                          },
+                          child: const Text('Кошуу'))
                     ],
                   ),
                 ),

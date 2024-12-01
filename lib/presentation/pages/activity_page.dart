@@ -1,4 +1,4 @@
-import 'package:agro/presentation/pages/landing/landing_page.dart';
+import 'package:agro/presentation/pages/animal_amount/add_new_breed_page.dart';
 import 'package:agro/presentation/theme/theme.dart';
 import 'package:flutter/material.dart';
 
@@ -55,21 +55,16 @@ class ActivityPage extends StatelessWidget {
                   const SizedBox(height: 49),
                   FilledButton(
                     onPressed: () {
-                      Navigator.of(context).pushReplacement(
+                      Navigator.of(context).push(
                         MaterialPageRoute(
-                            builder: (context) => const LandingPage()),
+                            builder: (context) => const AddNewBreedPage()),
                       );
                     },
                     child: const Text('Мал чарбасы'),
                   ),
                   const SizedBox(height: 12),
                   FilledButton(
-                    onPressed: () {
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                            builder: (context) => const LandingPage()),
-                      );
-                    },
+                    onPressed: () {},
                     child: const Text('Өсүмдүк өстүрүү'),
                   ),
                 ],
