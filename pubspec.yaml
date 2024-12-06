@@ -42,6 +42,10 @@ dependencies:
   meta: ^1.15.0
   http: ^1.2.2
   dio: ^5.7.0
+  get_it: ^8.0.2
+  dartz:
+  logger:
+  shared_preferences:
 
 dev_dependencies:
   flutter_test:
