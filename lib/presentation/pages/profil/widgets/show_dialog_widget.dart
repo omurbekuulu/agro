@@ -1,6 +1,7 @@
-import 'package:agro/presentation/pages/sign_in_page.dart';
-import 'package:agro/presentation/theme/theme.dart';
 import 'package:flutter/material.dart';
+
+import 'package:agro/core/configs/theme/theme.dart';
+import 'package:agro/presentation/pages/sign_in_page.dart';
 
 Future showDialogWidget(BuildContext context) {
   final colors = Theme.of(context).appColors;

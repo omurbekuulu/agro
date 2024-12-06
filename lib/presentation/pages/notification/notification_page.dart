@@ -1,7 +1,8 @@
-import 'package:agro/presentation/pages/notification/widgets/breed_tab_bar_view.dart';
-import 'package:agro/presentation/theme/theme.dart';
-import 'package:agro/presentation/uikit/customBreedTabBar.dart';
 import 'package:flutter/material.dart';
+
+import 'package:agro/core/configs/theme/theme.dart';
+import 'package:agro/presentation/pages/notification/widgets/breed_tab_bar_view.dart';
+import 'package:agro/presentation/uikit/customBreedTabBar.dart';
 
 class NotificationPage extends StatelessWidget {
   const NotificationPage({super.key});

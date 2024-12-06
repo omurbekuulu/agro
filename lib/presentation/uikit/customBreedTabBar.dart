@@ -1,6 +1,7 @@
-import 'package:agro/presentation/theme/theme.dart';
 import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:flutter/material.dart';
+
+import 'package:agro/core/configs/theme/theme.dart';
 
 final tabss = [
   'Местный',

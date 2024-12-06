@@ -1,5 +1,6 @@
-import 'package:agro/presentation/theme/theme.dart';
 import 'package:flutter/material.dart';
+
+import 'package:agro/core/configs/theme/theme.dart';
 
 class CustomCard extends StatelessWidget {
   final String title;

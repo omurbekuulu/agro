@@ -1,6 +1,7 @@
-import 'package:agro/presentation/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import 'package:agro/core/configs/theme/theme.dart';
 
 Widget customAppBarWithBack(BuildContext context, {required String title}) {
   final typography = Theme.of(context).appTypography;

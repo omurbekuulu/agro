@@ -1,6 +1,7 @@
-import 'package:agro/presentation/pages/add_new_breed/add_new_breed_page.dart';
-import 'package:agro/presentation/theme/theme.dart';
 import 'package:flutter/material.dart';
+
+import 'package:agro/core/configs/theme/theme.dart';
+import 'package:agro/presentation/pages/add_new_breed/add_new_breed_page.dart';
 
 class ActivityPage extends StatelessWidget {
   const ActivityPage({super.key});

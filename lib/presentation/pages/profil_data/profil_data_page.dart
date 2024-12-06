@@ -1,4 +1,4 @@
-import 'package:agro/presentation/theme/theme.dart';
+import 'package:agro/core/configs/theme/theme.dart';
 import 'package:agro/presentation/uikit/customAppBarWithBack.dart';
 import 'package:agro/presentation/uikit/customLogo.dart';
 import 'package:agro/presentation/uikit/customTextFormField.dart';

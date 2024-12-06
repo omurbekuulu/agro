@@ -1,8 +1,9 @@
-import 'package:agro/presentation/pages/landing/bloc/bottom_nav_bloc.dart';
-import 'package:agro/presentation/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import 'package:agro/core/configs/theme/theme.dart';
+import 'package:agro/presentation/pages/landing/bloc/bottom_nav_bloc.dart';
 
 class BottomNavWidget extends StatelessWidget {
   const BottomNavWidget({super.key});

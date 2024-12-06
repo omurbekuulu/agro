@@ -1,8 +1,9 @@
 import 'package:agro/presentation/pages/sign_in_page.dart';
 import 'package:agro/presentation/service_locator.dart';
-import 'package:agro/presentation/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+import 'core/configs/theme/theme.dart';
 
 void main() {
   setupServiceLocator();

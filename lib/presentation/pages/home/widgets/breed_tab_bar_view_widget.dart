@@ -1,9 +1,10 @@
+import 'package:flutter/material.dart';
+
+import 'package:agro/core/configs/theme/theme.dart';
 import 'package:agro/presentation/pages/add_new_breed/add_new_breed_page.dart';
 import 'package:agro/presentation/pages/expense_page.dart';
 import 'package:agro/presentation/pages/income_page.dart';
 import 'package:agro/presentation/pages/profil/widgets/show_dialog_widget.dart';
-import 'package:agro/presentation/theme/theme.dart';
-import 'package:flutter/material.dart';
 
 Widget breedTabBarViewWidget(BuildContext context) {
   final colors = Theme.of(context).appColors;
