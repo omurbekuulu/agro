@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 
-abstract class AddNewBreedRepository {
+abstract class BreedsRepository {
   Future<Either> getBreeds();
   Future<Either> getSeasons();
 }

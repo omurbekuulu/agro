@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../domain/add_new_breed/entities/season.dart';
-import '../../../../domain/add_new_breed/use_cases/get_seasons.dart';
+import '../../../../domain/breeds/entities/season.dart';
+import '../../../../domain/breeds/use_cases/get_seasons.dart';
 import '../../../service_locator.dart';
 
 part 'season_state.dart';

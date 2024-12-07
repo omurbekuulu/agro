@@ -2,7 +2,7 @@ import 'package:agro/presentation/pages/add_new_breed/cubit/breed_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../domain/add_new_breed/entities/breed.dart';
+import '../../../../domain/breeds/entities/breed.dart';
 
 class BreedDropdownmenu extends StatefulWidget {
   const BreedDropdownmenu({super.key});

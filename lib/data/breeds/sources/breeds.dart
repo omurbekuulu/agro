@@ -5,12 +5,12 @@ import '../../../core/constants/api_url.dart';
 import '../../../core/network/dio_client.dart';
 import '../../../presentation/service_locator.dart';
 
-abstract class AddNewBreedService {
+abstract class BreedsService {
   Future<Either> getBreeds();
   Future<Either> getSeasons();
 }
 
-class AddNewBreedServiceImpl extends AddNewBreedService {
+class BreedsServiceImpl extends BreedsService {
   @override
   Future<Either> getBreeds() async {
     try {

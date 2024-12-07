@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../domain/add_new_breed/entities/season.dart';
+import '../../../../domain/breeds/entities/season.dart';
 import '../cubit/season_cubit.dart';
 
 class SeasonDropdownmenu extends StatefulWidget {

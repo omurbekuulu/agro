@@ -1,5 +1,5 @@
-import 'package:agro/data/add_new_breed/models/breed.dart';
-import 'package:agro/domain/add_new_breed/entities/breed.dart';
+import 'package:agro/data/breeds/models/breed.dart';
+import 'package:agro/domain/breeds/entities/breed.dart';
 
 class BreedMapper {
   static BreedEntity toEntity(BreedModel model) {

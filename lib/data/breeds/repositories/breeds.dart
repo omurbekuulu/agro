@@ -1,16 +1,16 @@
 import 'package:agro/common/helper/mapper/breed_mapper.dart';
 import 'package:agro/common/helper/mapper/season_mapper.dart';
-import 'package:agro/data/add_new_breed/models/breed.dart';
+import 'package:agro/data/breeds/models/breed.dart';
+import 'package:agro/data/breeds/sources/breeds.dart';
+import 'package:agro/domain/breeds/repositories/breeds.dart';
 import 'package:dartz/dartz.dart';
-import '../../../domain/add_new_breed/repositories/add_new_breed.dart';
 import '../../../presentation/service_locator.dart';
 import '../models/season.dart';
-import '../sources/add_new_breed.dart';
 
-class AddNewBreedBreedRepositoryImpl implements AddNewBreedRepository {
+class BreedsRepositoryImpl implements BreedsRepository {
   @override
   Future<Either> getBreeds() async {
-    var responseData = await sl<AddNewBreedService>().getBreeds();
+    var responseData = await sl<BreedsService>().getBreeds();
 
     return responseData.fold(
       (error) {
@@ -27,7 +27,7 @@ class AddNewBreedBreedRepositoryImpl implements AddNewBreedRepository {
 
   @override
   Future<Either> getSeasons() async {
-    var responseData = await sl<AddNewBreedService>().getSeasons();
+    var responseData = await sl<BreedsService>().getSeasons();
 
     return responseData.fold(
       (error) {

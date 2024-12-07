@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
-import '../../../../domain/add_new_breed/entities/breed.dart';
-import '../../../../domain/add_new_breed/use_cases/get_breeds.dart';
+import '../../../../domain/breeds/entities/breed.dart';
+import '../../../../domain/breeds/use_cases/get_breeds.dart';
 import '../../../service_locator.dart';
 
 part 'breed_state.dart';
