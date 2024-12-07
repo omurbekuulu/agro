@@ -1,4 +1,4 @@
-import 'package:agro/domain/add_new_breed/repositories/breed.dart';
+import 'package:agro/domain/add_new_breed/repositories/add_new_breed.dart';
 import 'package:dartz/dartz.dart';
 
 import '../../../core/usecase/usecase.dart';

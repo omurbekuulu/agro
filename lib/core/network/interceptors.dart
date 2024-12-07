@@ -43,7 +43,7 @@ class AuthorizationInterceptor extends Interceptor {
         await SharedPreferences.getInstance();
     final token = sharedPreferences.getString('token');
     options.headers['Authorization'] =
-        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdHJpbmciLCJpYXQiOjE3MzM1MDkzMTgsImV4cCI6MTczMzUyMzcxOH0.xsFhJzswWITZmcALImGczkvHGRX3ljccHx-chsuHC5M";
+        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdHJpbmciLCJpYXQiOjE3MzM1NDgzNzUsImV4cCI6MTczMzU2Mjc3NX0.jP_xuqjezW9AwhKXziQ9G6WFHd317zbx2Vgss77qa9Y";
     handler.next(options); // continue with the Request
   }
 }
