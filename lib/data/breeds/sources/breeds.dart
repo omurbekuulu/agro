@@ -7,7 +7,6 @@ import '../../../presentation/service_locator.dart';
 
 abstract class BreedsService {
   Future<Either> getBreeds();
-  Future<Either> getSeasons();
 }
 
 class BreedsServiceImpl extends BreedsService {
@@ -19,19 +18,15 @@ class BreedsServiceImpl extends BreedsService {
       );
       return Right(response.data);
     } on DioException catch (e) {
-      return Left(e.response!.data['message']);
-    }
-  }
+      String errorMessage;
 
-  @override
-  Future<Either> getSeasons() async {
-    try {
-      var resoponse = await sl<DioClient>().get(
-        ApiUrl.seasons,
-      );
-      return Right(resoponse.data);
-    } on DioException catch (e) {
-      return Left(e.response!.data['message']);
+      if (e.response != null && e.response!.data != null) {
+        errorMessage = e.response!.data;
+      } else {
+        errorMessage = e.message ?? 'An unknown error occurred';
+      }
+
+      return Left(errorMessage);
     }
   }
 }

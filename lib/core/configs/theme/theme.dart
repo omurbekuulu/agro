@@ -37,6 +37,7 @@ class AppTheme {
     background: AppPalette.white,
     onBackground: AppPalette.lightGray,
     onBackground2: AppPalette.blackGray,
+    onBackground3: AppPalette.black,
   );
 
   ThemeData light() {

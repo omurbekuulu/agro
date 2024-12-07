@@ -1,8 +1,12 @@
 import 'package:agro/common/widgets/customAppBarWithBack.dart';
+import 'package:agro/core/configs/theme/theme.dart';
+import 'package:agro/presentation/pages/add_new_breed/cubit/add_new_breed_cubit.dart';
 import 'package:agro/presentation/pages/add_new_breed/widget/breed_dropdownmenu.dart';
+import 'package:agro/presentation/pages/add_new_breed/widget/pet_quantity.dart';
 import 'package:agro/presentation/pages/add_new_breed/widget/season_dropdownmenu.dart';
 import 'package:flutter/material.dart';
 import 'package:agro/presentation/pages/landing/landing_page.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../common/widgets/customLogo.dart';
 
@@ -18,174 +22,87 @@ class _AddNewBreedPageState extends State<AddNewBreedPage> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = Theme.of(context).appColors;
+
     return Scaffold(
       body: SafeArea(
-        child: Stack(
-          children: [
-            Column(
-              children: [
-                customAppBarWithBack(context, title: 'Жаңы парода кошуу'),
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+        child: BlocProvider(
+          create: (context) => AddNewBreedCubit()..getData(),
+          child: BlocBuilder<AddNewBreedCubit, AddNewBreedState>(
+            builder: (context, state) {
+              if (state is FailureLoadAddNewBreed) {
+                return Center(
+                  child: Text(
+                    state.errorMessage,
+                    style: TextStyle(color: colors.onBackground3),
+                  ),
+                );
+              }
+              if (state is LoadingAddNewBreed) {
+                return Center(
+                  child: CircularProgressIndicator(
+                    color: colors.onBackground3,
+                  ),
+                );
+              }
+              if (state is LoadedAddNewBreed) {
+                return Stack(
+                  children: [
+                    Column(
                       children: [
-                        const BreedDropdownmenu(),
-                        const SizedBox(height: 16),
-                        const SeasonDropdownmenu(),
-                        const SizedBox(height: 16),
-                        const Text('Уйдун саны'),
-                        const SizedBox(height: 8),
-                        TextFormField(
-                          decoration: InputDecoration(
-                            hintText: '0',
-                            filled: true,
-                            fillColor: Colors.grey[200],
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
-                              borderSide: BorderSide.none,
-                            ),
-                            contentPadding: const EdgeInsets.symmetric(
-                              horizontal: 12,
-                              vertical: 16,
+                        customAppBarWithBack(context,
+                            title:
+                                'Жаңы парода кошуу'), // TODO: implement on top of circleindicator
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Form(
+                            key: _formKey,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                BreedDropdownmenu(breeds: state.breeds),
+                                const SizedBox(height: 16),
+                                SeasonDropdownmenu(seasons: state.seasons),
+                                const SizedBox(height: 16),
+                                const Text('Уйдун саны'),
+                                const SizedBox(height: 8),
+                                const PetQuantity(),
+                              ],
                             ),
                           ),
-                          keyboardType: TextInputType.number,
-                          onChanged: (value) {
-                            // Логика обработки изменения текста
-                            print('Введенное значение: $value');
-                          },
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Введите количество';
-                            }
-                            return null;
-                          },
                         ),
                       ],
                     ),
-                  ),
-                ),
-              ],
-            ),
-            Positioned(
-              bottom: 74,
-              right: 16,
-              child: customLogo(),
-            ),
-            Positioned(
-              bottom: 12,
-              left: 16,
-              right: 16,
-              child: FilledButton(
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                        builder: (context) => const LandingPage()),
-                  );
-                },
-                child: const Text('Кошуу'),
-              ),
-            ),
-          ],
+                    Positioned(
+                      bottom: 74,
+                      right: 16,
+                      child: customLogo(),
+                    ),
+                    Positioned(
+                      //TODO: impelment enabled button
+                      bottom: 12,
+                      left: 16,
+                      right: 16,
+                      child: FilledButton(
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                  builder: (context) => const LandingPage()),
+                            );
+                          }
+                        },
+                        child: const Text('Кошуу'),
+                      ),
+                    ),
+                  ],
+                );
+              }
+              return Container();
+            },
+          ),
         ),
       ),
     );
   }
 }
-
-// final Dio _dio = Dio(BaseOptions(
-  //   baseUrl: 'http://ec2-16-171-165-233.eu-north-1.compute.amazonaws.com',
-  // ));
-
-  // List<Breed> _breeds = [];
-  // Breed? _selectedBreed;
-
-  // List<Season> _seasons = [];
-  // Season? _selectedSeason;
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _fetchBreeds();
-  //   _fetchSeasons();
-  // }
-
-  // Future<void> _fetchBreeds() async {
-  //   try {
-  //     const String authToken =
-  //         "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdHJpbmciLCJpYXQiOjE3MzMzMTE1NDcsImV4cCI6MTczMzMyNTk0N30.IpDmLjjVvciz13sm2dzk8Srl4sG3tr1GCz6inAYG7rQ";
-
-  //     final response = await _dio.get(
-  //       '/api/breed',
-  //       options: Options(
-  //         headers: {
-  //           'Authorization': 'Bearer $authToken',
-  //         },
-  //         responseType: ResponseType.json,
-  //       ),
-  //     );
-
-  //     if (response.statusCode == 200) {
-  //       if (response.data is List) {
-  //         setState(() {
-  //           _breeds = (response.data as List)
-  //               .map((item) => Breed.fromJson(item))
-  //               .toList();
-  //         });
-  //       } else {
-  //         setState(() {
-  //           _breeds = [];
-  //         });
-  //         print("Ожидали список, но получили: ${response.data}");
-  //       }
-  //     } else {
-  //       setState(() {
-  //         _breeds = [];
-  //       });
-  //       print("Данные не найдены");
-  //     }
-  //   } catch (e) {
-  //     print("Ошибка при получении данных: $e");
-  //     setState(() {
-  //       _breeds = [];
-  //     });
-  //   }
-  // }
-
-  // Future<void> _fetchSeasons() async {
-  //   try {
-  //     const String authToken =
-  //         "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdHJpbmciLCJpYXQiOjE3MzMzMTE1NDcsImV4cCI6MTczMzMyNTk0N30.IpDmLjjVvciz13sm2dzk8Srl4sG3tr1GCz6inAYG7rQ";
-
-  //     final response = await _dio.get(
-  //       '/api/seasons',
-  //       options: Options(
-  //         headers: {
-  //           'Authorization': 'Bearer $authToken',
-  //         },
-  //         responseType: ResponseType.json,
-  //       ),
-  //     );
-
-  //     if (response.statusCode == 200 && response.data is List) {
-  //       setState(() {
-  //         _seasons = (response.data as List)
-  //             .map((item) => Season.fromJson(item))
-  //             .toList(); // Преобразуем JSON в объекты Season
-  //       });
-  //     } else {
-  //       print("Ошибка загрузки данных: ${response.data}");
-  //       setState(() {
-  //         _seasons = [];
-  //       });
-  //     }
-  //   } catch (e) {
-  //     print("Ошибка при получении данных: $e");
-  //     setState(() {
-  //       _seasons = [];
-  //     });
-  //   }
-  // }

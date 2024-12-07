@@ -70,10 +70,10 @@ class NotificationPage extends StatelessWidget {
                 ],
               ),
             ),
-            customBreedTabBar(
-              context,
-              tabBarViews: breedTabBarViewWidget(context),
-            ),
+            // customBreedTabBar(
+            //   context,
+            //   tabBarViews: breedTabBarViewWidget(context),
+            // ),
           ],
         ),
       ),

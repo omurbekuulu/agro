@@ -44,10 +44,10 @@ class StatisticsPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 24),
-            customBreedTabBar(
-              context,
-              tabBarViews: breedTabBarViewWidget(context),
-            )
+            // customBreedTabBar(
+            //   context,
+            //   tabBarViews: breedTabBarViewWidget(context),
+            // )
           ],
         ),
       ),

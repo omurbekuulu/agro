@@ -1,11 +1,11 @@
+import 'package:agro/core/configs/theme/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../../domain/breeds/entities/season.dart';
-import '../cubit/season_cubit.dart';
+import '../../../../domain/season/entities/season.dart';
 
 class SeasonDropdownmenu extends StatefulWidget {
-  const SeasonDropdownmenu({super.key});
+  const SeasonDropdownmenu({super.key, required this.seasons});
+
+  final List<SeasonEntity> seasons;
 
   @override
   State<SeasonDropdownmenu> createState() => _SeasonDropdownmenuState();
@@ -16,71 +16,59 @@ class _SeasonDropdownmenuState extends State<SeasonDropdownmenu> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => SeasonsCubit()..getSeasons(),
-      child: BlocBuilder<SeasonsCubit, SeasonsState>(
-        builder: (context, state) {
-          if (state is LoadingSeasons) {
-            return const Center(
-              child: CircularProgressIndicator(
-                color: Colors.black,
+    final colors = Theme.of(context).appColors;
+
+    if (widget.seasons.isEmpty) {
+      return const Text('Сезондор жок');
+    }
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text('Уйдун жашы'),
+        const SizedBox(height: 4),
+        DropdownButtonFormField<SeasonEntity>(
+          decoration: InputDecoration(
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 12,
+              vertical: 16,
+            ),
+            filled: true,
+            fillColor: colors.onBackground,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: BorderSide.none,
+            ),
+          ),
+          hint: const Text('Жашын тандаңыз'),
+          items: widget.seasons.map((season) {
+            return DropdownMenuItem<SeasonEntity>(
+              value: season,
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxWidth: MediaQuery.sizeOf(context).width - 80,
+                ),
+                child: Text(
+                  season.name!,
+                  style: TextStyle(fontSize: 16),
+                  softWrap: true,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             );
-          }
-          if (state is LoadedSeasons) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text('Уйдун жашы'),
-                const SizedBox(height: 4),
-                DropdownButtonFormField<SeasonEntity>(
-                  hint: const Text('Жашын тандаңыз'),
-                  value: _selectedSeason,
-                  items: state.seasons.map((season) {
-                    return DropdownMenuItem<SeasonEntity>(
-                      value: season,
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(
-                          maxWidth: MediaQuery.sizeOf(context).width - 80,
-                        ),
-                        child: Text(
-                          season.name!,
-                          style: TextStyle(fontSize: 16),
-                          softWrap: true,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    );
-                  }).toList(),
-                  onChanged: (value) {
-                    setState(() {
-                      _selectedSeason = value;
-                    });
-                  },
-                  decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 16,
-                    ),
-                    filled: true,
-                    fillColor: Colors.grey[200],
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide.none,
-                    ),
-                  ),
-                ),
-              ],
-            );
-          }
-          if (state is FailureLoadSeasons) {
-            return Center(
-              child: Text(state.errorMessage),
-            );
-          }
-          return Container();
-        },
-      ),
+          }).toList(),
+          validator: (value) {
+            if (value == null) {
+              return 'Породаны тандаңыз';
+            }
+            return null;
+          },
+          onChanged: (value) {
+            setState(() {
+              _selectedSeason = value;
+            });
+          },
+        ),
+      ],
     );
   }
 }

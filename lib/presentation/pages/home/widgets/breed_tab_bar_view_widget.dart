@@ -14,7 +14,7 @@ Widget breedTabBarViewWidget(BuildContext context) {
     child: Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
-        children: [
+        children: [ 
           FilledButton(
             onPressed: () {
               Navigator.of(context).push(

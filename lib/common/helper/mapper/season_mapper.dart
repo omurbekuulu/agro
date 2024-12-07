@@ -1,5 +1,5 @@
-import 'package:agro/data/breeds/models/season.dart';
-import 'package:agro/domain/breeds/entities/season.dart';
+import 'package:agro/data/season/models/season.dart';
+import 'package:agro/domain/season/entities/season.dart';
 
 class SeasonMapper {
   static SeasonEntity toEntity(SeasonModel model) {

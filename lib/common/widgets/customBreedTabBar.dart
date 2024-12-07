@@ -3,51 +3,48 @@ import 'package:flutter/material.dart';
 
 import 'package:agro/core/configs/theme/theme.dart';
 
-final tabss = [
-  'Местный',
-  'Швед',
-  'Голланд',
-  'Местный',
-  'Швед',
-  'Голланд',
-  'Местный',
-  'Швед',
-  'Голланд',
-  'Голланд',
-];
-
-Widget customBreedTabBar(BuildContext context,
-    {required Widget tabBarViews}) {
+Widget customBreedTabBar(
+  BuildContext context, {
+  required List tabs,
+  required Widget tabBarViews,
+}) {
   final colors = Theme.of(context).appColors;
   final typography = Theme.of(context).appTypography;
+
+  if (tabs.isEmpty) {
+    return const Text('Нету доступных парод'); //TODO: implement isAddedBreed
+  }
 
   return Expanded(
     child: DefaultTabController(
       initialIndex: 0,
-      length: 10,
+      length: tabs.length,
       child: Column(
         children: [
-          SizedBox(
-            height: 35,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 16),
-              child: ButtonsTabBar(
-                width: MediaQuery.sizeOf(context).width / 3.2,
-                contentCenter: true,
-                buttonMargin: const EdgeInsets.only(right: 5),
-                contentPadding:
-                    const EdgeInsets.symmetric(vertical: 0, horizontal: 8),
-                backgroundColor: colors.secondary1,
-                unselectedBackgroundColor: colors.onBackground,
-                unselectedLabelStyle:
-                    typography.p1.bold.copyWith(color: Colors.black),
-                labelStyle:
-                    typography.p1.bold.copyWith(color: colors.background),
-                tabs: List.generate(10, (index) {
-                  return Tab(
-                    text: tabss[index],
-                  );
-                }),
+          Align(
+            alignment: Alignment.topLeft,
+            child: SizedBox(
+              height: 35,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 16),
+                child: ButtonsTabBar(
+                  width: MediaQuery.sizeOf(context).width / 3.2,
+                  contentCenter: true,
+                  buttonMargin: const EdgeInsets.only(right: 5),
+                  contentPadding:
+                      const EdgeInsets.symmetric(vertical: 0, horizontal: 8),
+                  backgroundColor: colors.secondary1,
+                  unselectedBackgroundColor: colors.onBackground,
+                  unselectedLabelStyle:
+                      typography.p1.bold.copyWith(color: Colors.black),
+                  labelStyle:
+                      typography.p1.bold.copyWith(color: colors.background),
+                  tabs: List.generate(tabs.length, (index) {
+                    return Tab(
+                      text: tabs[index],
+                    );
+                  }),
+                ),
               ),
             ),
           ),
@@ -56,15 +53,6 @@ Widget customBreedTabBar(BuildContext context,
             child: TabBarView(
               children: [
                 tabBarViews,
-                Center(child: Text('Shved')),
-                Center(child: Text('Голланд')),
-                Center(child: Text('Mestnyi')),
-                Center(child: Text('Shved')),
-                Center(child: Text('Голланд')),
-                Center(child: Text('Mestnyi')),
-                Center(child: Text('Shved')),
-                Center(child: Text('Голланд')),
-                Center(child: Text('Голланд')),
               ],
             ),
           )
