@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:agro/core/configs/theme/theme.dart';
 import 'package:agro/presentation/pages/calculator/widget/list_tile_data.dart';
-import 'package:agro/presentation/uikit/customLogo.dart';
-import 'package:agro/presentation/uikit/customTextFormField.dart';
+
+import '../../../common/widgets/customLogo.dart';
+import '../../../common/widgets/customTextFormField.dart';
 
 class CalculatorPage extends StatefulWidget {
   const CalculatorPage({super.key});

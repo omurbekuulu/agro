@@ -1,8 +1,9 @@
 import 'package:agro/core/configs/theme/theme.dart';
-import 'package:agro/presentation/uikit/customAppBarWithBack.dart';
-import 'package:agro/presentation/uikit/customLogo.dart';
-import 'package:agro/presentation/uikit/customTextFormField.dart';
 import 'package:flutter/material.dart';
+
+import '../../../common/widgets/customAppBarWithBack.dart';
+import '../../../common/widgets/customLogo.dart';
+import '../../../common/widgets/customTextFormField.dart';
 
 class ProfilDataPage extends StatefulWidget {
   const ProfilDataPage({super.key});

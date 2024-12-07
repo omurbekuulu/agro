@@ -1,9 +1,10 @@
+import 'package:agro/common/widgets/customAppBarWithBack.dart';
 import 'package:agro/presentation/pages/add_new_breed/widget/breed_dropdownmenu.dart';
 import 'package:agro/presentation/pages/add_new_breed/widget/season_dropdownmenu.dart';
 import 'package:flutter/material.dart';
 import 'package:agro/presentation/pages/landing/landing_page.dart';
-import 'package:agro/presentation/uikit/customAppBarWithBack.dart';
-import 'package:agro/presentation/uikit/customLogo.dart';
+
+import '../../../common/widgets/customLogo.dart';
 
 class AddNewBreedPage extends StatefulWidget {
   const AddNewBreedPage({super.key});

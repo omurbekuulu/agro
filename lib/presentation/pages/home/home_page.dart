@@ -1,8 +1,9 @@
 import 'package:agro/presentation/pages/home/widgets/breed_tab_bar_view_widget.dart';
 import 'package:agro/presentation/pages/home/widgets/main_tabs_widget.dart';
 import 'package:agro/presentation/pages/home/widgets/stack_weather_profit_widget.dart';
-import 'package:agro/presentation/uikit/customBreedTabBar.dart';
 import 'package:flutter/material.dart';
+
+import '../../../common/widgets/customBreedTabBar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

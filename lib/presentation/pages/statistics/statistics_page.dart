@@ -4,7 +4,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:agro/core/configs/theme/theme.dart';
 import 'package:agro/presentation/pages/statistics/widgets/breed_tab_bar_view_widget.dart';
 import 'package:agro/presentation/pages/statistics/widgets/direction_tab_bar_widget.dart';
-import 'package:agro/presentation/uikit/customBreedTabBar.dart';
+
+import '../../../common/widgets/customBreedTabBar.dart';
 
 class StatisticsPage extends StatelessWidget {
   const StatisticsPage({super.key});

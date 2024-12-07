@@ -10,7 +10,8 @@ import 'package:agro/presentation/pages/profil/widgets/custom_tile_widget.dart';
 import 'package:agro/presentation/pages/profil/widgets/profil_view_widget.dart';
 import 'package:agro/presentation/pages/profil/widgets/show_dialog_widget.dart';
 import 'package:agro/presentation/pages/profil_data/profil_data_page.dart';
-import 'package:agro/presentation/uikit/customLogo.dart';
+
+import '../../../common/widgets/customLogo.dart';
 
 class ProfilPage extends StatelessWidget {
   const ProfilPage({super.key});

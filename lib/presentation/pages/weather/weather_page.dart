@@ -1,7 +1,8 @@
 import 'package:agro/presentation/pages/weather/widgets/build_days.dart';
 import 'package:agro/presentation/pages/weather/widgets/build_month_title.dart';
-import 'package:agro/presentation/uikit/customAppBarWithBack.dart';
 import 'package:flutter/material.dart';
+
+import '../../../common/widgets/customAppBarWithBack.dart';
 
 class WeatherPage extends StatelessWidget {
   const WeatherPage({super.key});

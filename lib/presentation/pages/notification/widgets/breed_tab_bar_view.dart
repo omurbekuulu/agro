@@ -1,5 +1,5 @@
+import 'package:agro/common/widgets/customLogo.dart';
 import 'package:agro/presentation/pages/notification/widgets/notification_card.dart';
-import 'package:agro/presentation/uikit/customLogo.dart';
 import 'package:flutter/material.dart';
 
 Widget breedTabBarViewWidget(BuildContext context) {
