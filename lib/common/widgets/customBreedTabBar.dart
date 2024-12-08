@@ -12,7 +12,7 @@ Widget customBreedTabBar(
   final typography = Theme.of(context).appTypography;
 
   if (tabs.isEmpty) {
-    return const Text('Нету доступных парод'); //TODO: implement isAddedBreed
+    return const Text('Породалар жок'); //TODO: implement isAddedBreed
   }
 
   return Expanded(

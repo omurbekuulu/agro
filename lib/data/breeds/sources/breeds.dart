@@ -24,7 +24,7 @@ class BreedsServiceImpl extends BreedsService {
         errorMessage = e.response!.data;
       } else {
         errorMessage = e.message ?? 'An unknown error occurred';
-      }
+      } //TODO: implement it in another sources
 
       return Left(errorMessage);
     }

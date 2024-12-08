@@ -5,4 +5,5 @@ class ApiUrl {
   static const breeds = 'api/breed';
   static const seasons = 'api/seasons';
   static const pets = 'api/user-pets';
+  static const profitability = 'api/transactions/profitability/';
 }

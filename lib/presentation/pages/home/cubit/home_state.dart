@@ -3,16 +3,22 @@ part of 'home_cubit.dart';
 @immutable
 sealed class HomeState {}
 
-class LoadingBreeds extends HomeState {}
+class InitialHome extends HomeState {}
 
-class LoadedBreeds extends HomeState {
+class LoadingHome extends HomeState {}
+
+class LoadedHome extends HomeState {
+  final int? profitability;
   final List<BreedEntity> breeds;
 
-  LoadedBreeds({required this.breeds});
+  LoadedHome({
+    this.profitability,
+    this.breeds = const [],
+  });
 }
 
-class FailureLoadBreeds extends HomeState {
+class FailureLoadHome extends HomeState {
   final String errorMessage;
 
-  FailureLoadBreeds({required this.errorMessage});
+  FailureLoadHome({required this.errorMessage});
 }

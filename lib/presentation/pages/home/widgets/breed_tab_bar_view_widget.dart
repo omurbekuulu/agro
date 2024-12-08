@@ -22,7 +22,7 @@ Widget breedTabBarViewWidget(BuildContext context) {
                     builder: (context) => const AddNewBreedPage()),
               );
             },
-            child: const Text('Жаңы парода кошуу'),
+            child: const Text('Жаңы порода кошуу'),
           ),
           const SizedBox(height: 24),
           Container(

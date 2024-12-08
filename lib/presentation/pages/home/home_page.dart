@@ -20,24 +20,24 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: SafeArea(
         child: BlocProvider(
-          create: (context) => HomeCubit()..getBreeds(),
+          create: (context) => HomeCubit()..initHome(5),
           child: BlocBuilder<HomeCubit, HomeState>(
             builder: (context, state) {
-              if (state is LoadingBreeds) {
+              if (state is LoadingHome) {
                 return const Center(
                   child: CircularProgressIndicator(
                     color: Colors.black,
                   ),
                 );
               }
-              if (state is FailureLoadBreeds) {
+              if (state is FailureLoadHome) {
                 return Center(
                   child: Text(
                     state.errorMessage,
                   ),
                 );
               }
-              if (state is LoadedBreeds) {
+              if (state is LoadedHome) {
                 return Column(
                   children: [
                     stackWeatherProfit(context),
