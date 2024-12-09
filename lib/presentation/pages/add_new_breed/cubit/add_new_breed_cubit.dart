@@ -16,6 +16,9 @@ class AddNewBreedCubit extends Cubit<AddNewBreedState> {
     var responseBreeds = await sl<GetBreedsUseCase>().call();
     var responseSeasons = await sl<GetSeasonsUseCase>().call();
 
+    List<BreedEntity> breeds = [];
+    List<SeasonEntity> seasons = [];
+
     responseBreeds.fold(
       (error) {
         emit(
@@ -23,9 +26,7 @@ class AddNewBreedCubit extends Cubit<AddNewBreedState> {
         );
       },
       (data) {
-        emit(
-          LoadedAddNewBreed(breeds: data),
-        );
+        breeds = data;
       },
     );
 
@@ -36,10 +37,15 @@ class AddNewBreedCubit extends Cubit<AddNewBreedState> {
         );
       },
       (data) {
-        emit(
-          LoadedAddNewBreed(seasons: data),
-        );
+        seasons = data;
       },
     );
+
+    emit(
+      LoadedAddNewBreed(
+        breeds: breeds,
+        seasons: seasons,
+      ),
+    ); 
   }
 }

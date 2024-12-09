@@ -79,7 +79,6 @@ class _AddNewBreedPageState extends State<AddNewBreedPage> {
                       child: customLogo(),
                     ),
                     Positioned(
-                      //TODO: impelment enabled button
                       bottom: 12,
                       left: 16,
                       right: 16,

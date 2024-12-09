@@ -6,7 +6,12 @@ import 'package:agro/presentation/pages/expense_page.dart';
 import 'package:agro/presentation/pages/income_page.dart';
 import 'package:agro/presentation/pages/profil/widgets/show_dialog_widget.dart';
 
-Widget breedTabBarViewWidget(BuildContext context) {
+import '../../../../domain/percent/entity/percent.dart';
+
+Widget breedTabBarViewWidget(
+  BuildContext context, {
+  required PercentEntity percent,
+}) {
   final colors = Theme.of(context).appColors;
   final typography = Theme.of(context).appTypography;
 
@@ -14,7 +19,7 @@ Widget breedTabBarViewWidget(BuildContext context) {
     child: Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
-        children: [ 
+        children: [
           FilledButton(
             onPressed: () {
               Navigator.of(context).push(
@@ -31,22 +36,22 @@ Widget breedTabBarViewWidget(BuildContext context) {
               color: colors.onBackground,
               borderRadius: BorderRadius.circular(12),
             ),
-            child: const Column(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: EdgeInsets.all(12),
+                  padding: const EdgeInsets.all(12),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Чыгаша: 0'),
-                      Text('Киреше: 0'),
+                      Text('Чыгаша: ${percent.expense}'),
+                      Text('Киреше: ${percent.income}'),
                     ],
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(left: 12),
-                  child: Text('Түшүмдүүлүгү: 0%'),
+                  padding: const EdgeInsets.only(left: 12),
+                  child: Text('Пароданын түшүмдүлүгү: ${percent.performance}'),
                 )
               ],
             ),

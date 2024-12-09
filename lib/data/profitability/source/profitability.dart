@@ -16,6 +16,7 @@ class ProfitabilityServiceImpl extends ProfitabilityService {
       var response = await sl<DioClient>().get(
         '${ApiUrl.profitability}$directionId',
       );
+      print(response);
       return Right(response.data);
     } on DioException catch (e) {
       return Left(e.response!.data);

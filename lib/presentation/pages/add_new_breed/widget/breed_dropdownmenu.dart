@@ -20,7 +20,7 @@ class _BreedDropdownmenuState extends State<BreedDropdownmenu> {
     final colors = Theme.of(context).appColors;
 
     if (widget.breeds.isEmpty) {
-      return const Text('Породалар жок');
+      return const Text('Породалар жок'); //TODO: will be dellete
     }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

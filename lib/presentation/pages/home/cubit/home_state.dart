@@ -8,12 +8,16 @@ class InitialHome extends HomeState {}
 class LoadingHome extends HomeState {}
 
 class LoadedHome extends HomeState {
-  final int? profitability;
+  final List<DirectionEntity> directions;
+  final int profitability;
   final List<BreedEntity> breeds;
+  final PercentEntity percent;
 
   LoadedHome({
-    this.profitability,
-    this.breeds = const [],
+    required this.profitability,
+    required this.breeds,
+    required this.directions,
+    required this.percent,
   });
 }
 

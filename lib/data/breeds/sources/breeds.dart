@@ -18,15 +18,7 @@ class BreedsServiceImpl extends BreedsService {
       );
       return Right(response.data);
     } on DioException catch (e) {
-      String errorMessage;
-
-      if (e.response != null && e.response!.data != null) {
-        errorMessage = e.response!.data;
-      } else {
-        errorMessage = e.message ?? 'An unknown error occurred';
-      } //TODO: implement it in another sources
-
-      return Left(errorMessage);
+      return Left(e.response!.data);
     }
   }
 }

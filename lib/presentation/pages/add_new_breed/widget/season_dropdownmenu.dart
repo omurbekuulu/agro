@@ -19,7 +19,7 @@ class _SeasonDropdownmenuState extends State<SeasonDropdownmenu> {
     final colors = Theme.of(context).appColors;
 
     if (widget.seasons.isEmpty) {
-      return const Text('Сезондор жок');
+      return const Text('Сезондор жок'); //TODO: will be dellete
     }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

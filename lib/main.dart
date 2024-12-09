@@ -1,3 +1,4 @@
+import 'package:agro/presentation/pages/home/home_page.dart';
 import 'package:agro/presentation/pages/sign_in_page.dart';
 import 'package:agro/presentation/service_locator.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
       theme: theme.light(),
       themeMode: ThemeMode.light,
       debugShowCheckedModeBanner: false,
-      home: const SignInPage(),
+      home: const HomePage(),
     );
   }
 }
