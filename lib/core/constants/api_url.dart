@@ -8,4 +8,6 @@ class ApiUrl {
   static const pets = 'api/user-pets';
   static const profitability = 'api/transactions/profitability/';
   static const percent = 'api/transactions/percent/';
+  static const recommendations = 'api/recommendations/';
+  static const transactions = 'api/transactions/search';
 }

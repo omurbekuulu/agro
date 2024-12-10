@@ -12,12 +12,14 @@ class LoadedHome extends HomeState {
   final int profitability;
   final List<BreedEntity> breeds;
   final PercentEntity percent;
+  final List<CardEntity> cards;
 
   LoadedHome({
     required this.profitability,
     required this.breeds,
     required this.directions,
     required this.percent,
+    required this.cards,
   });
 }
 

@@ -7,10 +7,12 @@ import 'package:agro/presentation/pages/income_page.dart';
 import 'package:agro/presentation/pages/profil/widgets/show_dialog_widget.dart';
 
 import '../../../../domain/percent/entity/percent.dart';
+import '../../../../domain/recommendation/entity/recommentation.dart';
 
 Widget breedTabBarViewWidget(
   BuildContext context, {
   required PercentEntity percent,
+  required List<CardEntity> cards,
 }) {
   final colors = Theme.of(context).appColors;
   final typography = Theme.of(context).appTypography;
@@ -106,51 +108,61 @@ Widget breedTabBarViewWidget(
           ),
           const SizedBox(height: 24),
           Column(
-            children: List.generate(14, (index) {
-              if (index == 0 || index % 4 == 0) {
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 16),
-                  child: SizedBox(
-                    height: 28,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'До беременности',
-                          style: typography.p1.bold.copyWith(
-                            color: colors.primary,
+            children: List.generate(cards.length, (index) {
+              return Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 16),
+                    child: SizedBox(
+                      height: 28,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            cards[index].name,
+                            style: typography.p1.bold.copyWith(
+                              color: colors.primary,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-                );
-              }
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 24),
-                child: SizedBox(
-                  height: 28,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Новый корм', style: typography.p1.bold),
-                      InkWell(
-                        onTap: () {
-                          showDialogWidget(context);
-                        },
-                        child: Container(
+                  Column(
+                    children: List.generate(cards[index].recommendations.length,
+                        (innerIndex) {
+                      final name =
+                          cards[index].recommendations[innerIndex].name;
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 24),
+                        child: SizedBox(
                           height: 28,
-                          width: 28,
-                          decoration: BoxDecoration(
-                            color: colors.onBackground,
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(color: colors.secondary1),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(name, style: typography.p1.bold),
+                              InkWell(
+                                onTap: () {
+                                  showDialogWidget(context);
+                                },
+                                child: Container(
+                                  height: 28,
+                                  width: 28,
+                                  decoration: BoxDecoration(
+                                    color: colors.onBackground,
+                                    borderRadius: BorderRadius.circular(8),
+                                    border:
+                                        Border.all(color: colors.secondary1),
+                                  ),
+                                ),
+                              )
+                            ],
                           ),
                         ),
-                      )
-                    ],
+                      );
+                    }),
                   ),
-                ),
+                ],
               );
             }),
           ),

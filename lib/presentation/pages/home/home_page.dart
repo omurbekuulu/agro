@@ -1,5 +1,5 @@
 import 'package:agro/presentation/pages/home/cubit/home_cubit.dart';
-import 'package:agro/presentation/pages/home/widgets/main_tabs_widget.dart';
+import 'package:agro/presentation/pages/home/widgets/direction_tab_widget.dart';
 import 'package:agro/presentation/pages/home/widgets/stack_weather_profit_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,8 +17,13 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: SafeArea(
         child: BlocProvider(
-          create: (context) =>
-              HomeCubit()..initHome(categoryId: 1, directionId: 5, petId: 1),
+          create: (context) => HomeCubit()
+            ..initHome(
+              categoryId: 1,
+              directionId: 5,
+              petId: 1,
+              breedId: 1,
+            ), //TODO: implement these response datas
           child: BlocBuilder<HomeCubit, HomeState>(
             builder: (context, state) {
               if (state is LoadingHome) {
@@ -36,19 +41,18 @@ class _HomePageState extends State<HomePage> {
                 );
               }
               if (state is LoadedHome) {
-                return ListView(
-                  shrinkWrap: true,
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     stackWeatherProfit(context),
-                    mainTabsWidget(
-                      context,
-                      tabDirections: state.directions
-                          .map((directoin) => directoin.name)
-                          .toList(),
-                      tabBreeds:
-                          state.breeds.map((breed) => breed.name).toList(),
-                      percent: state.percent,
-                    ),
+                    directionTabWidget(context,
+                        tabDirectionNames: state.directions
+                            .map((directoin) => directoin.name)
+                            .toList(),
+                        tabBreedNames:
+                            state.breeds.map((breed) => breed.name).toList(),
+                        percent: state.percent,
+                        cards: state.cards),
                     const SizedBox(height: 24),
                   ],
                 );

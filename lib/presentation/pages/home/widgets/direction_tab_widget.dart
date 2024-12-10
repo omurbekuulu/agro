@@ -1,23 +1,24 @@
-import 'package:flutter/material.dart';
-
 import 'package:agro/core/configs/theme/theme.dart';
+import 'package:agro/domain/recommendation/entity/recommentation.dart';
+import 'package:flutter/material.dart';
 
 import '../../../../common/widgets/customBreedTabBar.dart';
 import '../../../../domain/percent/entity/percent.dart';
 import 'breed_tab_bar_view_widget.dart';
 
-Widget directionTabBarWidget(
+Widget directionTabWidget(
   BuildContext context, {
-  required List tabDirectionsNames,
-  required List tabBreedsNames,
+  required List tabDirectionNames,
+  required List tabBreedNames,
   required PercentEntity percent,
+  required List<CardEntity> cards,
 }) {
   final colors = Theme.of(context).appColors;
   final typography = Theme.of(context).appTypography;
 
   return Expanded(
     child: DefaultTabController(
-      length: tabDirectionsNames.length,
+      length: tabDirectionNames.length,
       child: Column(
         children: [
           TabBar(
@@ -26,22 +27,23 @@ Widget directionTabBarWidget(
             unselectedLabelColor: Colors.black,
             indicatorColor: colors.primary,
             dividerColor: Colors.transparent,
-            tabs: List.generate(tabDirectionsNames.length, (index) {
+            tabs: List.generate(tabDirectionNames.length, (index) {
               return Tab(
-                text: tabDirectionsNames[index],
+                text: tabDirectionNames[index],
               );
             }),
           ),
           const SizedBox(height: 24),
           Expanded(
             child: TabBarView(
-              children: List.generate(tabDirectionsNames.length, (index) {
+              children: List.generate(tabDirectionNames.length, (index) {
                 return customBreedTabBar(
                   context,
-                  tabsNames: tabBreedsNames,
+                  tabsNames: tabBreedNames,
                   tabBarViews: breedTabBarViewWidget(
                     context,
                     percent: percent,
+                    cards: cards,
                   ),
                 );
               }),

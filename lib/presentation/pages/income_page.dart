@@ -78,7 +78,7 @@ class _IncomePageState extends State<IncomePage> {
                               hintText: 'Кошумча сөздөр'),
                           const SizedBox(height: 24),
                           Text(
-                            'Саны',
+                            'Уйдун саны',
                             style: typography.p1.medium.copyWith(
                               color: colors.secondary1,
                             ),
