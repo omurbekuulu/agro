@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:agro/core/configs/theme/theme.dart';
-import 'package:agro/presentation/pages/add_new_breed/add_new_breed_page.dart';
+import 'package:agro/presentation/pages/landing/landing_page.dart';
 
 class ActivityPage extends StatelessWidget {
   const ActivityPage({super.key});
@@ -74,7 +74,7 @@ class ActivityPage extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                        builder: (context) => const AddNewBreedPage()),
+                        builder: (context) => const LandingPage()),
                   );
                 },
                 child: const Text('Мал чарбасы'),

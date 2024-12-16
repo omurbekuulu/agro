@@ -33,12 +33,16 @@ class HomeCubit extends Cubit<HomeState> {
     var responseCards = await sl<GetRecommendationsUseCase>().call(
       params: directionId,
       params2: breedId,
-    );
+    ); 
 
     List<DirectionEntity> directions = [];
     int profitability = 0;
     List<BreedEntity> breeds = [];
-    PercentEntity? percent;
+    PercentEntity percent = PercentEntity(
+      expense: 0,
+      income: 0,
+      performance: 0,
+    );
     List<CardEntity> cards = [];
 
     responseDirections.fold(
@@ -70,7 +74,7 @@ class HomeCubit extends Cubit<HomeState> {
 
     responsePercent.fold(
       (error) {
-        emit(FailureLoadHome(errorMessage: error));
+        emit(FailureLoadHome(errorMessage: error.toString()));
       },
       (data) {
         percent = data;
@@ -91,7 +95,7 @@ class HomeCubit extends Cubit<HomeState> {
         directions: directions,
         profitability: profitability,
         breeds: breeds,
-        percent: percent!,
+        percent: percent,
         cards: cards,
       ),
     );

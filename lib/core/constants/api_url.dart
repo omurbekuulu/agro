@@ -2,6 +2,8 @@ class ApiUrl {
   static const baseURL =
       'http://ec2-16-171-165-233.eu-north-1.compute.amazonaws.com/';
 
+  static const signup = 'api/v1/auth/sign-up';
+  static const signin = 'api/v1/auth/sign-in';
   static const directions = 'directions/by/';
   static const breeds = 'api/breed';
   static const seasons = 'api/seasons';

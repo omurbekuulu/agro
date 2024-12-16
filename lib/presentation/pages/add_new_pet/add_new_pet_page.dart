@@ -1,23 +1,23 @@
 import 'package:agro/common/widgets/customAppBarWithBack.dart';
 import 'package:agro/core/configs/theme/theme.dart';
-import 'package:agro/presentation/pages/add_new_breed/cubit/add_new_breed_cubit.dart';
-import 'package:agro/presentation/pages/add_new_breed/widget/breed_dropdownmenu.dart';
-import 'package:agro/presentation/pages/add_new_breed/widget/pet_quantity.dart';
-import 'package:agro/presentation/pages/add_new_breed/widget/season_dropdownmenu.dart';
+import 'package:agro/presentation/pages/add_new_pet/cubit/add_new_pet_cubit.dart';
+import 'package:agro/presentation/pages/add_new_pet/widget/breed_dropdownmenu.dart';
+import 'package:agro/presentation/pages/add_new_pet/widget/pet_quantity.dart';
+import 'package:agro/presentation/pages/add_new_pet/widget/month_dropdownmenu.dart';
 import 'package:flutter/material.dart';
 import 'package:agro/presentation/pages/landing/landing_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../common/widgets/customLogo.dart';
 
-class AddNewBreedPage extends StatefulWidget {
-  const AddNewBreedPage({super.key});
+class AddNewPetPage extends StatefulWidget {
+  const AddNewPetPage({super.key, required});
 
   @override
-  State<AddNewBreedPage> createState() => _AddNewBreedPageState();
+  State<AddNewPetPage> createState() => _AddNewPetPageState();
 }
 
-class _AddNewBreedPageState extends State<AddNewBreedPage> {
+class _AddNewPetPageState extends State<AddNewPetPage> {
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -27,10 +27,10 @@ class _AddNewBreedPageState extends State<AddNewBreedPage> {
     return Scaffold(
       body: SafeArea(
         child: BlocProvider(
-          create: (context) => AddNewBreedCubit()..getData(),
-          child: BlocBuilder<AddNewBreedCubit, AddNewBreedState>(
+          create: (context) => AddNewPetCubit()..initBreeds(),
+          child: BlocBuilder<AddNewPetCubit, AddNewPetState>(
             builder: (context, state) {
-              if (state is FailureLoadAddNewBreed) {
+              if (state is FailureLoadAddNewPet) {
                 return Center(
                   child: Text(
                     state.errorMessage,
@@ -38,14 +38,14 @@ class _AddNewBreedPageState extends State<AddNewBreedPage> {
                   ),
                 );
               }
-              if (state is LoadingAddNewBreed) {
+              if (state is LoadingAddNewPet) {
                 return Center(
                   child: CircularProgressIndicator(
                     color: colors.onBackground3,
                   ),
                 );
               }
-              if (state is LoadedAddNewBreed) {
+              if (state is LoadedAddNewPet) {
                 return Stack(
                   children: [
                     Column(
@@ -62,7 +62,7 @@ class _AddNewBreedPageState extends State<AddNewBreedPage> {
                               children: [
                                 BreedDropdownmenu(breeds: state.breeds),
                                 const SizedBox(height: 16),
-                                SeasonDropdownmenu(seasons: state.seasons),
+                                const MonthDropdownmenu(),
                                 const SizedBox(height: 16),
                                 const Text('Уйдун саны'),
                                 const SizedBox(height: 8),
@@ -85,6 +85,8 @@ class _AddNewBreedPageState extends State<AddNewBreedPage> {
                       child: FilledButton(
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
+                            context.read<AddNewPetCubit>();
+
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                   builder: (context) => const LandingPage()),

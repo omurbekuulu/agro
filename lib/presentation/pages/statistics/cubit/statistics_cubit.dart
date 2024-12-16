@@ -36,7 +36,11 @@ class StatisticsCubit extends Cubit<StatisticsState> {
 
     List<DirectionEntity> directions = [];
     List<BreedEntity> breeds = [];
-    PercentEntity? percent;
+    PercentEntity percent = PercentEntity(
+      expense: 0,
+      income: 0,
+      performance: 0,
+    );
     List<TransactionEntity> transactions = [];
 
     responseDirections.fold(
@@ -59,7 +63,7 @@ class StatisticsCubit extends Cubit<StatisticsState> {
 
     responsePercent.fold(
       (error) {
-        emit(FailureStatistics(errorMessage: error));
+        emit(FailureStatistics(errorMessage: error['message']));
       },
       (data) {
         percent = data;
@@ -79,7 +83,7 @@ class StatisticsCubit extends Cubit<StatisticsState> {
       LoadedStatistics(
         directions: directions,
         breeds: breeds,
-        percent: percent!,
+        percent: percent,
         transactions: transactions,
       ),
     );

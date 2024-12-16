@@ -1,7 +1,8 @@
+import 'package:agro/common/helper/navigation/app_navigator.dart';
 import 'package:flutter/material.dart';
 
 import 'package:agro/core/configs/theme/theme.dart';
-import 'package:agro/presentation/pages/sign_in_page.dart';
+import 'package:agro/presentation/pages/auth/pages/sign_in_page.dart';
 
 Future showDialogWidget(BuildContext context) {
   final colors = Theme.of(context).appColors;
@@ -30,9 +31,9 @@ Future showDialogWidget(BuildContext context) {
                 Flexible(
                   child: FilledButton(
                     onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                            builder: (context) => const SignInPage()),
+                      AppNavigator.pushAndRemove(
+                        context,
+                        SignInPage(),
                       );
                     },
                     style: const ButtonStyle(
@@ -47,7 +48,7 @@ Future showDialogWidget(BuildContext context) {
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
-                    child: const Text('Чыгуу'),
+                    child: const Text('Артка'),
                   ),
                 )
               ],

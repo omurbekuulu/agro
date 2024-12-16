@@ -1,6 +1,7 @@
 import 'package:agro/common/helper/mapper/pet_mapper.dart';
 import 'package:agro/data/pet/models/pet.dart';
 import 'package:agro/data/pet/sources/pet.dart';
+import 'package:agro/domain/pet/entities/pet.dart';
 import 'package:agro/domain/pet/repositories/pets.dart';
 import 'package:dartz/dartz.dart';
 import '../../../presentation/service_locator.dart';
@@ -21,5 +22,11 @@ class PetsRepositoryImpl implements PetsRepository {
         return Right(pets);
       },
     );
+  }
+
+  @override
+  Future<void> postPets(PetEntity pet) async {
+    final modelPet = PetMapper.toModel(pet);
+    await sl<PetsService>().postPets(modelPet);
   }
 }

@@ -4,9 +4,11 @@ import 'package:dio/dio.dart';
 import '../../../core/constants/api_url.dart';
 import '../../../core/network/dio_client.dart';
 import '../../../presentation/service_locator.dart';
+import '../models/pet.dart';
 
 abstract class PetsService {
   Future<Either> getPets();
+  Future<void> postPets(PetModel pet);
 }
 
 class PetsServiceImpl extends PetsService {
@@ -19,6 +21,18 @@ class PetsServiceImpl extends PetsService {
       return Right(response.data);
     } on DioException catch (e) {
       return Left(e.response!.data);
+    }
+  }
+
+  @override
+  Future<void> postPets(PetModel pet) async {
+    try {
+      await sl<DioClient>().post(
+        '${ApiUrl.pets}/save',
+        data: pet.toJson(),
+      );
+    } on DioException catch (e) {
+      throw e.response!.data;
     }
   }
 }

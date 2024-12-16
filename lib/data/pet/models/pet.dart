@@ -1,5 +1,4 @@
 class PetModel {
-  final int id;
   final int userId;
   final int breedId;
   final int directionId;
@@ -7,7 +6,6 @@ class PetModel {
   final int animalMonths;
 
   PetModel({
-    required this.id,
     required this.userId,
     required this.breedId,
     required this.directionId,
@@ -17,12 +15,20 @@ class PetModel {
 
   factory PetModel.fromJson(Map<String, dynamic> json) {
     return PetModel(
-      id: json['id'],
       userId: json['userId'],
       breedId: json['breedId'],
       directionId: json['directionId'],
       quantity: json['quantity'],
       animalMonths: json['animalMonths'],
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'breedId': breedId,
+      'directionId': directionId,
+      'quantity': quantity,
+      'month': animalMonths,
+    };
   }
 }

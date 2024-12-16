@@ -23,7 +23,7 @@ class TransactionServiceImpl extends TransactionService {
   ) async {
     try {
       final transactions = await sl<DioClient>().get(
-      '${ApiUrl.transactions}?startDate=$startDate&endDate=$endDate&breedId=$breedId&directionId=$directionId',
+        '${ApiUrl.transactions}?startDate=$startDate&endDate=$endDate&breedId=$breedId&directionId=$directionId',
       );
       return Right(transactions.data);
     } on DioException catch (e) {

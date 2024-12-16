@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
 
 abstract class PostIncomeRepository {
-  Future<Either> postIncome();
+  Future<Either> postPets();
 }

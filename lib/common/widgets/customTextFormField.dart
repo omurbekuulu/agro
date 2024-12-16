@@ -17,7 +17,7 @@ Widget customTextFormField(
     autovalidateMode: AutovalidateMode.onUnfocus,
     validator: (value) {
       if (value == null || value.isEmpty) {
-        return 'Поля не должна быть пустым';
+        return 'Талаа бош болбошу керек';
       }
       return null;
     },
