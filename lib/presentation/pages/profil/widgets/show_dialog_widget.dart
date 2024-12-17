@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:agro/core/configs/theme/theme.dart';
 import 'package:agro/presentation/pages/auth/pages/sign_in_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 Future showDialogWidget(BuildContext context) {
   final colors = Theme.of(context).appColors;
@@ -30,15 +31,19 @@ Future showDialogWidget(BuildContext context) {
               children: [
                 Flexible(
                   child: FilledButton(
-                    onPressed: () {
+                    onPressed: () async {
+                      SharedPreferences sharedPreferences =
+                          await SharedPreferences.getInstance();
+                      sharedPreferences.clear();
                       AppNavigator.pushAndRemove(
                         context,
-                        SignInPage(),
+                        const SignInPage(),
                       );
                     },
                     style: const ButtonStyle(
-                        backgroundColor:
-                            WidgetStatePropertyAll(Color(0xFF181818))),
+                      backgroundColor:
+                          WidgetStatePropertyAll(Color(0xFF181818)),
+                    ),
                     child: const Text('Чыгуу'),
                   ),
                 ),

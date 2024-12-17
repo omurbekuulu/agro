@@ -1,9 +1,13 @@
 import 'package:agro/data/auth/repository/auth.dart';
 import 'package:agro/data/auth/source/auth_api_service.dart';
+import 'package:agro/data/category/repository/category.dart';
+import 'package:agro/data/category/source/category.dart';
 import 'package:agro/domain/auth/repository/auth.dart';
 import 'package:agro/domain/auth/usecase/is_logged_in.dart';
 import 'package:agro/domain/auth/usecase/signin.dart';
 import 'package:agro/domain/auth/usecase/signup.dart';
+import 'package:agro/domain/category/repository/category.dart';
+import 'package:agro/domain/category/usecase/get_all_categories.dart';
 import 'package:agro/domain/pet/use_cases/post_pets.dart';
 import 'package:get_it/get_it.dart';
 
@@ -49,6 +53,7 @@ void setupServiceLocator() {
 
   //Services
   sl.registerSingleton<AuthApiService>(AuthApiServiceImple());
+  sl.registerSingleton<CategoryService>(CategoryServiceImpl());
   sl.registerSingleton<BreedsService>(BreedsServiceImpl());
   sl.registerSingleton<SeasonService>(SeasonServiceImpl());
   sl.registerSingleton<PetsService>(PetsServiceImpl());
@@ -60,6 +65,7 @@ void setupServiceLocator() {
 
   //Repositories
   sl.registerSingleton<AuthRepository>(AuthRepositoryImpl());
+  sl.registerSingleton<CategoryRepository>(CategoryRepositoryImpl());
   sl.registerSingleton<BreedsRepository>(BreedsRepositoryImpl());
   sl.registerSingleton<SeasonRepository>(SeasonRepositoryImpl());
   sl.registerSingleton<PetsRepository>(PetsRepositoryImpl());
@@ -73,6 +79,7 @@ void setupServiceLocator() {
   //UseCases
   sl.registerSingleton<SignupUseCase>(SignupUseCase());
   sl.registerSingleton<SigninUseCase>(SigninUseCase());
+  sl.registerSingleton<GetAllCategoriesUseCase>(GetAllCategoriesUseCase());
   sl.registerSingleton<GetBreedsUseCase>(GetBreedsUseCase());
   sl.registerSingleton<GetSeasonsUseCase>(GetSeasonsUseCase());
   sl.registerSingleton<GetPetsUseCase>(GetPetsUseCase());

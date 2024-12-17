@@ -104,6 +104,8 @@ flutter:
     - assets/arrow-right-fill-icon.svg
     - assets/calendar-icon.svg 
     - assets/back-icon.svg
+    - assets/milk.svg
+    - assets/meat.svg
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

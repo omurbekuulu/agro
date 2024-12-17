@@ -2,6 +2,7 @@ import 'package:agro/core/constants/api_url.dart';
 import 'package:dio/dio.dart';
 import 'interceptors.dart';
 
+
 class DioClient {
   late final Dio _dio;
   DioClient()
@@ -17,6 +18,7 @@ class DioClient {
             [
               AuthorizationInterceptor(),
               LoggerInterceptor(),
+              RefreshTokenInterceptor(Dio()),
             ],
           );
 

@@ -1,3 +1,4 @@
+import 'package:agro/presentation/pages/landing/landing_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -6,7 +7,6 @@ import 'package:agro/core/configs/theme/color_extantion.dart';
 import 'package:agro/core/configs/theme/theme.dart';
 import 'package:agro/data/auth/model/signin_req_params.dart';
 import 'package:agro/domain/auth/usecase/signin.dart';
-import 'package:agro/presentation/pages/activity_page.dart';
 import 'package:agro/presentation/pages/auth/pages/sing_up_page.dart';
 import 'package:agro/presentation/service_locator.dart';
 
@@ -134,7 +134,7 @@ class _SignInPageState extends State<SignInPage> {
                                 },
                                 (data) {
                                   AppNavigator.pushAndRemove(
-                                      context, const ActivityPage());
+                                      context, const LandingPage());
                                 },
                               );
                             }
@@ -158,7 +158,7 @@ class _SignInPageState extends State<SignInPage> {
   Widget _signUpText(AppColorExtantion colors, BuildContext context) {
     return TextButton(
       onPressed: () {
-        AppNavigator.push(context, SignUpPage());
+        AppNavigator.pushAndRemove(context, const SignUpPage());
       },
       child: Text(
         'Жаңы катталуу',

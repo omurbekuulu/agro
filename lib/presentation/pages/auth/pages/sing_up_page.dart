@@ -6,18 +6,24 @@ import 'package:agro/core/configs/theme/color_extantion.dart';
 import 'package:agro/core/configs/theme/theme.dart';
 import 'package:agro/data/auth/model/signup_req_params.dart';
 import 'package:agro/domain/auth/usecase/signup.dart';
-import 'package:agro/presentation/pages/activity_page.dart';
+import 'package:agro/presentation/pages/category/category_page.dart';
 import 'package:agro/presentation/pages/auth/pages/sign_in_page.dart';
 import 'package:agro/presentation/service_locator.dart';
 
-import '../../../../common/helper/message/display_message.dart';
+class SignUpPage extends StatefulWidget {
+  const SignUpPage({super.key});
 
-class SignUpPage extends StatelessWidget {
-  SignUpPage({super.key});
+  @override
+  State<SignUpPage> createState() => _SignUpPageState();
+}
 
+class _SignUpPageState extends State<SignUpPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   final TextEditingController _nameCon = TextEditingController();
   final TextEditingController _passwordCon = TextEditingController();
+
+  bool _isExist = false;
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +63,18 @@ class SignUpPage extends StatelessWidget {
                             typography.h0.bold.copyWith(color: colors.primary),
                       ),
                       const SizedBox(height: 24),
+                      if (_isExist)
+                        Column(
+                          children: [
+                            Text(
+                              'Колдонуучу мурунтан катталган',
+                              style: TextStyle(
+                                color: Colors.deepOrange.shade900,
+                              ),
+                            ),
+                            const SizedBox(height: 12),
+                          ],
+                        ),
                       TextFormField(
                         controller: _nameCon,
                         cursorColor: colors.onBackground2,
@@ -112,11 +130,13 @@ class SignUpPage extends StatelessWidget {
                               );
                               response.fold(
                                 (error) {
-                                  DisplayMessage.errorMessage(error, context);
+                                  setState(() {
+                                    _isExist = true;
+                                  });
                                 },
                                 (data) {
                                   AppNavigator.pushAndRemove(
-                                      context, const ActivityPage());
+                                      context, const CategoryPage());
                                 },
                               );
                             }
@@ -140,7 +160,7 @@ class SignUpPage extends StatelessWidget {
   Widget _signInText(AppColorExtantion colors, BuildContext context) {
     return TextButton(
       onPressed: () {
-        AppNavigator.push(context, SignInPage());
+        AppNavigator.pushAndRemove(context, const SignInPage());
       },
       child: Text(
         'Аккаунтка кирүү',
