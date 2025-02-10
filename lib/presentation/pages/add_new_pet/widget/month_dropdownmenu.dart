@@ -60,9 +60,7 @@ class _MonthDropdownmenuState extends State<MonthDropdownmenu> {
                 return null;
               },
               onChanged: (value) {
-                if (state is LoadedAddNewPet) {
-                  state.copyWith(selectedMonth: value);
-                }
+                context.read<AddNewPetCubit>().updateSelectedMonth(value!);
               },
             ),
           ],

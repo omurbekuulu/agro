@@ -5,22 +5,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../domain/breeds/entities/breed.dart';
 
-class BreedDropdownmenu extends StatefulWidget {
+class BreedDropdownmenu extends StatelessWidget {
   const BreedDropdownmenu({super.key, required this.breeds});
 
   final List<BreedEntity> breeds;
 
   @override
-  State<BreedDropdownmenu> createState() => _BreedDropdownmenuState();
-}
-
-class _BreedDropdownmenuState extends State<BreedDropdownmenu> {
-  @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).appColors;
 
-    if (widget.breeds.isEmpty) {
-      return const Text('Породалар жок'); //TODO: will be dellete
+    if (breeds.isEmpty) {
+      return const Text('Породалар жок'); //TODO: will be delleted
     }
     return BlocBuilder<AddNewPetCubit, AddNewPetState>(
       builder: (context, state) {
@@ -43,7 +38,7 @@ class _BreedDropdownmenuState extends State<BreedDropdownmenu> {
                 ),
               ),
               hint: const Text('Порода тандаңыз'),
-              items: widget.breeds.map((breed) {
+              items: breeds.map((breed) {
                 return DropdownMenuItem<BreedEntity>(
                   value: breed,
                   child: ConstrainedBox(
@@ -51,7 +46,7 @@ class _BreedDropdownmenuState extends State<BreedDropdownmenu> {
                       maxWidth: MediaQuery.sizeOf(context).width - 80,
                     ),
                     child: Text(
-                      breed.name!,
+                      breed.name,
                       softWrap: true,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -65,9 +60,7 @@ class _BreedDropdownmenuState extends State<BreedDropdownmenu> {
                 return null;
               },
               onChanged: (value) {
-                if (state is LoadedAddNewPet) {
-                  state.copyWith(selectedBreed: value);
-                }
+                context.read<AddNewPetCubit>().updateSelectedBreed(value!);
               },
             ),
           ],

@@ -1,13 +1,13 @@
 class BreedEntity {
-  final int? id;
-  final String? name;
-  final String? categoryId;
-  final String? description;
+  final int id;
+  final String name;
+  String? categoryId;
+  final String description;
 
   BreedEntity({
     required this.id,
     required this.name,
-    required this.categoryId,
+    this.categoryId,
     required this.description,
   });
 }

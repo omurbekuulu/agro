@@ -17,7 +17,7 @@ class RecommendationServiceImpl extends RecommendationService {
       );
       return Right(recommendations.data);
     } on DioException catch (e) {
-      return Left(e.response!.data);
+      return Left(e.type.name);
     }
   }
 }

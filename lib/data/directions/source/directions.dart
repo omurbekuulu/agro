@@ -16,7 +16,8 @@ class DirectionsServiceIpml extends DirectionsService {
           await sl<DioClient>().get('${ApiUrl.directions}$categoryId');
       return Right(directions.data);
     } on DioException catch (e) {
-      return Left(e.response!.data);
+      print(e.type.name);
+      return Left(e.type.name);
     }
   }
 }

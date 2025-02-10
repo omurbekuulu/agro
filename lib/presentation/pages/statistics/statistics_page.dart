@@ -1,3 +1,5 @@
+import 'package:agro/presentation/pages/statistics/cubit/date_cubit.dart';
+import 'package:agro/presentation/pages/statistics/widgets/date_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -5,6 +7,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:agro/core/configs/theme/theme.dart';
 import 'package:agro/presentation/pages/statistics/cubit/statistics_cubit.dart';
 import 'package:agro/presentation/pages/statistics/widgets/direction_tab_bar_widget.dart';
+import 'package:intl/intl.dart';
+
+import '../../../domain/percent/entity/percent.dart';
 
 class StatisticsPage extends StatelessWidget {
   const StatisticsPage({super.key});
@@ -12,17 +17,20 @@ class StatisticsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final typography = Theme.of(context).appTypography;
+    final colors = Theme.of(context).appColors;
 
     return Scaffold(
       body: SafeArea(
-        child: BlocProvider(
-          create: (context) => StatisticsCubit()
-            ..initStatistics(
-              categoryId: 1,
-              directionId: 5,
-              petId: 1,
-              breedId: 1,
-            ), //TODO: implement these response datas
+        child: MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) => StatisticsCubit()
+                ..initStatistics(), //TODO: implement these response datas
+            ),
+            BlocProvider(
+              create: (context) => DateCubit(),
+            ),
+          ],
           child: BlocBuilder<StatisticsCubit, StatisticsState>(
             builder: (context, state) {
               if (state is LoadingStatistics) {
@@ -32,7 +40,7 @@ class StatisticsPage extends StatelessWidget {
                   ),
                 );
               }
-              if (state is FailureStatistics) {
+              if (state is FailureLoadStatistics) {
                 return Center(
                   child: Text(
                     state.errorMessage,
@@ -46,31 +54,58 @@ class StatisticsPage extends StatelessWidget {
                     const SizedBox(height: 24),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Row(
-                        children: [
-                          Text(
-                            '12.11.24 - 23.03.25',
-                            style: typography.h2.bold,
-                          ),
-                          const Spacer(),
-                          Text(
-                            'Убактысы',
-                            style: typography.p1.bold,
-                          ),
-                          const SizedBox(width: 12),
-                          SvgPicture.asset('assets/calendar-icon.svg'),
-                        ],
+                      child: BlocBuilder<DateCubit, DateState>(
+                        builder: (context, state) {
+                          final currentDate = state.selectedDateTimeRange ??
+                              DateTimeRange(
+                                start: DateTime.now(),
+                                end: DateTime.now(),
+                              );
+                          DateFormat dateFormat = DateFormat('dd.MM.yy');
+                          return Row(
+                            children: [
+                              Text(
+                                '${dateFormat.format(currentDate.start)} - ${dateFormat.format(currentDate.end)}',
+                                style: typography.h2.bold,
+                              ),
+                              const Spacer(),
+                              Text(
+                                'Убактысы',
+                                style: typography.p1.bold,
+                              ),
+                              const SizedBox(width: 12),
+                              InkWell(
+                                highlightColor: colors.onBackground,
+                                onTap: () {
+                                  displayDateBottomSheet(
+                                      context,
+                                      colors,
+                                      typography,
+                                      state.selectedDateTimeRange ??
+                                          DateTimeRange(
+                                            start: DateTime.now(),
+                                            end: DateTime.now(),
+                                          ));
+                                },
+                                child: SvgPicture.asset(
+                                    'assets/calendar-icon.svg'),
+                              ),
+                            ],
+                          );
+                        },
                       ),
                     ),
                     const SizedBox(height: 24),
                     directionTabBarWidget(
                       context,
-                      tabDirectionsNames: state.directions
-                          .map((direction) => direction.name)
-                          .toList(),
-                      tabBreedsNames:
-                          state.breeds.map((breed) => breed.name).toList(),
-                      percent: state.percent,
+                      tabDirections: state.directions,
+                      tabBreeds: state.userBreeds,
+                      percent: state.percent ??
+                          PercentEntity(
+                            expense: 0,
+                            income: 0,
+                            performance: 0,
+                          ),
                     ),
                   ],
                 );

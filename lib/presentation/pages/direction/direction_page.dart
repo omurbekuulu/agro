@@ -93,8 +93,11 @@ class DirectionPage extends StatelessWidget {
                       left: 16,
                       child: FilledButton(
                         onPressed: () {
-                          AppNavigator.pushAndRemove(
-                              context, const AddNewPetPage());
+                          AppNavigator.push(
+                              context,
+                              AddNewPetPage(
+                                directionId: state.directions.last.id!,
+                              ));
                         },
                         child: Text(
                           state.directions.last.name!,

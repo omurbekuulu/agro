@@ -4,6 +4,8 @@ import 'package:agro/presentation/service_locator.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 
+import '../model/expense.dart';
+
 abstract class TransactionService {
   Future<Either> getTransactions(
     String startDate,
@@ -11,6 +13,8 @@ abstract class TransactionService {
     int breedId,
     int directionId,
   );
+
+  Future<Either> postExpense(int userPetsId, int recommId, ExpenseModel model);
 }
 
 class TransactionServiceImpl extends TransactionService {
@@ -27,7 +31,21 @@ class TransactionServiceImpl extends TransactionService {
       );
       return Right(transactions.data);
     } on DioException catch (e) {
-      return Left(e.response!.data);
+      return Left(e.type.name);
+    }
+  }
+
+  @override
+  Future<Either> postExpense(
+      int userPetsId, int recommId, ExpenseModel model) async {
+    try {
+      var response = await sl<DioClient>().post(
+        '${ApiUrl.postExpense}/$userPetsId/$recommId',
+        data: model.toJson(),
+      );
+      return Right(response.data);
+    } on DioException catch (e) {
+      return Left(e.type.name);
     }
   }
 }

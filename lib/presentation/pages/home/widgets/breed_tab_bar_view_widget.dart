@@ -1,16 +1,19 @@
-import 'package:flutter/material.dart';
-
-import 'package:agro/core/configs/theme/theme.dart';
+import 'package:agro/common/helper/navigation/app_navigator.dart';
 import 'package:agro/presentation/pages/add_new_pet/add_new_pet_page.dart';
 import 'package:agro/presentation/pages/expense_page.dart';
 import 'package:agro/presentation/pages/income_page.dart';
-import 'package:agro/presentation/pages/profil/widgets/show_dialog_widget.dart';
+import 'package:flutter/material.dart';
+
+import 'package:agro/core/configs/theme/theme.dart';
 
 import '../../../../domain/percent/entity/percent.dart';
 import '../../../../domain/recommendation/entity/recommentation.dart';
+import 'show_dialog_widgets.dart';
 
 Widget breedTabBarViewWidget(
   BuildContext context, {
+  required selectedDirectionId,
+  required int selectedPetsId,
   required PercentEntity percent,
   required List<CardEntity> cards,
 }) {
@@ -24,9 +27,8 @@ Widget breedTabBarViewWidget(
         children: [
           FilledButton(
             onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const AddNewPetPage()),
-              );
+              AppNavigator.pushAndRemove(
+                  context, AddNewPetPage(directionId: selectedDirectionId));
             },
             child: const Text('Жаңы порода кошуу'),
           ),
@@ -72,9 +74,7 @@ Widget breedTabBarViewWidget(
                       const WidgetStatePropertyAll(Colors.transparent),
                   splashColor: colors.onBackground,
                   onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const ExpensePage(),
-                    ));
+                    AppNavigator.push(context, const ExpensePage());
                   },
                   child: Image.asset('assets/add-icon.png'),
                 )
@@ -96,9 +96,7 @@ Widget breedTabBarViewWidget(
                       const WidgetStatePropertyAll(Colors.transparent),
                   splashColor: colors.onBackground,
                   onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const IncomePage(),
-                    ));
+                    AppNavigator.push(context, const IncomePage());
                   },
                   child: Image.asset('assets/add-icon.png'),
                 )
@@ -141,8 +139,15 @@ Widget breedTabBarViewWidget(
                             children: [
                               Text(name, style: typography.p1.bold),
                               InkWell(
-                                onTap: () {
-                                  showDialogWidget(context);
+                                onTap: () async {
+                                  showDialogWidget(
+                                    context,
+                                    selectedPetsId: selectedPetsId,
+                                    recommendationId: cards[index]
+                                        .recommendations[innerIndex]
+                                        .id,
+                                    card: cards[index],
+                                  );
                                 },
                                 child: Container(
                                   height: 28,

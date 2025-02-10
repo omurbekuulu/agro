@@ -19,7 +19,7 @@ class SeasonServiceImpl extends SeasonService {
       );
       return Right(resoponse.data);
     } on DioException catch (e) {
-      return Left(e.response!.data);
+      return Left(e.type.name);
     }
   }
 }

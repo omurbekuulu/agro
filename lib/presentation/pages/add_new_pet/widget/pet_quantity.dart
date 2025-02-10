@@ -53,9 +53,9 @@ class _PetQuantityState extends State<PetQuantity> {
             return null;
           },
           onChanged: (value) {
-            if (state is LoadedAddNewPet) {
-              state.copyWith(selectedQuantity: int.parse(value));
-            }
+            context
+                .read<AddNewPetCubit>()
+                .updateSelectedQuantity(int.parse(value));
           },
         );
       },

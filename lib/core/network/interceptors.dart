@@ -2,8 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../constants/api_url.dart';
-
 /// This interceptor is used to show request and response logs
 class LoggerInterceptor extends Interceptor {
   Logger logger = Logger(
@@ -44,57 +42,8 @@ class AuthorizationInterceptor extends Interceptor {
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
     final token = sharedPreferences.getString('token');
-    if (token != null && token.isNotEmpty) {
-      options.headers['Authorization'] = "Bearer $token";
-    }
-    handler.next(options);
-  }
-}
-
-class RefreshTokenInterceptor extends Interceptor {
-  final Dio dio;
-
-  RefreshTokenInterceptor(this.dio);
-
-  @override
-  void onError(DioException err, ErrorInterceptorHandler handler) async {
-    if (err.response?.statusCode == 401 &&
-        err.response?.data['message'] == 'Invalid JWT') {
-      final prefs = await SharedPreferences.getInstance();
-      final refreshToken = prefs.getString('refreshToken');
-      if (refreshToken != null && await _refreshToken(refreshToken, prefs)) {
-        final newRequest = await _retry(err.requestOptions);
-        return handler.resolve(newRequest);
-      }
-    }
-    super.onError(err, handler); // Продолжить обработку
-  }
-
-  Future<bool> _refreshToken(String refreshToken, SharedPreferences prefs) async {
-    try {
-      final response = await dio.post('${ApiUrl.baseURL}/auth/refresh',
-          data: {'refreshToken': refreshToken});
-      if (response.statusCode == 201) {
-        final accessToken = response.data['accessToken'];
-        await prefs.setString('accessToken', accessToken);
-        return true;
-      }
-    } catch (e) {
-      await prefs.clear();
-    }
-    return false;
-  }
-
-  Future<Response> _retry(RequestOptions requestOptions) async {
-    final options = Options(
-      method: requestOptions.method,
-      headers: requestOptions.headers,
-    );
-    return dio.request(
-      requestOptions.path,
-      data: requestOptions.data,
-      queryParameters: requestOptions.queryParameters,
-      options: options,
-    );
+    options.headers['Authorization'] =
+        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdHJpbmciLCJpYXQiOjE3MzkxODE1NjEsImV4cCI6MTczOTE5NTk2MX0.EhEIRA-zbxSKBaACjW59ILMvTDnKJyTRlDnjvxqQjSA";
+    handler.next(options); // continue with the Request
   }
 }

@@ -1,40 +1,33 @@
 part of 'add_new_pet_cubit.dart';
 
-@immutable
-sealed class AddNewPetState {}
+class AddNewPetState {
+  bool isLoading;
+  List<BreedEntity> breeds;
+  BreedEntity? selectedBreed;
+  int? selectedMonth;
+  int? selectedQuantity;
 
-class LoadingAddNewPet extends AddNewPetState {}
-
-class LoadedAddNewPet extends AddNewPetState {
-  final List<BreedEntity> breeds;
-  final BreedEntity? selectedBreed;
-  final int? selectedMonth;
-  final int? selectedQuantity;
-
-  LoadedAddNewPet({
+  AddNewPetState({
+    this.isLoading = false,
     this.breeds = const [],
     this.selectedBreed,
     this.selectedMonth,
     this.selectedQuantity,
   });
 
-  LoadedAddNewPet copyWith({
+  AddNewPetState copyWith({
+    bool? isLoading,
     List<BreedEntity>? breeds,
     BreedEntity? selectedBreed,
     int? selectedMonth,
     int? selectedQuantity,
   }) {
-    return LoadedAddNewPet(
+    return AddNewPetState(
+      isLoading: isLoading ?? this.isLoading,
       breeds: breeds ?? this.breeds,
       selectedBreed: selectedBreed ?? this.selectedBreed,
       selectedMonth: selectedMonth ?? this.selectedMonth,
       selectedQuantity: selectedQuantity ?? this.selectedQuantity,
     );
   }
-}
-
-class FailureLoadAddNewPet extends AddNewPetState {
-  final String errorMessage;
-
-  FailureLoadAddNewPet({required this.errorMessage});
 }

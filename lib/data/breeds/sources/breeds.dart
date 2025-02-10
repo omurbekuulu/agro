@@ -18,7 +18,7 @@ class BreedsServiceImpl extends BreedsService {
       );
       return Right(response.data);
     } on DioException catch (e) {
-      return Left(e.response!.data);
+      return Left(e.type.name);
     }
   }
 }

@@ -25,8 +25,17 @@ class PetsRepositoryImpl implements PetsRepository {
   }
 
   @override
-  Future<void> postPets(PetEntity pet) async {
+  Future<Either> postPets(PetEntity pet) async {
     final modelPet = PetMapper.toModel(pet);
-    await sl<PetsService>().postPets(modelPet);
+    var responseData = await sl<PetsService>().postPets(modelPet);
+
+    return responseData.fold(
+      (error) {
+        return Left(error);
+      },
+      (data) {
+        return Right(data);
+      },
+    );
   }
 }

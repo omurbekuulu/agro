@@ -15,7 +15,7 @@ class CategoryServiceImpl extends CategoryService {
       final response = await sl<DioClient>().get(ApiUrl.categories);
       return Right(response.data);
     } on DioException catch (e) {
-      return Left(e.response!.data['message']);
+      return Left(e.type.name);
     }
   }
 }

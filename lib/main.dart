@@ -1,3 +1,4 @@
+import 'package:agro/presentation/pages/home/cubit/home_cubit.dart';
 import 'package:agro/presentation/pages/splash/cubit/splash_cubit.dart';
 import 'package:agro/presentation/pages/splash/splash_page.dart';
 import 'package:agro/presentation/service_locator.dart';
@@ -23,8 +24,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = AppTheme();
-    return BlocProvider(
-      create: (context) => SplashCubit()..appStart(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => SplashCubit()..appStart(),
+        ),
+        BlocProvider(
+          create: (context) => HomeCubit()..initHome(),
+        )
+      ],
       child: MaterialApp(
         title: 'Agro',
         theme: theme.light(),

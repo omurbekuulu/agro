@@ -1,3 +1,4 @@
+import 'package:agro/presentation/pages/category/category_page.dart';
 import 'package:agro/presentation/pages/landing/landing_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -134,7 +135,7 @@ class _SignInPageState extends State<SignInPage> {
                                 },
                                 (data) {
                                   AppNavigator.pushAndRemove(
-                                      context, const LandingPage());
+                                      context, const CategoryPage());
                                 },
                               );
                             }

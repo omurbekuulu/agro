@@ -9,6 +9,7 @@ import 'package:agro/domain/auth/usecase/signup.dart';
 import 'package:agro/domain/category/repository/category.dart';
 import 'package:agro/domain/category/usecase/get_all_categories.dart';
 import 'package:agro/domain/pet/use_cases/post_pets.dart';
+import 'package:agro/domain/transaction/usecase/post_expense.dart';
 import 'package:get_it/get_it.dart';
 
 import 'package:agro/core/network/dio_client.dart';
@@ -90,4 +91,5 @@ void setupServiceLocator() {
   sl.registerSingleton<GetTransactionsUseCase>(GetTransactionsUseCase());
   sl.registerSingleton<PostPetsUsecase>(PostPetsUsecase());
   sl.registerSingleton<IsLoggedInUseCase>(IsLoggedInUseCase());
+  sl.registerSingleton<PostExpenseUseCase>(PostExpenseUseCase());
 }

@@ -1,6 +1,6 @@
 class ApiUrl {
   static const baseURL =
-      'http://ec2-16-171-165-233.eu-north-1.compute.amazonaws.com/';
+      'http://ec2-13-60-92-85.eu-north-1.compute.amazonaws.com:8080/';
 
   static const signup = 'api/v1/auth/sign-up';
   static const signin = 'api/v1/auth/sign-in';
@@ -13,4 +13,5 @@ class ApiUrl {
   static const percent = 'api/transactions/percent/';
   static const recommendations = 'api/recommendations/';
   static const transactions = 'api/transactions/search';
+  static const postExpense = 'api/transactions/expense/';
 }

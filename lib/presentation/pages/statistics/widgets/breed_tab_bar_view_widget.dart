@@ -1,3 +1,4 @@
+import 'package:agro/common/helper/navigation/app_navigator.dart';
 import 'package:flutter/material.dart';
 
 import 'package:agro/core/configs/theme/theme.dart';
@@ -34,9 +35,7 @@ Widget breedTabBarViewWidget(
                         subTitle: 'Сумма',
                         sum: percent.income.toString(),
                         onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const IncomeDataPage(),
-                          ));
+                          AppNavigator.push(context, const IncomeDataPage());
                         },
                       ),
                       const SizedBox(width: 21),
@@ -46,9 +45,7 @@ Widget breedTabBarViewWidget(
                         subTitle: 'Сумма',
                         sum: percent.expense.toString(),
                         onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const ExpenseDataPage(),
-                          ));
+                          AppNavigator.push(context, const ExpenseDataPage());
                         },
                       ),
                     ],
@@ -56,9 +53,7 @@ Widget breedTabBarViewWidget(
                   const SizedBox(height: 24),
                   FilledButton(
                     onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const IncomePage(),
-                      ));
+                      AppNavigator.push(context, const IncomePage());
                     },
                     style: ButtonStyle(
                       backgroundColor:
@@ -79,9 +74,7 @@ Widget breedTabBarViewWidget(
                   const SizedBox(height: 24),
                   FilledButton(
                     onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const ExpensePage(),
-                      ));
+                      AppNavigator.push(context, const ExpensePage());
                     },
                     style: ButtonStyle(
                       backgroundColor:

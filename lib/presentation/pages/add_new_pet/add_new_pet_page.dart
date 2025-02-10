@@ -1,3 +1,4 @@
+import 'package:agro/common/helper/navigation/app_navigator.dart';
 import 'package:agro/common/widgets/customAppBarWithBack.dart';
 import 'package:agro/core/configs/theme/theme.dart';
 import 'package:agro/presentation/pages/add_new_pet/cubit/add_new_pet_cubit.dart';
@@ -11,7 +12,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../common/widgets/customLogo.dart';
 
 class AddNewPetPage extends StatefulWidget {
-  const AddNewPetPage({super.key, required});
+  const AddNewPetPage({super.key, required this.directionId});
+
+  final int directionId;
 
   @override
   State<AddNewPetPage> createState() => _AddNewPetPageState();
@@ -30,76 +33,63 @@ class _AddNewPetPageState extends State<AddNewPetPage> {
           create: (context) => AddNewPetCubit()..initBreeds(),
           child: BlocBuilder<AddNewPetCubit, AddNewPetState>(
             builder: (context, state) {
-              if (state is FailureLoadAddNewPet) {
-                return Center(
-                  child: Text(
-                    state.errorMessage,
-                    style: TextStyle(color: colors.onBackground3),
-                  ),
-                );
-              }
-              if (state is LoadingAddNewPet) {
-                return Center(
-                  child: CircularProgressIndicator(
-                    color: colors.onBackground3,
-                  ),
-                );
-              }
-              if (state is LoadedAddNewPet) {
-                return Stack(
-                  children: [
-                    Column(
+              return state.isLoading
+                  ? Center(
+                      child: CircularProgressIndicator(
+                        color: colors.onBackground3,
+                      ),
+                    )
+                  : Stack(
                       children: [
-                        customAppBarWithBack(context,
-                            title:
-                                'Жаңы парода кошуу'), // TODO: implement on top of circleindicator
-                        Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Form(
-                            key: _formKey,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                BreedDropdownmenu(breeds: state.breeds),
-                                const SizedBox(height: 16),
-                                const MonthDropdownmenu(),
-                                const SizedBox(height: 16),
-                                const Text('Уйдун саны'),
-                                const SizedBox(height: 8),
-                                const PetQuantity(),
-                              ],
+                        Column(
+                          children: [
+                            customAppBarWithBack(context,
+                                title:
+                                    'Жаңы парода кошуу'), // TODO: implement on top of circleindicator
+                            Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Form(
+                                key: _formKey,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    BreedDropdownmenu(breeds: state.breeds),
+                                    const SizedBox(height: 16),
+                                    const MonthDropdownmenu(),
+                                    const SizedBox(height: 16),
+                                    const Text('Уйдун саны'),
+                                    const SizedBox(height: 8),
+                                    const PetQuantity(),
+                                  ],
+                                ),
+                              ),
                             ),
+                          ],
+                        ),
+                        Positioned(
+                          bottom: 74,
+                          right: 16,
+                          child: customLogo(),
+                        ),
+                        Positioned(
+                          bottom: 12,
+                          left: 16,
+                          right: 16,
+                          child: FilledButton(
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                context
+                                    .read<AddNewPetCubit>()
+                                    .postPets(widget.directionId);
+                                AppNavigator.pushAndRemove(
+                                    context, const LandingPage());
+                              }
+                            },
+                            child: const Text('Кошуу'),
                           ),
                         ),
                       ],
-                    ),
-                    Positioned(
-                      bottom: 74,
-                      right: 16,
-                      child: customLogo(),
-                    ),
-                    Positioned(
-                      bottom: 12,
-                      left: 16,
-                      right: 16,
-                      child: FilledButton(
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            context.read<AddNewPetCubit>();
-
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                  builder: (context) => const LandingPage()),
-                            );
-                          }
-                        },
-                        child: const Text('Кошуу'),
-                      ),
-                    ),
-                  ],
-                );
-              }
-              return Container();
+                    );
             },
           ),
         ),
