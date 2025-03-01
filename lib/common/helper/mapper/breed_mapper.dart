@@ -6,7 +6,6 @@ class BreedMapper {
     return BreedEntity(
       id: model.id,
       name: model.name,
-      categoryId: model.categoryId,
       description: model.description,
     );
   }

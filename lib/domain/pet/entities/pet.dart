@@ -1,14 +1,12 @@
 class PetEntity {
-  final int id;
-  final int userId;
+  final int? id;
   final int breedId;
   final int directionId;
   final int quantity;
   final int animalMonths;
 
   PetEntity({
-    required this.id,
-    required this.userId,
+    this.id,
     required this.breedId,
     required this.directionId,
     required this.quantity,

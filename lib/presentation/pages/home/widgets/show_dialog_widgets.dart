@@ -1,7 +1,16 @@
 import 'package:agro/core/configs/theme/theme.dart';
+import 'package:agro/domain/transaction/entities/record.dart';
+import 'package:agro/domain/recommendation/entity/recommentation.dart';
+import 'package:agro/presentation/pages/home/cubit/home_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-Future showDialogWidget(BuildContext context) {
+Future showDialogWidget(
+  BuildContext context, {
+  required int selectedPetsId,
+  required int recommendationId,
+  required CardEntity card,
+}) {
   final colors = Theme.of(context).appColors;
   final typography = Theme.of(context).appTypography;
   TextEditingController controller = TextEditingController(text: '0');
@@ -11,7 +20,16 @@ Future showDialogWidget(BuildContext context) {
     builder: (context) => AlertDialog(
       actions: [
         FilledButton(
-          onPressed: () {
+          onPressed: () async {
+            context.read<HomeCubit>().addExpense(
+                  selectedPetId: selectedPetsId,
+                  recommId: recommendationId,
+                  recordEntity: RecordEntity(
+                    price: int.parse(controller.text),
+                    description: card.description,
+                    quantity: 0,
+                  ),
+                );
             Navigator.of(context).pop();
           },
           child: Text(
@@ -31,7 +49,7 @@ Future showDialogWidget(BuildContext context) {
           TextField(
             controller: controller,
             keyboardType: TextInputType.number,
-            
+            cursorColor: colors.onBackground3,
             decoration: InputDecoration(
               border: OutlineInputBorder(
                 borderSide: BorderSide(color: colors.secondary1),

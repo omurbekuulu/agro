@@ -19,7 +19,7 @@ class ProfitabilityServiceImpl extends ProfitabilityService {
       print(response);
       return Right(response.data);
     } on DioException catch (e) {
-      return Left(e.response!.data);
+      return Left(e.type.name);
     }
   }
 }

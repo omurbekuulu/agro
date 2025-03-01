@@ -1,15 +1,18 @@
+import 'package:agro/common/helper/navigation/app_navigator.dart';
 import 'package:flutter/material.dart';
 
 import 'package:agro/core/configs/theme/theme.dart';
 import 'package:agro/presentation/pages/expense_data/expense_data_page.dart';
-import 'package:agro/presentation/pages/expense_page.dart';
 import 'package:agro/presentation/pages/income_data/income_data_page.dart';
-import 'package:agro/presentation/pages/income_page.dart';
 import 'package:agro/presentation/pages/statistics/widgets/custom_grid.dart';
 
 import '../../../../common/widgets/customLogo.dart';
+import '../../../../domain/percent/entity/percent.dart';
 
-Widget breedTabBarViewWidget(BuildContext context) {
+Widget breedTabBarViewWidget(
+  BuildContext context, {
+  required PercentEntity percent,
+}) {
   final colors = Theme.of(context).appColors;
   final typography = Theme.of(context).appTypography;
 
@@ -28,11 +31,9 @@ Widget breedTabBarViewWidget(BuildContext context) {
                         context,
                         title: 'Киреше',
                         subTitle: 'Сумма',
-                        sum: '552 000 с',
+                        sum: percent.income.toString(),
                         onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const IncomeDataPage(),
-                          ));
+                          AppNavigator.push(context, const IncomeDataPage());
                         },
                       ),
                       const SizedBox(width: 21),
@@ -40,11 +41,9 @@ Widget breedTabBarViewWidget(BuildContext context) {
                         context,
                         title: 'Чыгаша',
                         subTitle: 'Сумма',
-                        sum: '112 000 с',
+                        sum: percent.expense.toString(),
                         onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const ExpenseDataPage(),
-                          ));
+                          AppNavigator.push(context, const ExpenseDataPage());
                         },
                       ),
                     ],
@@ -52,9 +51,7 @@ Widget breedTabBarViewWidget(BuildContext context) {
                   const SizedBox(height: 24),
                   FilledButton(
                     onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const IncomePage(),
-                      ));
+                      // AppNavigator.push(context, const AddIncomePage());
                     },
                     style: ButtonStyle(
                       backgroundColor:
@@ -75,9 +72,7 @@ Widget breedTabBarViewWidget(BuildContext context) {
                   const SizedBox(height: 24),
                   FilledButton(
                     onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const ExpensePage(),
-                      ));
+                      // AppNavigator.push(context, const AddExpensePage());
                     },
                     style: ButtonStyle(
                       backgroundColor:

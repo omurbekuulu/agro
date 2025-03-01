@@ -10,7 +10,7 @@ final date = [
   '18.11',
 ];
 
-Widget stackWeatherProfit(BuildContext context) {
+Widget stackWeatherProfit(BuildContext context, {required int profitability}) {
   final colors = Theme.of(context).appColors;
   final typography = Theme.of(context).appTypography;
 
@@ -97,7 +97,7 @@ Widget stackWeatherProfit(BuildContext context) {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  '0%',
+                  '$profitability%',
                   style: typography.h0.bold.copyWith(
                     color: colors.background,
                   ),

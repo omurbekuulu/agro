@@ -1,61 +1,74 @@
+import 'package:agro/domain/percent/entity/percent.dart';
 import 'package:agro/presentation/pages/home/cubit/home_cubit.dart';
-import 'package:agro/presentation/pages/home/widgets/main_tabs_widget.dart';
+import 'package:agro/presentation/pages/home/widgets/direction_tab_widget.dart';
 import 'package:agro/presentation/pages/home/widgets/stack_weather_profit_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => HomeCubit()..initHome(),
+      child: const _HomeView(),
+    );
+  }
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomeView extends StatefulWidget {
+  const _HomeView();
+
+  @override
+  State<_HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<_HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: BlocProvider(
-          create: (context) =>
-              HomeCubit()..initHome(categoryId: 1, directionId: 5, petId: 1),
-          child: BlocBuilder<HomeCubit, HomeState>(
-            builder: (context, state) {
-              if (state is LoadingHome) {
-                return const Center(
-                  child: CircularProgressIndicator(
-                    color: Colors.black,
-                  ),
-                );
-              }
-              if (state is FailureLoadHome) {
-                return Center(
-                  child: Text(
-                    state.errorMessage,
-                  ),
-                );
-              }
-              if (state is LoadedHome) {
-                return ListView(
-                  shrinkWrap: true,
-                  children: [
-                    stackWeatherProfit(context),
-                    mainTabsWidget(
-                      context,
-                      tabDirections: state.directions
-                          .map((directoin) => directoin.name)
-                          .toList(),
-                      tabBreeds:
-                          state.breeds.map((breed) => breed.name).toList(),
-                      percent: state.percent,
-                    ),
-                    const SizedBox(height: 24),
-                  ],
-                );
-              }
-              return Container();
-            },
-          ),
+        child: BlocBuilder<HomeCubit, HomeState>(
+          builder: (context, state) {
+            if (state is LoadingHome) {
+              return const Center(
+                child: CircularProgressIndicator(
+                  color: Colors.black,
+                ),
+              );
+            }
+            if (state is FailureLoadHome) {
+              return Center(
+                child: Text(
+                  state.errorMessage,
+                ),
+              );
+            }
+            if (state is LoadedHome) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  stackWeatherProfit(context,
+                      profitability: state.profitability),
+                  directionTabWidget(context,
+                      selectedDirectionId: state.selectedDirectionId,
+                      selectedPetsId: state.selectedPetsId,
+                      tabDirections: state.directions,
+                      tabBreeds: state.userBreeds,
+                      percent: state.percent ??
+                          PercentEntity(
+                            expense: 0,
+                            income: 0,
+                            performance: 0,
+                          ),
+                      cards: state.cards),
+                  const SizedBox(height: 24),
+                ],
+              );
+            }
+            return Container();
+          },
         ),
       ),
     );

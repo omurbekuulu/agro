@@ -1,19 +1,31 @@
+import 'package:agro/common/helper/navigation/app_navigator.dart';
+import 'package:agro/presentation/pages/add_new_pet/add_new_pet_page.dart';
 import 'package:flutter/material.dart';
 
 import 'package:agro/core/configs/theme/theme.dart';
-import 'package:agro/presentation/pages/add_new_breed/add_new_breed_page.dart';
-import 'package:agro/presentation/pages/expense_page.dart';
-import 'package:agro/presentation/pages/income_page.dart';
-import 'package:agro/presentation/pages/profil/widgets/show_dialog_widget.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../common/widgets/recording_page.dart';
 import '../../../../domain/percent/entity/percent.dart';
+import '../../../../domain/recommendation/entity/recommentation.dart';
+import '../../../../domain/transaction/entities/record.dart';
+import '../../landing/landing_page.dart';
+import '../cubit/home_cubit.dart';
+import 'show_dialog_widgets.dart';
 
 Widget breedTabBarViewWidget(
   BuildContext context, {
+  required selectedDirectionId,
+  required int selectedPetsId,
   required PercentEntity percent,
+  required List<CardEntity> cards,
 }) {
   final colors = Theme.of(context).appColors;
   final typography = Theme.of(context).appTypography;
+
+  TextEditingController priceController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
+  TextEditingController quantityController = TextEditingController();
 
   return SingleChildScrollView(
     child: Padding(
@@ -22,10 +34,8 @@ Widget breedTabBarViewWidget(
         children: [
           FilledButton(
             onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                    builder: (context) => const AddNewBreedPage()),
-              );
+              AppNavigator.pushAndRemove(
+                  context, AddNewPetPage(directionId: selectedDirectionId));
             },
             child: const Text('Жаңы порода кошуу'),
           ),
@@ -71,9 +81,27 @@ Widget breedTabBarViewWidget(
                       const WidgetStatePropertyAll(Colors.transparent),
                   splashColor: colors.onBackground,
                   onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const ExpensePage(),
-                    ));
+                    AppNavigator.push(
+                      context,
+                      RecordingPage(
+                        priceController: priceController,
+                        descriptionController: descriptionController,
+                        quantityController: quantityController,
+                        onTap: () async {
+                          context.read<HomeCubit>().addExpense(
+                                selectedPetId: selectedPetsId,
+                                recommId: -1,
+                                recordEntity: RecordEntity(
+                                  price: int.parse(priceController.text),
+                                  description: descriptionController.text,
+                                  quantity: int.parse(quantityController.text),
+                                ),
+                              );
+                          AppNavigator.pushAndRemove(
+                              context, const LandingPage());
+                        },
+                      ),
+                    );
                   },
                   child: Image.asset('assets/add-icon.png'),
                 )
@@ -95,9 +123,28 @@ Widget breedTabBarViewWidget(
                       const WidgetStatePropertyAll(Colors.transparent),
                   splashColor: colors.onBackground,
                   onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const IncomePage(),
-                    ));
+                    AppNavigator.push(
+                      context,
+                      RecordingPage(
+                        priceController: priceController,
+                        descriptionController: descriptionController,
+                        quantityController: quantityController,
+                        onTap: () async {
+                          context.read<HomeCubit>().addIncome(
+                                selectedPetId: selectedPetsId,
+                                isDecreas:
+                                    selectedDirectionId == 1 ? true : false,
+                                recordEntity: RecordEntity(
+                                  price: int.parse(priceController.text),
+                                  description: descriptionController.text,
+                                  quantity: int.parse(quantityController.text),
+                                ),
+                              );
+                          AppNavigator.pushAndRemove(
+                              context, const LandingPage());
+                        },
+                      ),
+                    );
                   },
                   child: Image.asset('assets/add-icon.png'),
                 )
@@ -106,51 +153,68 @@ Widget breedTabBarViewWidget(
           ),
           const SizedBox(height: 24),
           Column(
-            children: List.generate(14, (index) {
-              if (index == 0 || index % 4 == 0) {
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 16),
-                  child: SizedBox(
-                    height: 28,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'До беременности',
-                          style: typography.p1.bold.copyWith(
-                            color: colors.primary,
+            children: List.generate(cards.length, (index) {
+              return Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 16),
+                    child: SizedBox(
+                      height: 28,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            cards[index].name,
+                            style: typography.p1.bold.copyWith(
+                              color: colors.primary,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-                );
-              }
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 24),
-                child: SizedBox(
-                  height: 28,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Новый корм', style: typography.p1.bold),
-                      InkWell(
-                        onTap: () {
-                          showDialogWidget(context);
-                        },
-                        child: Container(
+                  Column(
+                    children: List.generate(cards[index].recommendations.length,
+                        (innerIndex) {
+                      final name =
+                          cards[index].recommendations[innerIndex].name;
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 24),
+                        child: SizedBox(
                           height: 28,
-                          width: 28,
-                          decoration: BoxDecoration(
-                            color: colors.onBackground,
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(color: colors.secondary1),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(name, style: typography.p1.bold),
+                              InkWell(
+                                onTap: () async {
+                                  showDialogWidget(
+                                    context,
+                                    selectedPetsId: selectedPetsId,
+                                    recommendationId: cards[index]
+                                        .recommendations[innerIndex]
+                                        .id,
+                                    card: cards[index],
+                                  );
+                                },
+                                child: Container(
+                                  height: 28,
+                                  width: 28,
+                                  decoration: BoxDecoration(
+                                    color: colors.onBackground,
+                                    borderRadius: BorderRadius.circular(8),
+                                    border:
+                                        Border.all(color: colors.secondary1),
+                                  ),
+                                ),
+                              )
+                            ],
                           ),
                         ),
-                      )
-                    ],
+                      );
+                    }),
                   ),
-                ),
+                ],
               );
             }),
           ),

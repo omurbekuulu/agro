@@ -1,7 +1,9 @@
+import 'package:agro/common/helper/navigation/app_navigator.dart';
 import 'package:flutter/material.dart';
 
 import 'package:agro/core/configs/theme/theme.dart';
-import 'package:agro/presentation/pages/sign_in_page.dart';
+import 'package:agro/presentation/pages/auth/pages/sign_in_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 Future showDialogWidget(BuildContext context) {
   final colors = Theme.of(context).appColors;
@@ -29,15 +31,19 @@ Future showDialogWidget(BuildContext context) {
               children: [
                 Flexible(
                   child: FilledButton(
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                            builder: (context) => const SignInPage()),
+                    onPressed: () async {
+                      SharedPreferences sharedPreferences =
+                          await SharedPreferences.getInstance();
+                      sharedPreferences.clear();
+                      AppNavigator.pushAndRemove(
+                        context,
+                        const SignInPage(),
                       );
                     },
                     style: const ButtonStyle(
-                        backgroundColor:
-                            WidgetStatePropertyAll(Color(0xFF181818))),
+                      backgroundColor:
+                          WidgetStatePropertyAll(Color(0xFF181818)),
+                    ),
                     child: const Text('Чыгуу'),
                   ),
                 ),
@@ -47,7 +53,7 @@ Future showDialogWidget(BuildContext context) {
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
-                    child: const Text('Чыгуу'),
+                    child: const Text('Артка'),
                   ),
                 )
               ],

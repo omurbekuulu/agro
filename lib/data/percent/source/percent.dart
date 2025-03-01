@@ -17,7 +17,7 @@ class PercentServiceImpl extends PercentService {
       );
       return Right(directions.data);
     } on DioException catch (e) {
-      return Left(e.response!.data);
+      return Left(e.type.name);
     }
   }
 }
