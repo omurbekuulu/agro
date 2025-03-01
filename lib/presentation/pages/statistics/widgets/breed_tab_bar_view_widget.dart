@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:agro/core/configs/theme/theme.dart';
 import 'package:agro/presentation/pages/expense_data/expense_data_page.dart';
-import 'package:agro/presentation/pages/expense_page.dart';
 import 'package:agro/presentation/pages/income_data/income_data_page.dart';
-import 'package:agro/presentation/pages/income_page.dart';
 import 'package:agro/presentation/pages/statistics/widgets/custom_grid.dart';
 
 import '../../../../common/widgets/customLogo.dart';
@@ -53,7 +51,7 @@ Widget breedTabBarViewWidget(
                   const SizedBox(height: 24),
                   FilledButton(
                     onPressed: () {
-                      AppNavigator.push(context, const IncomePage());
+                      // AppNavigator.push(context, const AddIncomePage());
                     },
                     style: ButtonStyle(
                       backgroundColor:
@@ -74,7 +72,7 @@ Widget breedTabBarViewWidget(
                   const SizedBox(height: 24),
                   FilledButton(
                     onPressed: () {
-                      AppNavigator.push(context, const ExpensePage());
+                      // AppNavigator.push(context, const AddExpensePage());
                     },
                     style: ButtonStyle(
                       backgroundColor:

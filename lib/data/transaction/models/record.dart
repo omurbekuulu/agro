@@ -1,9 +1,9 @@
-class ExpenseModel {
+class RecordModel {
   final int price;
   final String description;
   final int quantity;
 
-  ExpenseModel({
+  RecordModel({
     required this.price,
     required this.description,
     required this.quantity,

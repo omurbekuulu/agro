@@ -1,4 +1,4 @@
-import 'package:agro/domain/transaction/repository/transactoin.dart';
+import 'package:agro/domain/transaction/repositories/transactoin.dart';
 import 'package:agro/presentation/service_locator.dart';
 import 'package:dartz/dartz.dart';
 

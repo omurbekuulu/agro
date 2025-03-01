@@ -1,14 +1,15 @@
 import 'package:agro/core/configs/theme/theme.dart';
-import 'package:agro/domain/breeds/entities/breed.dart';
-import 'package:agro/domain/directions/entity/direction.dart';
-import 'package:agro/domain/recommendation/entity/recommentation.dart';
-import 'package:agro/presentation/pages/home/cubit/home_cubit.dart';
-import 'package:agro/presentation/pages/home/widgets/breed_tab_bar.dart';
+import 'package:agro/presentation/pages/notification/cubit/notification_cubit.dart';
+import 'package:agro/presentation/pages/notification/widgets/breed_tab_bar.dart';
+import 'package:agro/presentation/pages/notification/widgets/breed_tab_bar_view.dart';
+import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../domain/breeds/entities/breed.dart';
+import '../../../../domain/directions/entity/direction.dart';
 import '../../../../domain/percent/entity/percent.dart';
-import 'breed_tab_bar_view_widget.dart';
+import '../../../../domain/recommendation/entity/recommentation.dart';
 
 Widget directionTabWidget(
   BuildContext context, {
@@ -35,24 +36,36 @@ Widget directionTabWidget(
             final selectedDirection = tabDirections[selectedIndex];
 
             // Обновляем состояние Cubit
-            context.read<HomeCubit>().updateDirection(selectedDirection);
+            context
+                .read<NotificationCubit>()
+                .updateDirection(selectedDirection);
           }
         });
         return Column(
           children: [
-            TabBar(
-              labelStyle: typography.h1.bold,
-              labelColor: colors.primary,
-              unselectedLabelColor: Colors.black,
-              indicatorColor: colors.primary,
-              dividerColor: Colors.transparent,
-              tabs: List.generate(tabDirections.length, (index) {
-                return Tab(
-                  text: tabDirections
-                      .map((direction) => direction.name)
-                      .toList()[index],
-                );
-              }),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              height: 56,
+              child: ButtonsTabBar(
+                width: MediaQuery.sizeOf(context).width / 2.15,
+                contentCenter: true,
+                buttonMargin: const EdgeInsets.only(right: 5),
+                contentPadding:
+                    const EdgeInsets.symmetric(vertical: 0, horizontal: 8),
+                backgroundColor: colors.secondary1,
+                unselectedBackgroundColor: colors.onBackground,
+                unselectedLabelStyle:
+                    typography.h0.bold.copyWith(color: Colors.black),
+                labelStyle:
+                    typography.h0.bold.copyWith(color: colors.background),
+                tabs: List.generate(tabDirections.length, (index) {
+                  return Tab(
+                    text: tabDirections
+                        .map((direction) => direction.name)
+                        .toList()[index],
+                  );
+                }),
+              ),
             ),
             const SizedBox(height: 24),
             Expanded(
@@ -63,9 +76,6 @@ Widget directionTabWidget(
                     tabBreeds: tabBreeds,
                     tabBarViews: breedTabBarViewWidget(
                       context,
-                      selectedDirectionId: selectedDirectionId,
-                      selectedPetsId: selectedPetsId,
-                      percent: percent,
                       cards: cards,
                     ),
                   );

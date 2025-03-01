@@ -1,13 +1,16 @@
 import 'package:agro/common/helper/navigation/app_navigator.dart';
 import 'package:agro/presentation/pages/add_new_pet/add_new_pet_page.dart';
-import 'package:agro/presentation/pages/expense_page.dart';
-import 'package:agro/presentation/pages/income_page.dart';
 import 'package:flutter/material.dart';
 
 import 'package:agro/core/configs/theme/theme.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../common/widgets/recording_page.dart';
 import '../../../../domain/percent/entity/percent.dart';
 import '../../../../domain/recommendation/entity/recommentation.dart';
+import '../../../../domain/transaction/entities/record.dart';
+import '../../landing/landing_page.dart';
+import '../cubit/home_cubit.dart';
 import 'show_dialog_widgets.dart';
 
 Widget breedTabBarViewWidget(
@@ -19,6 +22,10 @@ Widget breedTabBarViewWidget(
 }) {
   final colors = Theme.of(context).appColors;
   final typography = Theme.of(context).appTypography;
+
+  TextEditingController priceController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
+  TextEditingController quantityController = TextEditingController();
 
   return SingleChildScrollView(
     child: Padding(
@@ -74,7 +81,27 @@ Widget breedTabBarViewWidget(
                       const WidgetStatePropertyAll(Colors.transparent),
                   splashColor: colors.onBackground,
                   onTap: () {
-                    AppNavigator.push(context, const ExpensePage());
+                    AppNavigator.push(
+                      context,
+                      RecordingPage(
+                        priceController: priceController,
+                        descriptionController: descriptionController,
+                        quantityController: quantityController,
+                        onTap: () async {
+                          context.read<HomeCubit>().addExpense(
+                                selectedPetId: selectedPetsId,
+                                recommId: -1,
+                                recordEntity: RecordEntity(
+                                  price: int.parse(priceController.text),
+                                  description: descriptionController.text,
+                                  quantity: int.parse(quantityController.text),
+                                ),
+                              );
+                          AppNavigator.pushAndRemove(
+                              context, const LandingPage());
+                        },
+                      ),
+                    );
                   },
                   child: Image.asset('assets/add-icon.png'),
                 )
@@ -96,7 +123,28 @@ Widget breedTabBarViewWidget(
                       const WidgetStatePropertyAll(Colors.transparent),
                   splashColor: colors.onBackground,
                   onTap: () {
-                    AppNavigator.push(context, const IncomePage());
+                    AppNavigator.push(
+                      context,
+                      RecordingPage(
+                        priceController: priceController,
+                        descriptionController: descriptionController,
+                        quantityController: quantityController,
+                        onTap: () async {
+                          context.read<HomeCubit>().addIncome(
+                                selectedPetId: selectedPetsId,
+                                isDecreas:
+                                    selectedDirectionId == 1 ? true : false,
+                                recordEntity: RecordEntity(
+                                  price: int.parse(priceController.text),
+                                  description: descriptionController.text,
+                                  quantity: int.parse(quantityController.text),
+                                ),
+                              );
+                          AppNavigator.pushAndRemove(
+                              context, const LandingPage());
+                        },
+                      ),
+                    );
                   },
                   child: Image.asset('assets/add-icon.png'),
                 )

@@ -1,12 +1,12 @@
 import 'package:agro/domain/breeds/entities/breed.dart';
 import 'package:agro/domain/directions/entity/direction.dart';
 import 'package:agro/presentation/pages/statistics/cubit/statistics_cubit.dart';
+import 'package:agro/presentation/pages/statistics/widgets/breed_tab_bar.dart';
 import 'package:flutter/material.dart';
 
 import 'package:agro/core/configs/theme/theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../common/widgets/customBreedTabBar.dart';
 import '../../../../domain/percent/entity/percent.dart';
 import 'breed_tab_bar_view_widget.dart';
 
@@ -53,7 +53,7 @@ Widget directionTabBarWidget(
             Expanded(
               child: TabBarView(
                 children: List.generate(tabDirections.length, (index) {
-                  return customBreedTabBar(
+                  return breedTabBar(
                     context,
                     tabBreeds: tabBreeds,
                     tabBarViews: breedTabBarViewWidget(

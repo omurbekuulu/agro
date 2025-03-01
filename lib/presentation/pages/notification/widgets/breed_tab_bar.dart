@@ -1,13 +1,13 @@
-import 'package:agro/domain/breeds/entities/breed.dart';
-import 'package:buttons_tabbar/buttons_tabbar.dart';
-import 'package:flutter/material.dart';
 
 import 'package:agro/core/configs/theme/theme.dart';
+import 'package:agro/presentation/pages/notification/cubit/notification_cubit.dart';
+import 'package:buttons_tabbar/buttons_tabbar.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../presentation/pages/home/cubit/home_cubit.dart';
+import '../../../../domain/breeds/entities/breed.dart';
 
-Widget customBreedTabBar(
+Widget breedTabBar(
   BuildContext context, {
   required List<BreedEntity> tabBreeds,
   required Widget tabBarViews,
@@ -34,7 +34,7 @@ Widget customBreedTabBar(
             final selectedBreed = tabBreeds[selectedIndex];
 
             // Обновляем состояние Cubit
-            context.read<HomeCubit>().updateBreed(selectedBreed);
+            context.read<NotificationCubit>().updateBreed(selectedBreed);
           }
         });
           return Column(

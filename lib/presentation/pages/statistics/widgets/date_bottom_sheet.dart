@@ -1,3 +1,4 @@
+import 'package:agro/common/helper/navigation/app_navigator.dart';
 import 'package:agro/core/configs/theme/color_extantion.dart';
 import 'package:agro/core/configs/theme/typography_extantion.dart';
 import 'package:agro/presentation/pages/statistics/cubit/date_cubit.dart';
@@ -273,18 +274,7 @@ Widget _dateContainer(
   return Expanded(
     child: GestureDetector(
       onTap: () async {
-        final DateTimeRange? dateTimeRange = await showDateRangePicker(
-          context: context,
-          initialDateRange: DateTimeRange(
-            start: DateTime.now(),
-            end: DateTime.now(),
-          ),
-          firstDate: DateTime(2000),
-          lastDate: DateTime.now(),
-        );
-        if (dateTimeRange != null) {
-          context.read<DateCubit>().updateSelectedDate(dateTimeRange);
-        }
+        AppNavigator.push(context, CalendarBottomSheet());
       },
       child: Container(
         height: 56,

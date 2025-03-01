@@ -1,7 +1,5 @@
 import 'package:agro/domain/breeds/entities/breed.dart';
 import 'package:agro/domain/directions/entity/direction.dart';
-import 'package:agro/domain/transaction/entity/transaction.dart';
-import 'package:agro/domain/transaction/usecase/get_transactions.dart';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
@@ -22,13 +20,13 @@ class StatisticsCubit extends Cubit<StatisticsState> {
 
   void updateDirection(DirectionEntity selectedDirection) {
     emit(
-      LoadedStatistics().copyWith(selectedDirectionId: selectedDirection.id),
+      (state as LoadedStatistics).copyWith(selectedDirectionId: selectedDirection.id),
     );
   }
 
   void updateBreed(BreedEntity selectedBreed) {
     emit(
-      LoadedStatistics().copyWith(selectedBreedId: selectedBreed.id),
+      (state as LoadedStatistics).copyWith(selectedBreedId: selectedBreed.id),
     );
   }
 
@@ -92,12 +90,12 @@ class StatisticsCubit extends Cubit<StatisticsState> {
     );
 
     List<BreedEntity> userBreeds = breeds.where((breed) {
-      return userPets.any((pet) => pet.breedId == breed.id);
+      return userPets.any((pet) =>
+          pet.directionId == LoadedStatistics().selectedDirectionId &&
+          pet.breedId == breed.id);
     }).toList();
 
-    var selectedPet = userPets.firstWhere((pet) {
-      return pet.breedId == LoadedStatistics().selectedBreedId;
-    });
+    var selectedPet = userPets.first;
     emit(
       LoadedStatistics().copyWith(selectedPetsId: selectedPet.id),
     );

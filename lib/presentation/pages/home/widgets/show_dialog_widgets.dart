@@ -1,5 +1,5 @@
 import 'package:agro/core/configs/theme/theme.dart';
-import 'package:agro/domain/transaction/entity/expense.dart';
+import 'package:agro/domain/transaction/entities/record.dart';
 import 'package:agro/domain/recommendation/entity/recommentation.dart';
 import 'package:agro/presentation/pages/home/cubit/home_cubit.dart';
 import 'package:flutter/material.dart';
@@ -21,10 +21,10 @@ Future showDialogWidget(
       actions: [
         FilledButton(
           onPressed: () async {
-            context.read<HomeCubit>().postExpense(
-                  selectedPetsId: selectedPetsId,
+            context.read<HomeCubit>().addExpense(
+                  selectedPetId: selectedPetsId,
                   recommId: recommendationId,
-                  expense: ExpenseEntity(
+                  recordEntity: RecordEntity(
                     price: int.parse(controller.text),
                     description: card.description,
                     quantity: 0,

@@ -50,7 +50,7 @@ class RecommendationModel {
     return RecommendationModel(
       id: json['id'],
       name: json['name'],
-      description: json['description'],
+      description: json['description'] ?? '',
       seasonId: json['seasonId'],
       breedId: json['breedId'],
       durationMonths: json['durationMonths'],

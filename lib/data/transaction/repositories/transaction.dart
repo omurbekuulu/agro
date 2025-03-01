@@ -1,12 +1,9 @@
 import 'package:agro/common/helper/mapper/transaction.dart';
-import 'package:agro/data/transaction/model/transaction.dart';
+import 'package:agro/data/transaction/models/transaction.dart';
 import 'package:agro/data/transaction/source/transaction.dart';
-import 'package:agro/domain/transaction/repository/transactoin.dart';
+import 'package:agro/domain/transaction/repositories/transactoin.dart';
 import 'package:agro/presentation/service_locator.dart';
 import 'package:dartz/dartz.dart';
-
-import '../../../common/helper/mapper/expense_mapper.dart';
-import '../../../domain/transaction/entity/expense.dart';
 
 class TransactionRepositoryImpl extends TransactoinRepository {
   @override
@@ -33,30 +30,6 @@ class TransactionRepositoryImpl extends TransactoinRepository {
                 TransactionModel.fromJson(transaction)))
             .toList();
         return Right(transactions);
-      },
-    );
-  }
-
-  @override
-  Future<Either> postExpense(
-    int userPetsId,
-    int recommId,
-    ExpenseEntity entity,
-  ) async {
-    final toModel = ExpenseMapper.toModel(entity);
-
-    final response = await sl<TransactionService>().postExpense(
-      userPetsId,
-      recommId,
-      toModel,
-    );
-
-    return response.fold(
-      (error) {
-        return Left(error);
-      },
-      (data) {
-        return Right(data);
       },
     );
   }

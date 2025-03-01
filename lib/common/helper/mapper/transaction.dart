@@ -1,5 +1,5 @@
-import 'package:agro/data/transaction/model/transaction.dart';
-import 'package:agro/domain/transaction/entity/transaction.dart';
+import 'package:agro/data/transaction/models/transaction.dart';
+import 'package:agro/domain/transaction/entities/transaction.dart';
 
 class TransactionMapper {
   static TransactionEntity toEntity(TransactionModel model) {

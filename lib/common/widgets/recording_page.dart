@@ -2,17 +2,23 @@ import 'package:flutter/material.dart';
 
 import 'package:agro/core/configs/theme/theme.dart';
 
-import '../../common/widgets/customLogo.dart';
-import '../../common/widgets/customTextFormField.dart';
+import '../../../../common/widgets/customLogo.dart';
+import '../../../../common/widgets/customTextFormField.dart';
 
-class ExpensePage extends StatefulWidget {
-  const ExpensePage({super.key});
+class RecordingPage extends StatelessWidget {
+  RecordingPage({
+    super.key,
+    required this.onTap,
+    required this.priceController,
+    required this.descriptionController,
+    required this.quantityController,
+  });
 
-  @override
-  State<ExpensePage> createState() => _ExpensePageState();
-}
+  final TextEditingController priceController;
+  final TextEditingController descriptionController;
+  final TextEditingController quantityController;
+  final Function() onTap;
 
-class _ExpensePageState extends State<ExpensePage> {
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -63,8 +69,12 @@ class _ExpensePageState extends State<ExpensePage> {
                             ),
                           ),
                           const SizedBox(height: 4),
-                          customTextFormField(context,
-                              inputType: TextInputType.number, hintText: '0 с'),
+                          customTextFormField(
+                            context,
+                            controller: priceController,
+                            inputType: TextInputType.number,
+                            hintText: '0 с',
+                          ),
                           const SizedBox(height: 24),
                           Text(
                             'Комментарий (Аты)',
@@ -73,9 +83,12 @@ class _ExpensePageState extends State<ExpensePage> {
                             ),
                           ),
                           const SizedBox(height: 4),
-                          customTextFormField(context,
-                              inputType: TextInputType.text,
-                              hintText: 'Кошумча сөздөр'),
+                          customTextFormField(
+                            context,
+                            controller: descriptionController,
+                            inputType: TextInputType.text,
+                            hintText: 'Кошумча сөздөр',
+                          ),
                           const SizedBox(height: 24),
                           Text(
                             'Саны',
@@ -83,8 +96,12 @@ class _ExpensePageState extends State<ExpensePage> {
                               color: colors.secondary1,
                             ),
                           ),
-                          customTextFormField(context,
-                              inputType: TextInputType.number, hintText: '0'),
+                          customTextFormField(
+                            context,
+                            controller: quantityController,
+                            inputType: TextInputType.number,
+                            hintText: '0',
+                          ),
                           const SizedBox(height: 125),
                         ],
                       ),
@@ -103,7 +120,7 @@ class _ExpensePageState extends State<ExpensePage> {
               right: 16,
               left: 16,
               child: FilledButton(
-                onPressed: () {},
+                onPressed: onTap,
                 child: const Text('Кошуу'),
               ),
             ),

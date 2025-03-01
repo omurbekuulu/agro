@@ -4,6 +4,7 @@ import 'package:agro/core/configs/theme/theme.dart';
 
 Widget customTextFormField(
   BuildContext context, {
+  TextEditingController? controller,
   required TextInputType inputType,
   required String hintText,
   bool hasValue = false,
@@ -13,7 +14,7 @@ Widget customTextFormField(
   final typography = Theme.of(context).appTypography;
 
   return TextFormField(
-    initialValue: hasValue ? hintText : '',
+    controller: controller,
     autovalidateMode: AutovalidateMode.onUnfocus,
     validator: (value) {
       if (value == null || value.isEmpty) {
@@ -38,7 +39,9 @@ Widget customTextFormField(
         borderSide: BorderSide.none,
       ),
       hintText: hintText,
-      hintStyle: typography.p1.medium.copyWith(color: colors.onBackground2,),
+      hintStyle: typography.p1.medium.copyWith(
+        color: colors.onBackground2,
+      ),
     ),
   );
 }
