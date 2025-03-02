@@ -1,51 +1,45 @@
 part of 'home_cubit.dart';
 
 @immutable
-sealed class HomeState {}
-
-class InitialHome extends HomeState {}
-
-class LoadingHome extends HomeState {}
-
-class LoadedHome extends HomeState {
+class HomeState extends Equatable {
+  final bool isLoaded;
   final List<DirectionEntity> directions;
-  final int profitability;
-  final List<PetEntity> userPets;
   final List<BreedEntity> userBreeds;
+  final int profitability;
   final PercentEntity? percent;
   final List<CardEntity> cards;
   final int selectedDirectionId;
-  final int selectedBreedId;
-  final int selectedPetsId;
+  final int? selectedBreedId;
+  final int? selectedPetsId;
 
-  LoadedHome({
-    this.userPets = const [],
-    this.selectedBreedId = 1,
-    this.selectedDirectionId = 1,
-    this.selectedPetsId = 1,
-    this.profitability = 0,
-    this.userBreeds = const [],
+  const HomeState({
+    this.isLoaded = false,
     this.directions = const [],
+    this.userBreeds = const [],
+    this.profitability = 0,
     this.percent,
     this.cards = const [],
+    this.selectedDirectionId = 1,
+    this.selectedBreedId,
+    this.selectedPetsId,
   });
 
-  LoadedHome copyWith({
+  HomeState copyWith({
+    bool? isLoaded,
     List<DirectionEntity>? directions,
-    List<PetEntity>? userPets,
-    int? profitability,
     List<BreedEntity>? userBreeds,
+    int? profitability,
     PercentEntity? percent,
     List<CardEntity>? cards,
     int? selectedDirectionId,
     int? selectedBreedId,
     int? selectedPetsId,
   }) {
-    return LoadedHome(
+    return HomeState(
+      isLoaded: isLoaded ?? this.isLoaded,
       directions: directions ?? this.directions,
-      userPets: userPets ?? this.userPets,
-      profitability: profitability ?? this.profitability,
       userBreeds: userBreeds ?? this.userBreeds,
+      profitability: profitability ?? this.profitability,
       percent: percent ?? this.percent,
       cards: cards ?? this.cards,
       selectedDirectionId: selectedDirectionId ?? this.selectedDirectionId,
@@ -53,10 +47,25 @@ class LoadedHome extends HomeState {
       selectedPetsId: selectedPetsId ?? this.selectedPetsId,
     );
   }
+
+  @override
+  List<Object> get props {
+    return [
+      isLoaded,
+      directions,
+      userBreeds,
+      profitability,
+      percent!,
+      cards,
+      selectedDirectionId,
+      selectedBreedId!,
+      selectedPetsId!,
+    ];
+  }
 }
 
 class FailureLoadHome extends HomeState {
   final String errorMessage;
 
-  FailureLoadHome({required this.errorMessage});
+  const FailureLoadHome({required this.errorMessage});
 }

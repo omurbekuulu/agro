@@ -11,6 +11,7 @@ import 'package:agro/domain/profitability/usecase/get_profitability.dart';
 import 'package:agro/domain/recommendation/entity/recommentation.dart';
 import 'package:agro/domain/transaction/usecases/post_income.dart';
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
 import '../../../../domain/breeds/use_cases/get_breeds.dart';
@@ -20,40 +21,38 @@ import '../../../service_locator.dart';
 part 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
-  HomeCubit() : super(InitialHome());
+  HomeCubit() : super(const HomeState());
 
   void updateDirection(DirectionEntity selectedDirection) {
     emit(
-      (state as LoadedHome).copyWith(selectedDirectionId: selectedDirection.id),
+      (state).copyWith(selectedDirectionId: selectedDirection.id),
     );
   }
 
   void updateBreed(BreedEntity selectedBreed) {
     emit(
-      (state as LoadedHome).copyWith(selectedBreedId: selectedBreed.id),
+      (state).copyWith(selectedBreedId: selectedBreed.id),
     );
   }
 
   void initHome() async {
-    emit(LoadingHome());
+    emit(
+      state.copyWith(isLoaded: false),
+    );
 
     List<DirectionEntity> directions = [];
+    List<BreedEntity> userBreeds = [];
     List<PetEntity> userPets = [];
     int profitability = 0;
-    List<BreedEntity> userBreeds = [];
-    List<CardEntity> cards = [];
     PercentEntity percent =
         PercentEntity(expense: 0, income: 0, performance: 0);
+    List<CardEntity> cards = [];
 
     var responseDirections = await sl<GetDirectoinsUseCase>().call(params: 1);
-    var responseUserPets = await sl<GetPetsUseCase>().call();
-    var responseProfibility = await sl<GetProfitabilityUseCase>()
-        .call(LoadedHome().selectedDirectionId);
     var responseBreeds = await sl<GetBreedsUseCase>().call();
-    var responseCards = await sl<GetRecommendationsUseCase>().call(
-      params: LoadedHome().selectedDirectionId,
-      params2: LoadedHome().selectedBreedId,
-    );
+    var responseUserPets = await sl<GetPetsUseCase>().call();
+    var responseProfibility =
+        await sl<GetProfitabilityUseCase>().call(1);
 
     responseDirections.fold(
       (error) {
@@ -62,6 +61,15 @@ class HomeCubit extends Cubit<HomeState> {
       },
       (data) {
         directions = data;
+      },
+    );
+    
+    responseProfibility.fold(
+      (error) {
+        emit(FailureLoadHome(errorMessage: error));
+      },
+      (data) {
+        profitability = data;
       },
     );
 
@@ -74,15 +82,6 @@ class HomeCubit extends Cubit<HomeState> {
       },
     );
 
-    responseProfibility.fold(
-      (error) {
-        emit(FailureLoadHome(errorMessage: error));
-      },
-      (data) {
-        profitability = data;
-      },
-    );
-
     responseBreeds.fold(
       (error) {
         emit(FailureLoadHome(errorMessage: error));
@@ -90,11 +89,18 @@ class HomeCubit extends Cubit<HomeState> {
       (data) {
         List<BreedEntity> userBreedsSorted = data.where((breed) {
           return userPets.any((pet) =>
-              pet.directionId == LoadedHome().selectedDirectionId &&
+              pet.directionId == state.selectedDirectionId &&
               pet.breedId == breed.id);
         }).toList();
         userBreeds = userBreedsSorted;
       },
+    );
+
+    var selectedPet = userPets.first;
+    
+    var responseCards = await sl<GetRecommendationsUseCase>().call(
+      params: 1,
+      params2: selectedPet.id,
     );
 
     responseCards.fold(
@@ -105,8 +111,6 @@ class HomeCubit extends Cubit<HomeState> {
         cards = data;
       },
     );
-
-    var selectedPet = userPets.first;
 
     var responsePercent =
         await sl<GetPercentUseCase>().call(params: selectedPet.id);
@@ -121,14 +125,14 @@ class HomeCubit extends Cubit<HomeState> {
     );
 
     emit(
-      LoadedHome().copyWith(
+      state.copyWith(
+        isLoaded: true,
         directions: directions,
-        userPets: userPets,
-        selectedPetsId: selectedPet.id,
-        profitability: profitability,
         userBreeds: userBreeds,
-        cards: cards,
+        profitability: profitability,
         percent: percent,
+        cards: cards,
+        selectedPetsId: selectedPet.id,
       ),
     );
   }
@@ -150,7 +154,6 @@ class HomeCubit extends Cubit<HomeState> {
     required bool isDecreas,
     required RecordEntity recordEntity,
   }) async {
-    print('$selectedPetId $isDecreas $recordEntity');
     await sl<PostIncomeUseCase>().postIncome(
       selectedPetId,
       isDecreas,

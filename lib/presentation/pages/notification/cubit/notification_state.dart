@@ -1,62 +1,53 @@
 part of 'notification_cubit.dart';
 
 @immutable
-sealed class NotificationState {}
-
-class InitialNotification extends NotificationState {}
-
-class LoadingNotification extends NotificationState {}
-
-class LoadedNotification extends NotificationState {
+class NotificationState extends Equatable {
+  final bool isLoaded;
   final List<DirectionEntity> directions;
-  final int profitability;
-  final List<PetEntity> userPets;
   final List<BreedEntity> userBreeds;
-  final PercentEntity? percent;
   final List<CardEntity> cards;
   final int selectedDirectionId;
-  final int selectedBreedId;
-  final int selectedPetsId;
+  final int? selectedBreedId;
 
-  LoadedNotification({
-    this.userPets = const [],
-    this.selectedBreedId = 1,
-    this.selectedDirectionId = 1,
-    this.selectedPetsId = 1,
-    this.profitability = 0,
+  const NotificationState({
+    this.isLoaded = false,
     this.userBreeds = const [],
     this.directions = const [],
-    this.percent,
     this.cards = const [],
+    this.selectedBreedId,
+    this.selectedDirectionId = 1,
   });
 
-  LoadedNotification copyWith({
+  NotificationState copyWith({
+    bool? isLoaded,
     List<DirectionEntity>? directions,
-    List<PetEntity>? userPets,
-    int? profitability,
     List<BreedEntity>? userBreeds,
-    PercentEntity? percent,
     List<CardEntity>? cards,
     int? selectedDirectionId,
     int? selectedBreedId,
-    int? selectedPetsId,
   }) {
-    return LoadedNotification(
+    return NotificationState(
+      isLoaded: isLoaded ?? this.isLoaded,
       directions: directions ?? this.directions,
-      userPets: userPets ?? this.userPets,
-      profitability: profitability ?? this.profitability,
       userBreeds: userBreeds ?? this.userBreeds,
-      percent: percent ?? this.percent,
       cards: cards ?? this.cards,
       selectedDirectionId: selectedDirectionId ?? this.selectedDirectionId,
       selectedBreedId: selectedBreedId ?? this.selectedBreedId,
-      selectedPetsId: selectedPetsId ?? this.selectedPetsId,
     );
   }
+
+  @override
+  List<Object?> get props => [
+        directions,
+        userBreeds,
+        cards,
+        selectedDirectionId,
+        selectedBreedId,
+      ];
 }
 
 class FailureLoadNotification extends NotificationState {
   final String errorMessage;
 
-  FailureLoadNotification({required this.errorMessage});
+  const FailureLoadNotification({required this.errorMessage});
 }

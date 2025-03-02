@@ -31,43 +31,30 @@ class _HomeViewState extends State<_HomeView> {
       body: SafeArea(
         child: BlocBuilder<HomeCubit, HomeState>(
           builder: (context, state) {
-            if (state is LoadingHome) {
+            if (!state.isLoaded) {
               return const Center(
-                child: CircularProgressIndicator(
-                  color: Colors.black,
-                ),
+                child: CircularProgressIndicator(),
               );
             }
-            if (state is FailureLoadHome) {
-              return Center(
-                child: Text(
-                  state.errorMessage,
-                ),
-              );
-            }
-            if (state is LoadedHome) {
-              return Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  stackWeatherProfit(context,
-                      profitability: state.profitability),
-                  directionTabWidget(context,
-                      selectedDirectionId: state.selectedDirectionId,
-                      selectedPetsId: state.selectedPetsId,
-                      tabDirections: state.directions,
-                      tabBreeds: state.userBreeds,
-                      percent: state.percent ??
-                          PercentEntity(
-                            expense: 0,
-                            income: 0,
-                            performance: 0,
-                          ),
-                      cards: state.cards),
-                  const SizedBox(height: 24),
-                ],
-              );
-            }
-            return Container();
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                stackWeatherProfit(context, profitability: state.profitability),
+                directionTabWidget(context,
+                    selectedDirectionId: state.selectedDirectionId,
+                    selectedPetsId: state.selectedPetsId!,
+                    tabDirections: state.directions,
+                    tabBreeds: state.userBreeds,
+                    percent: state.percent ??
+                        PercentEntity(
+                          expense: 0,
+                          income: 0,
+                          performance: 0,
+                        ),
+                    cards: state.cards),
+                const SizedBox(height: 24),
+              ],
+            );
           },
         ),
       ),
