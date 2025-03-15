@@ -1,0 +1,2 @@
+E:/kom_projects/agro/android/app/.cxx/Debug/412a1d2j/x86_64/CMakeFiles/edit_cache.dir
+E:/kom_projects/agro/android/app/.cxx/Debug/412a1d2j/x86_64/CMakeFiles/rebuild_cache.dir

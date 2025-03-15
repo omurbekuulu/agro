@@ -19,6 +19,7 @@ Widget breedTabBarViewWidget(
   required int selectedPetsId,
   required PercentEntity percent,
   required List<CardEntity> cards,
+
 }) {
   final colors = Theme.of(context).appColors;
   final typography = Theme.of(context).appTypography;
@@ -26,6 +27,8 @@ Widget breedTabBarViewWidget(
   TextEditingController priceController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController quantityController = TextEditingController();
+
+  final isConflict = context.select((HomeCubit b) => b.state.isConflict);
 
   return SingleChildScrollView(
     child: Padding(
@@ -41,29 +44,21 @@ Widget breedTabBarViewWidget(
           ),
           const SizedBox(height: 24),
           Container(
-            height: 84,
+            width: double.infinity,
             decoration: BoxDecoration(
               color: colors.onBackground,
               borderRadius: BorderRadius.circular(12),
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(12),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Чыгаша: ${percent.expense}'),
-                      Text('Киреше: ${percent.income}'),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 12),
-                  child: Text('Пароданын түшүмдүлүгү: ${percent.performance}'),
-                )
-              ],
+            child: Padding(
+              padding: const EdgeInsets.all(12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Чыгаша: ${percent.expense}'),
+                  const SizedBox(height: 12),
+                  Text('Киреше: ${percent.income}'),
+                ],
+              ),
             ),
           ),
           const SizedBox(height: 24),
@@ -84,6 +79,8 @@ Widget breedTabBarViewWidget(
                     AppNavigator.push(
                       context,
                       RecordingPage(
+                        isInomce: false,
+                        isConflict: isConflict,
                         priceController: priceController,
                         descriptionController: descriptionController,
                         quantityController: quantityController,
@@ -126,6 +123,8 @@ Widget breedTabBarViewWidget(
                     AppNavigator.push(
                       context,
                       RecordingPage(
+                        isInomce: true,
+                        isConflict: isConflict,
                         priceController: priceController,
                         descriptionController: descriptionController,
                         quantityController: quantityController,

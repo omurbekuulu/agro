@@ -5,6 +5,7 @@ import 'package:agro/data/auth/model/signup_req_params.dart';
 import 'package:agro/presentation/service_locator.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class AuthApiService {
   Future<Either> signup(SignupReqParams params);
@@ -32,6 +33,7 @@ class AuthApiServiceImple extends AuthApiService {
         ApiUrl.signin,
         data: params.toMap(),
       );
+      
       return Right(response.data);
     } on DioException catch (e) {
       return Left(e.type.name);

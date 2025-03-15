@@ -1,3 +1,7 @@
+import 'package:agro/common/helper/navigation/app_navigator.dart';
+import 'package:agro/presentation/pages/add_new_pet/add_new_pet_page.dart';
+import 'package:agro/presentation/pages/direction/direction_page.dart';
+import 'package:agro/presentation/pages/profil/cubit/profil_page_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -21,123 +25,143 @@ class ProfilPage extends StatelessWidget {
     final colors = Theme.of(context).appColors;
     final typography = Theme.of(context).appTypography;
 
-    return Scaffold(
-      body: SafeArea(
-        child: Stack(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
+    return BlocProvider(
+      create: (context) => ProfilPageCubit()..initProfil(),
+      child: Scaffold(
+        body: SafeArea(
+          child: BlocBuilder<ProfilPageCubit, ProfilPageState>(
+            builder: (context, state) {
+              return Stack(
                 children: [
-                  const SizedBox(height: 24),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Профиль',
-                        style: typography.h2.bold,
-                      ),
-                      InkWell(
-                        onTap: () {
-                          showDialogWidget(context);
-                        },
-                        child: SvgPicture.asset('assets/log-out-icon.svg'),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      profilViewWidget(context),
-                      const SizedBox(height: 26),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: colors.onBackground,
-                          borderRadius: BorderRadius.circular(12),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 24),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Профиль',
+                              style: typography.h2.bold,
+                            ),
+                            InkWell(
+                              onTap: () {
+                                showDialogWidget(context);
+                              },
+                              child:
+                                  SvgPicture.asset('assets/log-out-icon.svg'),
+                            ),
+                          ],
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(12),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              customTileWidget(
-                                context,
-                                icon: 'assets/human-icon-green.svg',
-                                title: 'Профилдин маалыматы',
-                                onTap: () {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const ProfilDataPage(),
-                                    ),
-                                  );
-                                },
+                        Column(
+                          children: [
+                            profilViewWidget(
+                              context,
+                              userName: state.userName,
+                            ),
+                            const SizedBox(height: 26),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: colors.onBackground,
+                                borderRadius: BorderRadius.circular(12),
                               ),
-                              const SizedBox(height: 12),
-                              customTileWidget(
-                                context,
-                                icon: 'assets/trail-sign-icon.svg',
-                                title: 'Багытыңыздын түрүн өзгөртү',
-                                onTap: () {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const ChangeDiractionPage(),
+                              child: Padding(
+                                padding: const EdgeInsets.all(12),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    customTileWidget(
+                                      context,
+                                      icon: 'assets/human-icon-green.svg',
+                                      title: 'Профилдин маалыматы',
+                                      onTap: () {
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const ProfilDataPage(),
+                                          ),
+                                        );
+                                      },
                                     ),
-                                  );
-                                },
-                              ),
-                              const SizedBox(height: 12),
-                              BlocProvider(
-                                create: (context) => BottomNavBloc(),
-                                child: customTileWidget(
-                                  context,
-                                  icon: 'assets/bar-chart-icon.svg',
-                                  title: 'Насыя алуу үчүн калькулятор',
-                                  onTap: () {
-                                    BlocProvider.of<BottomNavBloc>(context).add(
-                                      const PageTappedEvent(
-                                          LandingTap.calculator),
-                                    );
-                                  },
+                                    const SizedBox(height: 12),
+                                    customTileWidget(
+                                      context,
+                                      icon: 'assets/trail-sign-icon.svg',
+                                      title: 'Багытыңыздын түрүн өзгөртү',
+                                      onTap: () {
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const ChangeDiractionPage(),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                    const SizedBox(height: 12),
+                                    BlocProvider(
+                                      create: (context) => BottomNavBloc(),
+                                      child: customTileWidget(
+                                        context,
+                                        icon: 'assets/bar-chart-icon.svg',
+                                        title: 'Насыя алуу үчүн калькулятор',
+                                        onTap: () {
+                                          BlocProvider.of<BottomNavBloc>(
+                                                  context)
+                                              .add(
+                                            const PageTappedEvent(
+                                                LandingTap.calculator),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                    const SizedBox(height: 12),
+                                    customTileWidget(
+                                      context,
+                                      icon: 'assets/add-icon-green.svg',
+                                      title: 'Жаңы пароданы кошуу',
+                                      onTap: () {
+                                        AppNavigator.pushAndRemove(
+                                          context,
+                                          const DirectionPage(categoryId: 1),
+                                        );
+                                      },
+                                    ),
+                                    const SizedBox(height: 12),
+                                    customTileWidget(
+                                      context,
+                                      icon:
+                                          'assets/chatbubble-ellipses-icon.svg',
+                                      title: 'Байланышуу',
+                                      onTap: () {
+                                        Navigator.of(context).pushReplacement(
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const CommunicatePage(),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                    const SizedBox(height: 24),
+                                  ],
                                 ),
                               ),
-                              const SizedBox(height: 12),
-                              customTileWidget(
-                                context,
-                                icon: 'assets/add-icon-green.svg',
-                                title: 'Жаңы пароданы кошуу',
-                                onTap: () {},
-                              ),
-                              const SizedBox(height: 12),
-                              customTileWidget(
-                                context,
-                                icon: 'assets/chatbubble-ellipses-icon.svg',
-                                title: 'Байланышуу',
-                                onTap: () {
-                                  Navigator.of(context).pushReplacement(
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const CommunicatePage(),
-                                    ),
-                                  );
-                                },
-                              ),
-                              const SizedBox(height: 24),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 24,
+                    right: 16,
+                    child: customLogo(),
                   ),
                 ],
-              ),
-            ),
-            Positioned(
-              bottom: 24,
-              right: 16,
-              child: customLogo(),
-            ),
-          ],
+              );
+            },
+          ),
         ),
       ),
     );

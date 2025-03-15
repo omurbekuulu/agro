@@ -1,11 +1,11 @@
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
 import '../../../../domain/breeds/entities/breed.dart';
 import '../../../../domain/breeds/use_cases/get_breeds.dart';
 import '../../../../domain/directions/entity/direction.dart';
 import '../../../../domain/directions/use_case/get_directoins.dart';
-import '../../../../domain/percent/entity/percent.dart';
 import '../../../../domain/pet/entities/pet.dart';
 import '../../../../domain/pet/use_cases/get_pets.dart';
 import '../../../../domain/recommendation/entity/recommentation.dart';
@@ -15,23 +15,79 @@ import '../../../service_locator.dart';
 part 'notification_state.dart';
 
 class NotificationCubit extends Cubit<NotificationState> {
-  NotificationCubit() : super(InitialNotification());
+  NotificationCubit() : super(const NotificationState());
 
-  void updateDirection(DirectionEntity selectedDirection) {
-    emit(
-      (state as LoadedNotification)
-          .copyWith(selectedDirectionId: selectedDirection.id),
+  void updateDirection(DirectionEntity selectedDirection) async {
+    List<PetEntity> userPets = [];
+    List<BreedEntity> userBreeds = [];
+
+    var responseUserPets = await sl<GetPetsUseCase>().call();
+    var responseBreeds = await sl<GetBreedsUseCase>().call();
+    responseUserPets.fold(
+      (error) {
+        emit(FailureLoadNotification(errorMessage: error));
+      },
+      (data) {
+        userPets = data;
+      },
+    );
+
+    responseBreeds.fold(
+      (error) {
+        emit(FailureLoadNotification(errorMessage: error));
+      },
+      (data) {
+        List<BreedEntity> userBreedsSorted = data.where((breed) {
+          return userPets.any((pet) =>
+              pet.directionId == selectedDirection.id &&
+              pet.breedId == breed.id);
+        }).toList();
+        userBreeds = userBreedsSorted;
+      },
+    );
+
+    var responseCards = await sl<GetRecommendationsUseCase>().call(
+      params: selectedDirection.id,
+      params2: userBreeds.first.id,
+    );
+
+    responseCards.fold(
+      (error) {
+        emit(FailureLoadNotification(errorMessage: error));
+      },
+      (data) {
+        emit(
+          (state).copyWith(
+            userBreeds: userBreeds,
+            cards: data,
+          ),
+        );
+      },
     );
   }
 
-  void updateBreed(BreedEntity selectedBreed) {
-    emit(
-      (state as LoadedNotification).copyWith(selectedBreedId: selectedBreed.id),
+  void updateBreed(BreedEntity selectedBreed) async {
+    var responseCards = await sl<GetRecommendationsUseCase>().call(
+      params: state.selectedDirectionId,
+      params2: selectedBreed.id,
+    );
+
+    responseCards.fold(
+      (error) {
+        emit(FailureLoadNotification(errorMessage: error));
+      },
+      (data) {
+        emit(
+          (state).copyWith(
+            cards: data,
+          ),
+        );
+      },
     );
   }
 
   void initNotification() async {
-    emit(LoadingNotification());
+    (state.copyWith(isLoaded: false),);
 
     List<DirectionEntity> directions = [];
     List<PetEntity> userPets = [];
@@ -41,10 +97,6 @@ class NotificationCubit extends Cubit<NotificationState> {
     var responseDirections = await sl<GetDirectoinsUseCase>().call(params: 1);
     var responseUserPets = await sl<GetPetsUseCase>().call();
     var responseBreeds = await sl<GetBreedsUseCase>().call();
-    var responseCards = await sl<GetRecommendationsUseCase>().call(
-      params: LoadedNotification().selectedDirectionId,
-      params2: LoadedNotification().selectedBreedId,
-    );
 
     responseDirections.fold(
       (error) {
@@ -72,11 +124,16 @@ class NotificationCubit extends Cubit<NotificationState> {
       (data) {
         List<BreedEntity> userBreedsSorted = data.where((breed) {
           return userPets.any((pet) =>
-              pet.directionId == LoadedNotification().selectedDirectionId &&
+              pet.directionId == state.selectedDirectionId &&
               pet.breedId == breed.id);
         }).toList();
         userBreeds = userBreedsSorted;
       },
+    );
+
+    var responseCards = await sl<GetRecommendationsUseCase>().call(
+      params: state.selectedDirectionId,
+      params2: state.selectedBreedId ?? userBreeds.first.id,
     );
 
     responseCards.fold(
@@ -88,14 +145,13 @@ class NotificationCubit extends Cubit<NotificationState> {
       },
     );
 
-    var selectedPet = userPets.first;
-
     emit(
-      LoadedNotification().copyWith(
+      state.copyWith(
+        isLoaded: true,
         directions: directions,
-        userPets: userPets,
-        selectedPetsId: selectedPet.id,
         userBreeds: userBreeds,
+        selectedDirectionId: 1,
+        selectedBreedId: userBreeds.first.id,
         cards: cards,
       ),
     );

@@ -5,9 +5,18 @@ import 'package:flutter/material.dart';
 part 'date_state.dart';
 
 class DateCubit extends Cubit<DateState> {
-  DateCubit() : super(const DateState());
+  DateCubit()
+      : super(
+          DateState(
+              selectedDateTimeRange: DateTimeRange(
+            start: DateTime.now(),
+            end: DateTime.now(),
+          )),
+        );
 
   void updateSelectedDate(DateTimeRange selectedDate) {
-    state.copyWith(selectedDateTimeRange: selectedDate);
+    emit(
+      state.copyWith(selectedDateTimeRange: selectedDate),
+    );
   }
 }

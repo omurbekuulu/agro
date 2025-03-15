@@ -1,4 +1,5 @@
 import 'package:agro/domain/percent/entity/percent.dart';
+import 'package:agro/presentation/cubit/agro_cubit.dart';
 import 'package:agro/presentation/pages/home/cubit/home_cubit.dart';
 import 'package:agro/presentation/pages/home/widgets/direction_tab_widget.dart';
 import 'package:agro/presentation/pages/home/widgets/stack_weather_profit_widget.dart';
@@ -31,43 +32,33 @@ class _HomeViewState extends State<_HomeView> {
       body: SafeArea(
         child: BlocBuilder<HomeCubit, HomeState>(
           builder: (context, state) {
-            if (state is LoadingHome) {
+            if (state.isLoaded == false) {
               return const Center(
-                child: CircularProgressIndicator(
-                  color: Colors.black,
+                child: CircularProgressIndicator(),
+              );
+            }
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                stackWeatherProfit(
+                  context,
+                  profitability: state.profitability,
                 ),
-              );
-            }
-            if (state is FailureLoadHome) {
-              return Center(
-                child: Text(
-                  state.errorMessage,
-                ),
-              );
-            }
-            if (state is LoadedHome) {
-              return Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  stackWeatherProfit(context,
-                      profitability: state.profitability),
-                  directionTabWidget(context,
-                      selectedDirectionId: state.selectedDirectionId,
-                      selectedPetsId: state.selectedPetsId,
-                      tabDirections: state.directions,
-                      tabBreeds: state.userBreeds,
-                      percent: state.percent ??
-                          PercentEntity(
-                            expense: 0,
-                            income: 0,
-                            performance: 0,
-                          ),
-                      cards: state.cards),
-                  const SizedBox(height: 24),
-                ],
-              );
-            }
-            return Container();
+                directionTabWidget(context,
+                    selectedDirectionId: state.selectedDirectionId,
+                    selectedPetsId: state.selectedPetsId!,
+                    tabDirections: state.directions,
+                    tabBreeds: state.userBreeds,
+                    percent: state.percent ??
+                        PercentEntity(
+                          expense: 0,
+                          income: 0,
+                          performance: 0,
+                        ),
+                    cards: state.cards),
+                const SizedBox(height: 24),
+              ],
+            );
           },
         ),
       ),

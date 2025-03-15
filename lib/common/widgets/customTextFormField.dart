@@ -15,7 +15,7 @@ Widget customTextFormField(
 
   return TextFormField(
     controller: controller,
-    autovalidateMode: AutovalidateMode.onUnfocus,
+    autovalidateMode: AutovalidateMode.onUserInteraction,
     validator: (value) {
       if (value == null || value.isEmpty) {
         return 'Талаа бош болбошу керек';

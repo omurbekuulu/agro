@@ -1,4 +1,3 @@
-
 import 'package:agro/core/configs/theme/theme.dart';
 import 'package:agro/presentation/pages/notification/cubit/notification_cubit.dart';
 import 'package:buttons_tabbar/buttons_tabbar.dart';
@@ -27,16 +26,16 @@ Widget breedTabBar(
         builder: (context) {
           final TabController tabController = DefaultTabController.of(context);
 
-        // Слушаем изменения индекса
-        tabController.addListener(() {
-          if (!tabController.indexIsChanging) {
-            final selectedIndex = tabController.index;
-            final selectedBreed = tabBreeds[selectedIndex];
+          // Слушаем изменения индекса
+          tabController.addListener(() {
+            if (!tabController.indexIsChanging) {
+              final selectedIndex = tabController.index;
+              final selectedBreed = tabBreeds[selectedIndex];
 
-            // Обновляем состояние Cubit
-            context.read<NotificationCubit>().updateBreed(selectedBreed);
-          }
-        });
+              // Обновляем состояние Cubit
+              context.read<NotificationCubit>().updateBreed(selectedBreed);
+            }
+          });
           return Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -59,7 +58,9 @@ Widget breedTabBar(
                         typography.p1.bold.copyWith(color: colors.background),
                     tabs: List.generate(tabBreeds.length, (index) {
                       return Tab(
-                        text: tabBreeds.map((breed) => breed.name).toList()[index],
+                        text: tabBreeds
+                            .map((breed) => breed.name)
+                            .toList()[index],
                       );
                     }),
                   ),
@@ -73,10 +74,10 @@ Widget breedTabBar(
                     (index) => tabBarViews,
                   ),
                 ),
-              ),
+              )
             ],
           );
-        }
+        },
       ),
     ),
   );

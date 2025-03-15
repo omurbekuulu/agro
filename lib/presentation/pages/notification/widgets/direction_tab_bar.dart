@@ -8,17 +8,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../domain/breeds/entities/breed.dart';
 import '../../../../domain/directions/entity/direction.dart';
-import '../../../../domain/percent/entity/percent.dart';
 import '../../../../domain/recommendation/entity/recommentation.dart';
 
 Widget directionTabWidget(
   BuildContext context, {
   required List<DirectionEntity> tabDirections,
-  required int selectedDirectionId,
   required List<BreedEntity> tabBreeds,
-  required PercentEntity percent,
   required List<CardEntity> cards,
-  required int selectedPetsId,
 }) {
   final colors = Theme.of(context).appColors;
   final typography = Theme.of(context).appTypography;

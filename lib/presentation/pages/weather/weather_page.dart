@@ -1,42 +1,62 @@
 import 'dart:convert';
-
 import 'package:agro/core/configs/theme/theme.dart';
+import 'package:agro/presentation/cubit/agro_cubit.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+
+//TODO: it`ll impelement with clean arhitechture
 
 class Weather {
   final String areaName;
-  final List<Forecast> forecastList;
+  final Map<String, Forecast> forecastMap;
 
-  Weather({required this.areaName, required this.forecastList});
+  Weather({required this.areaName, required this.forecastMap});
 
   factory Weather.fromJson(Map<String, dynamic> json) {
     var list = json['list'] as List;
-    List<Forecast> forecastList =
-        list.map((item) => Forecast.fromJson(item)).toList();
+    Map<String, Forecast> forecastMap = {};
+
+    // Группируем прогнозы по дням
+    for (var item in list) {
+      Forecast forecast = Forecast.fromJson(item);
+      String dateKey = DateFormat('yyyy-MM-dd')
+          .format(forecast.date); // Форматируем дату для ключа
+
+      if (!forecastMap.containsKey(dateKey)) {
+        forecastMap[dateKey] =
+            forecast; // Сохраняем первый прогноз для каждого дня
+      }
+    }
 
     return Weather(
       areaName: json['city']['name'],
-      forecastList: forecastList,
+      forecastMap: forecastMap,
     );
   }
 }
 
 class Forecast {
   final DateTime date;
-  final double tempMin;
-  final double tempMax;
+  final dynamic tempMin;
+  final dynamic tempMax;
+  final String icon;
 
-  Forecast({required this.date, required this.tempMin, required this.tempMax});
+  Forecast({
+    required this.date,
+    required this.tempMin,
+    required this.tempMax,
+    required this.icon,
+  });
 
   factory Forecast.fromJson(Map<String, dynamic> json) {
     return Forecast(
       date: DateTime.parse(json['dt_txt']),
       tempMin: json['main']['temp_min'],
       tempMax: json['main']['temp_max'],
+      icon: json['weather'][0]['icon'],
     );
   }
 }
@@ -70,19 +90,23 @@ class _WeatherPageState extends State<WeatherPage> {
   fetchData() async {
     try {
       final weather = await getWeather();
+
       setState(() {
         _weather = weather;
-        // Получаем месяц из первого прогноза, чтобы он был отображён сверху
-        if (_weather?.forecastList.isNotEmpty ?? false) {
-          _monthName =
-              DateFormat('MMMM').format(_weather!.forecastList[0].date);
+        if (_weather?.forecastMap.isNotEmpty ?? false) {
+          _monthName = DateFormat('MMMM', 'ru_RU')
+              .format(_weather!.forecastMap.values.first.date);
+
+          // Делаем первую букву заглавной
+          _monthName = _monthName?.replaceFirst(
+              _monthName![0], _monthName![0].toUpperCase());
         }
       });
     } catch (e) {
       print(e);
     }
   }
-  
+
   @override
   void initState() {
     super.initState();
@@ -97,94 +121,133 @@ class _WeatherPageState extends State<WeatherPage> {
   }
 
   Widget buildUi() {
-    if (_weather == null) {
-      return const Center(
-        child: CircularProgressIndicator(),
-      );
-    }
-    return Padding(
-      padding: const EdgeInsets.all(8),  
-      child: CustomScrollView(
-        slivers: [
-          _locationHeader(),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.only(left: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 29),
-                  Text(
-                    _monthName ?? '...',
-                  ),
-                  const SizedBox(height: 24),
-                ],
+    return SafeArea(
+      child: Padding(
+        padding: EdgeInsets.all(8.r),
+        child: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: EdgeInsets.only(left: 16.w),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 29.h),
+                    Text(
+                      _monthName ?? '...',
+                    ),
+                    SizedBox(height: 24.h),
+                  ],
+                ),
               ),
             ),
-          ),
-          buildDays(context, weatherIcon: 'assets/sunny_grey.svg')
-        ],
+            buildDays(context),
+            SliverToBoxAdapter(
+              child: 24.verticalSpace,
+            )
+          ],
+        ),
       ),
     );
   }
 
-  Widget _locationHeader() {
-    return SliverToBoxAdapter(
-      child: Text(
-        _weather?.areaName ?? 'loading name...',
-        textAlign: TextAlign.center,
-        style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-      ),
-    );
-  }
-
-  Widget buildDays(BuildContext context, {required String weatherIcon}) {
+  Widget buildDays(BuildContext context) {
     final typography = Theme.of(context).appTypography;
-    final mediaQueryWidth = MediaQuery.sizeOf(context).width;
-
-    DateFormat dateFormat = DateFormat('dd.MM');
+    final colors = Theme.of(context).appColors;
 
     return SliverGrid(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: mediaQueryWidth >= 450 ? 5 : 4,
-        crossAxisSpacing: 16,
-        mainAxisSpacing: 7.5,
-        childAspectRatio: mediaQueryWidth >= 450 ? 0.7 : 1.3,
+        crossAxisCount: ScreenUtil().screenWidth >= 450.w ? 5 : 4,
+        crossAxisSpacing: 15.w,
+        mainAxisSpacing: 15.h,
+        childAspectRatio: ScreenUtil().screenWidth >= 450.w ? 0.7 : 1.2,
       ),
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index) {
-          final forecast = _weather?.forecastList[index];
+          List<String> uniqueDates = _weather?.forecastMap.keys.toList() ?? [];
+          String dateKey = uniqueDates[index];
+          Forecast forecast = _weather!.forecastMap[dateKey]!;
 
-          if (forecast == null) return Container();
+          var dayInfo = getDayLabel(forecast.date);
+          String dayLabel = dayInfo['label'];
+          bool isToday = dayInfo['isToday'];
 
-          String dayMonth = dateFormat.format(forecast.date);
-
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(dayMonth, style: typography.p3.bold),
-              const SizedBox(height: 7),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SvgPicture.asset(weatherIcon),
-                  const SizedBox(width: 4),
-                  Column(
-                    children: [
-                      Text('${forecast.tempMin.toStringAsFixed(1)}°C',
-                          style: typography.p3.bold),
-                      const SizedBox(height: 6),
-                      Text('${forecast.tempMax.toStringAsFixed(1)}°C',
-                          style: typography.p3.bold),
-                    ],
-                  ),
-                ],
-              ),
-            ],
+          return Container(
+            decoration: isToday
+                ? BoxDecoration(
+                    color: colors.secondary1,
+                    borderRadius: BorderRadius.circular(12.r))
+                : null,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(height: 3.h),
+                Text(
+                  dayLabel,
+                  style: isToday
+                      ? typography.p3.bold.copyWith(color: colors.background)
+                      : typography.p3.bold,
+                ),
+                SizedBox(height: 7.h),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 40.w,
+                      height: 36.h,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Image.network(
+                        'https://openweathermap.org/img/wn/${forecast.icon}@2x.png',
+                      ),
+                    ),
+                    SizedBox(width: 3.w),
+                    Column(
+                      children: [
+                        Text(
+                          '${forecast.tempMin.toStringAsFixed(1)}°C',
+                          style: isToday
+                              ? typography.p3.bold
+                                  .copyWith(color: colors.background)
+                              : typography.p3.bold,
+                        ),
+                        SizedBox(height: 2.h),
+                        Text(
+                          '${forecast.tempMax.toStringAsFixed(1)}°C',
+                          style: isToday
+                              ? typography.p3.bold
+                                  .copyWith(color: colors.background)
+                              : typography.p3.bold,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
           );
         },
-        childCount: _weather?.forecastList.length ?? 0,
+        childCount: _weather?.forecastMap.length ?? 0,
       ),
     );
+  }
+}
+
+Map<String, dynamic> getDayLabel(DateTime date) {
+  final now = DateTime.now();
+  final today = DateTime(now.year, now.month, now.day);
+  final tomorrow = today.add(const Duration(days: 1));
+
+  if (date.year == today.year &&
+      date.month == today.month &&
+      date.day == today.day) {
+    return {"label": "Бүгүн", "isToday": true};
+  } else if (date.year == tomorrow.year &&
+      date.month == tomorrow.month &&
+      date.day == tomorrow.day) {
+    return {"label": "Эртең", "isToday": false};
+  } else {
+    return {"label": DateFormat('dd.MM').format(date), "isToday": false};
   }
 }

@@ -1,6 +1,7 @@
 import 'package:agro/core/configs/theme/theme.dart';
 import 'package:agro/presentation/pages/weather/weather_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 final date = [
@@ -10,7 +11,10 @@ final date = [
   '18.11',
 ];
 
-Widget stackWeatherProfit(BuildContext context, {required int profitability}) {
+Widget stackWeatherProfit(
+  BuildContext context, {
+  required int profitability,
+}) {
   final colors = Theme.of(context).appColors;
   final typography = Theme.of(context).appTypography;
 

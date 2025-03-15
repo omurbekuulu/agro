@@ -7,7 +7,7 @@ abstract class AppPalette {
   static const black = Color.fromARGB(255, 0, 0, 0);
 
   static const forestGreen = Color(0xFF328E19);
-  static const green = Color(0xFF61BB46);
+  static const green = Color(0xff61BB46);
   static const semiTransparentGreen = Color(0x5061BB46);
   static const semiTransparentOrange = Color(0x50F19831);
   static const semiTransparentRed = Color(0x50F13131);
