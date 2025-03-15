@@ -8,3 +8,5 @@ final class DisplaySplash extends SplashState {}
 final class Authenticated extends SplashState {}
 
 final class UnAuthenticated extends SplashState {}
+
+final class DisplayUnConnected extends SplashState {}

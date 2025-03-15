@@ -9,13 +9,14 @@ class LoggerInterceptor extends Interceptor {
   );
 
   @override
-  void onError(DioException err, ErrorInterceptorHandler handler) {
+  void onError(DioException err, ErrorInterceptorHandler handler) async {
     final options = err.requestOptions;
     final requestPath = '${options.baseUrl}${options.path}';
     logger.e('${options.method} request ==> $requestPath'); //Error log
     logger.d('Error type: ${err.error} \n '
         'Error message: ${err.message}'); //Debug log
-    handler.next(err); //Continue with the Error
+
+    handler.next(err);
   }
 
   @override
@@ -42,8 +43,7 @@ class AuthorizationInterceptor extends Interceptor {
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
     final token = sharedPreferences.getString('token');
-    options.headers['Authorization'] =
-        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdHJpbmciLCJpYXQiOjE3NDA5MDM1NjcsImV4cCI6MTc0MDkxNzk2N30.jkJkKJDn8tQwFriHopdZerxmv6M8huwmxo3IjG0HJ5M";
+    options.headers['Authorization'] = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdHJpbmciLCJpYXQiOjE3NDIwNDEzMDUsImV4cCI6MTc0MjA1NTcwNX0.UWpeHK---yMFFbI0GKFv7mVtLhkvTm4JLb83j98gMMU";
     handler.next(options);
   }
 }

@@ -3,10 +3,13 @@ import 'package:flutter_svg/svg.dart';
 
 import 'package:agro/core/configs/theme/theme.dart';
 
-Widget profilViewWidget(BuildContext context) {
+Widget profilViewWidget(
+  BuildContext context, {
+  required String userName,
+}) {
   final colors = Theme.of(context).appColors;
   final typography = Theme.of(context).appTypography;
-  
+
   return Column(
     children: [
       const SizedBox(height: 24),
@@ -16,24 +19,19 @@ Widget profilViewWidget(BuildContext context) {
           borderRadius: BorderRadius.circular(12),
         ),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
               padding:
                   const EdgeInsets.only(left: 4, right: 25, top: 4, bottom: 4),
               child: SvgPicture.asset('assets/human-icon.svg'),
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Иванов Иван',
-                  style: typography.h3.bold.copyWith(color: colors.secondary1),
-                ),
-                Text(
-                  '+996 505 00 12 45',
-                  style: typography.p3.regular,
-                ),
-              ],
+            Padding(
+              padding: const EdgeInsets.only(top: 4),
+              child: Text(
+                userName,
+                style: typography.h3.bold.copyWith(color: colors.secondary1),
+              ),
             )
           ],
         ),

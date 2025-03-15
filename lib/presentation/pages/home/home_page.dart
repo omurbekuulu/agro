@@ -1,4 +1,5 @@
 import 'package:agro/domain/percent/entity/percent.dart';
+import 'package:agro/presentation/cubit/agro_cubit.dart';
 import 'package:agro/presentation/pages/home/cubit/home_cubit.dart';
 import 'package:agro/presentation/pages/home/widgets/direction_tab_widget.dart';
 import 'package:agro/presentation/pages/home/widgets/stack_weather_profit_widget.dart';
@@ -31,7 +32,7 @@ class _HomeViewState extends State<_HomeView> {
       body: SafeArea(
         child: BlocBuilder<HomeCubit, HomeState>(
           builder: (context, state) {
-            if (!state.isLoaded) {
+            if (state.isLoaded == false) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
@@ -39,7 +40,10 @@ class _HomeViewState extends State<_HomeView> {
             return Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                stackWeatherProfit(context, profitability: state.profitability),
+                stackWeatherProfit(
+                  context,
+                  profitability: state.profitability,
+                ),
                 directionTabWidget(context,
                     selectedDirectionId: state.selectedDirectionId,
                     selectedPetsId: state.selectedPetsId!,

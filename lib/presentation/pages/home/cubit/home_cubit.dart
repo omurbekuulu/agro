@@ -23,23 +23,126 @@ part 'home_state.dart';
 class HomeCubit extends Cubit<HomeState> {
   HomeCubit() : super(const HomeState());
 
-  void updateDirection(DirectionEntity selectedDirection) {
+  void updateDirection(DirectionEntity selectedDirection) async {
+    List<PetEntity> userPets = [];
+    List<BreedEntity> userBreeds = [];
+    late int profitability;
+    late PercentEntity percent;
+    late List<CardEntity> cards;
+
+    var responseUserPets = await sl<GetPetsUseCase>().call();
+    var responseBreeds = await sl<GetBreedsUseCase>().call();
+    var responseProfibility =
+        await sl<GetProfitabilityUseCase>().call(selectedDirection.id!);
+
+    responseUserPets.fold(
+      (error) {
+        emit(FailureLoadHome(errorMessage: error));
+      },
+      (data) {
+        userPets = data;
+      },
+    );
+
+    responseBreeds.fold(
+      (error) {
+        emit(FailureLoadHome(errorMessage: error));
+      },
+      (data) {
+        List<BreedEntity> userBreedsSorted = data.where((breed) {
+          return userPets.any((pet) =>
+              pet.directionId == selectedDirection.id &&
+              pet.breedId == breed.id);
+        }).toList();
+        userBreeds = userBreedsSorted;
+      },
+    );
+
+    responseProfibility.fold(
+      (error) {
+        emit(FailureLoadHome(errorMessage: error));
+      },
+      (data) {
+        profitability = data;
+      },
+    );
+
+    var responseCards = await sl<GetRecommendationsUseCase>().call(
+      params: selectedDirection.id,
+      params2: userBreeds.first.id,
+    );
+
+    responseCards.fold(
+      (error) {
+        emit(FailureLoadHome(errorMessage: error));
+      },
+      (data) {
+        cards = data;
+      },
+    );
+
+    var responsePercent =
+        await sl<GetPercentUseCase>().call(params: userBreeds.first.id);
+
+    responsePercent.fold(
+      (error) {
+        emit(FailureLoadHome(errorMessage: error['message']));
+      },
+      (data) {
+        percent = data;
+      },
+    );
+
     emit(
-      (state).copyWith(selectedDirectionId: selectedDirection.id),
+      state.copyWith(
+        userBreeds: userBreeds,
+        profitability: profitability,
+        percent: percent,
+        cards: cards,
+        selectedDirectionId: selectedDirection.id,
+      ),
     );
   }
 
-  void updateBreed(BreedEntity selectedBreed) {
+  void updateBreed(BreedEntity selectedBreed) async {
+    late PercentEntity percent;
+    late List<CardEntity> cards;
+
+    var responseCards = await sl<GetRecommendationsUseCase>().call(
+      params: state.selectedDirectionId,
+      params2: selectedBreed.id,
+    );
+
+    responseCards.fold(
+      (error) {
+        emit(FailureLoadHome(errorMessage: error));
+      },
+      (data) {
+        cards = data;
+      },
+    );
+
+    var responsePercent =
+        await sl<GetPercentUseCase>().call(params: selectedBreed.id);
+
+    responsePercent.fold(
+      (error) {
+        emit(FailureLoadHome(errorMessage: error['message']));
+      },
+      (data) {
+        percent = data;
+      },
+    );
+
     emit(
-      (state).copyWith(selectedBreedId: selectedBreed.id),
+      state.copyWith(
+        percent: percent,
+        cards: cards,
+      ),
     );
   }
 
   void initHome() async {
-    emit(
-      state.copyWith(isLoaded: false),
-    );
-
     List<DirectionEntity> directions = [];
     List<BreedEntity> userBreeds = [];
     List<PetEntity> userPets = [];
@@ -52,7 +155,7 @@ class HomeCubit extends Cubit<HomeState> {
     var responseBreeds = await sl<GetBreedsUseCase>().call();
     var responseUserPets = await sl<GetPetsUseCase>().call();
     var responseProfibility =
-        await sl<GetProfitabilityUseCase>().call(1);
+        await sl<GetProfitabilityUseCase>().call(state.selectedDirectionId);
 
     responseDirections.fold(
       (error) {
@@ -63,7 +166,7 @@ class HomeCubit extends Cubit<HomeState> {
         directions = data;
       },
     );
-    
+
     responseProfibility.fold(
       (error) {
         emit(FailureLoadHome(errorMessage: error));
@@ -96,11 +199,9 @@ class HomeCubit extends Cubit<HomeState> {
       },
     );
 
-    var selectedPet = userPets.first;
-    
     var responseCards = await sl<GetRecommendationsUseCase>().call(
-      params: 1,
-      params2: selectedPet.id,
+      params: state.selectedDirectionId,
+      params2: state.selectedBreedId ?? userBreeds.first.id,
     );
 
     responseCards.fold(
@@ -113,7 +214,7 @@ class HomeCubit extends Cubit<HomeState> {
     );
 
     var responsePercent =
-        await sl<GetPercentUseCase>().call(params: selectedPet.id);
+        await sl<GetPercentUseCase>().call(params: userBreeds.first.id);
 
     responsePercent.fold(
       (error) {
@@ -132,7 +233,8 @@ class HomeCubit extends Cubit<HomeState> {
         profitability: profitability,
         percent: percent,
         cards: cards,
-        selectedPetsId: selectedPet.id,
+        selectedDirectionId: 1,
+        selectedPetsId: userBreeds.first.id,
       ),
     );
   }
@@ -154,10 +256,21 @@ class HomeCubit extends Cubit<HomeState> {
     required bool isDecreas,
     required RecordEntity recordEntity,
   }) async {
-    await sl<PostIncomeUseCase>().postIncome(
+    final responsePostIncome = await sl<PostIncomeUseCase>().postIncome(
       selectedPetId,
       isDecreas,
       recordEntity,
+    );
+
+    responsePostIncome.fold(
+      (e) {
+        emit(
+          state.copyWith(
+            isConflict: true,
+          ),
+        );
+      },
+      (data) {},
     );
   }
 }

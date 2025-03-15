@@ -1,5 +1,5 @@
 import 'package:agro/presentation/pages/category/category_page.dart';
-import 'package:agro/presentation/pages/landing/landing_page.dart';
+import 'package:agro/presentation/pages/un_connected_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -81,6 +81,7 @@ class _SignInPageState extends State<SignInPage> {
                           border: OutlineInputBorder(),
                           hintText: 'Аты жөнү',
                         ),
+                        autocorrect: false,
                         autovalidateMode: AutovalidateMode.onUnfocus,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -129,9 +130,12 @@ class _SignInPageState extends State<SignInPage> {
                               );
                               response.fold(
                                 (error) {
-                                  setState(() {
-                                    _isNull = true;
-                                  });
+                                  error == 'connectionError'
+                                      ? AppNavigator.pushReplacement(
+                                          context, const UnConnectedPage())
+                                      : setState(() {
+                                          _isNull = true;
+                                        });
                                 },
                                 (data) {
                                   AppNavigator.pushAndRemove(

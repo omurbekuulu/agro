@@ -1,20 +1,33 @@
 import 'package:agro/common/helper/navigation/app_navigator.dart';
+import 'package:agro/presentation/pages/statistics/cubit/statistics_cubit.dart';
 import 'package:flutter/material.dart';
 
 import 'package:agro/core/configs/theme/theme.dart';
 import 'package:agro/presentation/pages/expense_data/expense_data_page.dart';
 import 'package:agro/presentation/pages/income_data/income_data_page.dart';
 import 'package:agro/presentation/pages/statistics/widgets/custom_grid.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../common/widgets/customLogo.dart';
+import '../../../../common/widgets/recording_page.dart';
 import '../../../../domain/percent/entity/percent.dart';
+import '../../../../domain/transaction/entities/record.dart';
+import '../../landing/landing_page.dart';
 
 Widget breedTabBarViewWidget(
   BuildContext context, {
+  required int selectedDirectionId,
+  required int selectedPetsId,
   required PercentEntity percent,
 }) {
   final colors = Theme.of(context).appColors;
   final typography = Theme.of(context).appTypography;
+
+  TextEditingController priceController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
+  TextEditingController quantityController = TextEditingController();
+
+  final isConflict = context.select((StatisticsCubit b) => b.state.isConflict);
 
   return Stack(
     children: [
@@ -51,7 +64,31 @@ Widget breedTabBarViewWidget(
                   const SizedBox(height: 24),
                   FilledButton(
                     onPressed: () {
-                      // AppNavigator.push(context, const AddIncomePage());
+                      AppNavigator.push(
+                        context,
+                        RecordingPage(
+                          isInomce: true,
+                          priceController: priceController,
+                          descriptionController: descriptionController,
+                          quantityController: quantityController,
+                          isConflict: isConflict,
+                          onTap: () async {
+                            context.read<StatisticsCubit>().addIncome(
+                                  selectedPetId: selectedPetsId,
+                                  isDecreas:
+                                      selectedDirectionId == 1 ? true : false,
+                                  recordEntity: RecordEntity(
+                                    price: int.parse(priceController.text),
+                                    description: descriptionController.text,
+                                    quantity:
+                                        int.parse(quantityController.text),
+                                  ),
+                                );
+                            AppNavigator.pushAndRemove(
+                                context, const LandingPage());
+                          },
+                        ),
+                      );
                     },
                     style: ButtonStyle(
                       backgroundColor:
@@ -72,7 +109,30 @@ Widget breedTabBarViewWidget(
                   const SizedBox(height: 24),
                   FilledButton(
                     onPressed: () {
-                      // AppNavigator.push(context, const AddExpensePage());
+                      AppNavigator.push(
+                        context,
+                        RecordingPage(
+                          isInomce: false,
+                          priceController: priceController,
+                          descriptionController: descriptionController,
+                          quantityController: quantityController,
+                          isConflict: isConflict,
+                          onTap: () async {
+                            context.read<StatisticsCubit>().addExpense(
+                                  selectedPetId: selectedPetsId,
+                                  recommId: -1,
+                                  recordEntity: RecordEntity(
+                                    price: int.parse(priceController.text),
+                                    description: descriptionController.text,
+                                    quantity:
+                                        int.parse(quantityController.text),
+                                  ),
+                                );
+                            AppNavigator.pushAndRemove(
+                                context, const LandingPage());
+                          },
+                        ),
+                      );
                     },
                     style: ButtonStyle(
                       backgroundColor:

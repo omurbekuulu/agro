@@ -19,7 +19,7 @@ class PetModel {
     return PetModel(
       id: json['id'],
       userId: json['userId'],
-      breedId: json['breedId'],
+      breedId: json['sectionsId'],
       directionId: json['directionId'],
       quantity: json['quantity'],
       animalMonths: json['animaMonth'],
@@ -28,7 +28,7 @@ class PetModel {
 
   Map<String, dynamic> toJson() {
     return {
-      'breedId': breedId,
+      'sectionsId': breedId,
       'directionId': directionId,
       'quantity': quantity,
       'month': animalMonths,

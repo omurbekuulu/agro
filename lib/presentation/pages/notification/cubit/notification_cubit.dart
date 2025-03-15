@@ -87,9 +87,7 @@ class NotificationCubit extends Cubit<NotificationState> {
   }
 
   void initNotification() async {
-    emit(
-      state.copyWith(isLoaded: false),
-    );
+    (state.copyWith(isLoaded: false),);
 
     List<DirectionEntity> directions = [];
     List<PetEntity> userPets = [];

@@ -1,58 +1,66 @@
 part of 'statistics_cubit.dart';
 
 @immutable
-sealed class StatisticsState {}
-
-class InitialStatistics extends StatisticsState {}
-
-class LoadingStatistics extends StatisticsState {}
-
-class LoadedStatistics extends StatisticsState {
+class StatisticsState extends Equatable {
+  final bool isLoaded;
   final List<DirectionEntity> directions;
-  final int profitability;
   final List<BreedEntity> userBreeds;
   final PercentEntity? percent;
-  final List<CardEntity> cards;
   final int selectedDirectionId;
-  final int selectedBreedId;
-  final int selectedPetsId;
+  final int? selectedBreedId;
+  final int? selectedPetsId;
+  final bool isConflict;
 
-  LoadedStatistics({
-    this.selectedBreedId = 1,
-    this.selectedDirectionId = 1,
-    this.selectedPetsId = 1,
-    this.profitability = 0,
-    this.userBreeds = const [],
+  const StatisticsState({
+    this.isLoaded = false,
     this.directions = const [],
+    this.userBreeds = const [],
     this.percent,
-    this.cards = const [],
+    this.selectedDirectionId = 1,
+    this.selectedBreedId,
+    this.selectedPetsId,
+    this.isConflict = false,
   });
 
-  LoadedStatistics copyWith({
+  StatisticsState copyWith({
+    bool? isLoaded,
     List<DirectionEntity>? directions,
-    int? profitability,
     List<BreedEntity>? userBreeds,
     PercentEntity? percent,
-    List<CardEntity>? cards,
     int? selectedDirectionId,
     int? selectedBreedId,
     int? selectedPetsId,
+    bool? isConflict,
   }) {
-    return LoadedStatistics(
+    return StatisticsState(
+      isLoaded: isLoaded ?? this.isLoaded,
       directions: directions ?? this.directions,
-      profitability: profitability ?? this.profitability,
       userBreeds: userBreeds ?? this.userBreeds,
       percent: percent ?? this.percent,
-      cards: cards ?? this.cards,
       selectedDirectionId: selectedDirectionId ?? this.selectedDirectionId,
       selectedBreedId: selectedBreedId ?? this.selectedBreedId,
       selectedPetsId: selectedPetsId ?? this.selectedPetsId,
+      isConflict: isConflict ?? this.isConflict,
     );
+  }
+
+  @override
+  List<Object?> get props {
+    return [
+      isLoaded,
+      directions,
+      userBreeds,
+      percent,
+      selectedDirectionId,
+      selectedBreedId,
+      selectedPetsId,
+      isConflict,
+    ];
   }
 }
 
 class FailureLoadStatistics extends StatisticsState {
   final String errorMessage;
 
-  FailureLoadStatistics({required this.errorMessage});
+  const FailureLoadStatistics({required this.errorMessage});
 }

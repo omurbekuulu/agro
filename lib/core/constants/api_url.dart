@@ -6,7 +6,7 @@ class ApiUrl {
   static const signin = 'api/v1/auth/sign-in';
   static const categories = 'api/category';
   static const directions = 'directions/by/';
-  static const breeds = 'api/breed';
+  static const breeds = 'api/sections';
   static const seasons = 'api/seasons';
   static const pets = 'api/user-pets';
   static const profitability = 'api/transactions/profitability/';

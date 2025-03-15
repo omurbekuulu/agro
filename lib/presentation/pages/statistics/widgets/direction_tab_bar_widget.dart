@@ -14,6 +14,8 @@ Widget directionTabBarWidget(
   BuildContext context, {
   required List<DirectionEntity> tabDirections,
   required List<BreedEntity> tabBreeds,
+  required selectedDirectionId,
+  required int selectedPetsId,
   required PercentEntity percent,
 }) {
   final colors = Theme.of(context).appColors;
@@ -58,6 +60,8 @@ Widget directionTabBarWidget(
                     tabBreeds: tabBreeds,
                     tabBarViews: breedTabBarViewWidget(
                       context,
+                      selectedDirectionId: selectedDirectionId,
+                      selectedPetsId: selectedPetsId,
                       percent: percent,
                     ),
                   );

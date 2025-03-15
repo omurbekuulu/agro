@@ -11,6 +11,7 @@ class HomeState extends Equatable {
   final int selectedDirectionId;
   final int? selectedBreedId;
   final int? selectedPetsId;
+  final bool isConflict;
 
   const HomeState({
     this.isLoaded = false,
@@ -22,6 +23,7 @@ class HomeState extends Equatable {
     this.selectedDirectionId = 1,
     this.selectedBreedId,
     this.selectedPetsId,
+    this.isConflict = false,
   });
 
   HomeState copyWith({
@@ -34,6 +36,7 @@ class HomeState extends Equatable {
     int? selectedDirectionId,
     int? selectedBreedId,
     int? selectedPetsId,
+    bool? isConflict,
   }) {
     return HomeState(
       isLoaded: isLoaded ?? this.isLoaded,
@@ -45,21 +48,23 @@ class HomeState extends Equatable {
       selectedDirectionId: selectedDirectionId ?? this.selectedDirectionId,
       selectedBreedId: selectedBreedId ?? this.selectedBreedId,
       selectedPetsId: selectedPetsId ?? this.selectedPetsId,
+      isConflict: isConflict ?? this.isConflict,
     );
   }
 
   @override
-  List<Object> get props {
+  List<Object?> get props {
     return [
       isLoaded,
       directions,
       userBreeds,
       profitability,
-      percent!,
+      percent,
       cards,
       selectedDirectionId,
-      selectedBreedId!,
-      selectedPetsId!,
+      selectedBreedId,
+      selectedPetsId,
+      isConflict,
     ];
   }
 }

@@ -5,26 +5,57 @@ import 'package:agro/core/configs/theme/theme.dart';
 import '../../../../common/widgets/customLogo.dart';
 import '../../../../common/widgets/customTextFormField.dart';
 
-class RecordingPage extends StatelessWidget {
-  RecordingPage({
+class RecordingPage extends StatefulWidget {
+  const RecordingPage({
     super.key,
     required this.onTap,
     required this.priceController,
     required this.descriptionController,
     required this.quantityController,
+    required this.isInomce,
+    required this.isConflict,
   });
 
+  final bool isInomce;
   final TextEditingController priceController;
   final TextEditingController descriptionController;
   final TextEditingController quantityController;
   final Function() onTap;
+  final bool isConflict;
 
+  @override
+  _RecordingPageState createState() => _RecordingPageState();
+}
+
+class _RecordingPageState extends State<RecordingPage> {
   final _formKey = GlobalKey<FormState>();
+
+  void _handleTap(BuildContext context) {
+    if (widget.isConflict) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          content: const Text(
+              'Сиз өзүңүздөгү жаныбарларга караганда көбүрөөк жаныбарларды тизмектедиңиз.'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('ОК'),
+            ),
+          ],
+        ),
+      );
+    } else {
+      widget.onTap();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).appColors;
     final typography = Theme.of(context).appTypography;
+
+    final isValid = _formKey.currentState?.validate() ?? false;
 
     return Scaffold(
       body: SafeArea(
@@ -34,6 +65,7 @@ class RecordingPage extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Form(
                 key: _formKey,
+                autovalidateMode: AutovalidateMode.onUnfocus,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -42,7 +74,7 @@ class RecordingPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Кошумча чыгаша',
+                          widget.isInomce ? 'Жаңы киреше' : 'Кошумча чыгаша',
                           style: typography.h2.bold,
                         ),
                         TextButton(
@@ -71,7 +103,7 @@ class RecordingPage extends StatelessWidget {
                           const SizedBox(height: 4),
                           customTextFormField(
                             context,
-                            controller: priceController,
+                            controller: widget.priceController,
                             inputType: TextInputType.number,
                             hintText: '0 с',
                           ),
@@ -85,7 +117,7 @@ class RecordingPage extends StatelessWidget {
                           const SizedBox(height: 4),
                           customTextFormField(
                             context,
-                            controller: descriptionController,
+                            controller: widget.descriptionController,
                             inputType: TextInputType.text,
                             hintText: 'Кошумча сөздөр',
                           ),
@@ -98,7 +130,7 @@ class RecordingPage extends StatelessWidget {
                           ),
                           customTextFormField(
                             context,
-                            controller: quantityController,
+                            controller: widget.quantityController,
                             inputType: TextInputType.number,
                             hintText: '0',
                           ),
@@ -120,7 +152,16 @@ class RecordingPage extends StatelessWidget {
               right: 16,
               left: 16,
               child: FilledButton(
-                onPressed: onTap,
+                style: ButtonStyle(
+                  backgroundColor: WidgetStateProperty.all(
+                    isValid == true ? colors.primary : colors.onBackground,
+                  ),
+                ),
+                onPressed: isValid == true
+                    ? () {
+                        _handleTap(context);
+                      }
+                    : null,
                 child: const Text('Кошуу'),
               ),
             ),

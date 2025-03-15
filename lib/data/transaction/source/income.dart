@@ -14,8 +14,6 @@ class IncomeServiceImpl extends IncomeService {
   @override
   Future<Either> postIncome(
       int userPetsId, bool isDecreas, RecordModel model) async {
-    print(
-        '\n ${model.description} \n ${model.price} \n ${model.quantity} ${ApiUrl.postIncome}$userPetsId?decreases=$isDecreas');
     try {
       var response = await sl<DioClient>().post(
         '${ApiUrl.postIncome}$userPetsId?decreases=$isDecreas',
@@ -23,7 +21,7 @@ class IncomeServiceImpl extends IncomeService {
       );
       return Right(response.data);
     } on DioException catch (e) {
-      return Left(e.type.name);
+      return Left(e.response!.data);
     }
   }
 }
