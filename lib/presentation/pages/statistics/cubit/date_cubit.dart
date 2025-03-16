@@ -8,15 +8,21 @@ class DateCubit extends Cubit<DateState> {
   DateCubit()
       : super(
           DateState(
-              selectedDateTimeRange: DateTimeRange(
-            start: DateTime.now(),
-            end: DateTime.now(),
-          )),
+            selectedDateTimeRange: DateTimeRange(
+              start: DateTime.now(),
+              end: DateTime.now(),
+            ),
+            today: DateTime.now(),
+          ),
         );
 
   void updateSelectedDate(DateTimeRange selectedDate) {
     emit(
       state.copyWith(selectedDateTimeRange: selectedDate),
     );
+  }
+
+  void onSelectedDate(DateTime day) {
+    emit(state.copyWith(today: day));
   }
 }
