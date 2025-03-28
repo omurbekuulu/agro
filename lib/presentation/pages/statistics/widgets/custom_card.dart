@@ -5,17 +5,15 @@ import 'package:agro/core/configs/theme/theme.dart';
 class CustomCard extends StatelessWidget {
   final String title;
   final String subtitle;
-  final String type;
-  final String amount;
-  final Color amountColor;
+  final String profit;
+  final String price;
 
   const CustomCard({
     super.key,
     required this.title,
     this.subtitle = '',
-    required this.type,
-    required this.amount,
-    this.amountColor = Colors.green,
+    required this.profit,
+    required this.price,
   });
 
   @override
@@ -47,12 +45,12 @@ class CustomCard extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            type,
+            profit,
             style: typography.p2.medium,
           ),
           const SizedBox(height: 4),
           Text(
-            amount,
+            price,
             style: typography.h3.bold.copyWith(color: colors.secondary1),
           ),
         ],

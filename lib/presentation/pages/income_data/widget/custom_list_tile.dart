@@ -8,6 +8,7 @@ Widget customListTile(BuildContext context) {
   final mediaWidth = MediaQuery.sizeOf(context).width;
 
   return Container(
+    margin: const EdgeInsets.only(bottom: 12),
     decoration: BoxDecoration(
       border: Border.all(
         width: 1,

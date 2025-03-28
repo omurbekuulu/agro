@@ -26,13 +26,11 @@ Widget breedTabBar(
         builder: (context) {
           final TabController tabController = DefaultTabController.of(context);
 
-        // Слушаем изменения индекса
         tabController.addListener(() {
           if (!tabController.indexIsChanging) {
             final selectedIndex = tabController.index;
             final selectedBreed = tabBreeds[selectedIndex];
 
-            // Обновляем состояние Cubit
             context.read<HomeCubit>().updateBreed(selectedBreed);
           }
         });

@@ -37,7 +37,8 @@ class NotificationCubit extends Cubit<NotificationState> {
         emit(FailureLoadNotification(errorMessage: error));
       },
       (data) {
-        List<BreedEntity> userBreedsSorted = data.where((breed) {
+        List<BreedEntity> breeds = data;
+        List<BreedEntity> userBreedsSorted = breeds.where((breed) {
           return userPets.any((pet) =>
               pet.directionId == selectedDirection.id &&
               pet.breedId == breed.id);
@@ -58,6 +59,7 @@ class NotificationCubit extends Cubit<NotificationState> {
       (data) {
         emit(
           (state).copyWith(
+            selectedDirectionId: selectedDirection.id,
             userBreeds: userBreeds,
             cards: data,
           ),
@@ -122,7 +124,8 @@ class NotificationCubit extends Cubit<NotificationState> {
         emit(FailureLoadNotification(errorMessage: error));
       },
       (data) {
-        List<BreedEntity> userBreedsSorted = data.where((breed) {
+        List<BreedEntity> breeds = data;
+        List<BreedEntity> userBreedsSorted = breeds.where((breed) {
           return userPets.any((pet) =>
               pet.directionId == state.selectedDirectionId &&
               pet.breedId == breed.id);

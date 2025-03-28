@@ -10,6 +10,7 @@ Widget breedTabBar(
   BuildContext context, {
   required List<BreedEntity> tabBreeds,
   required Widget tabBarViews,
+  required int selectedDirectionid,
 }) {
   final colors = Theme.of(context).appColors;
   final typography = Theme.of(context).appTypography;
@@ -25,14 +26,15 @@ Widget breedTabBar(
       child: Builder(builder: (context) {
         final TabController tabController = DefaultTabController.of(context);
 
-        // Слушаем изменения индекса
         tabController.addListener(() {
           if (!tabController.indexIsChanging) {
             final selectedIndex = tabController.index;
             final selectedBreed = tabBreeds[selectedIndex];
 
-            // Обновляем состояние Cubit
-            context.read<StatisticsCubit>().updateBreed(selectedBreed);
+            context.read<StatisticsCubit>().updateBreed(
+                  selectedBreedId: selectedBreed.id,
+                  selectedDirectionId: selectedDirectionid,
+                );
           }
         });
         return Column(

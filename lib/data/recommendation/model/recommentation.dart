@@ -52,7 +52,7 @@ class RecommendationModel {
       name: json['name'],
       description: json['description'] ?? '',
       seasonId: json['seasonId'],
-      breedId: json['breedId'],
+      breedId: json['sectionsId'],
       durationMonths: json['durationMonths'],
       directionId: json['directionId'],
       did: json['did'],

@@ -1,7 +1,6 @@
 import 'package:agro/core/configs/theme/theme.dart';
 import 'package:agro/presentation/pages/weather/weather_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 final date = [
@@ -13,6 +12,7 @@ final date = [
 
 Widget stackWeatherProfit(
   BuildContext context, {
+  required int selectedDirectionId,
   required int profitability,
 }) {
   final colors = Theme.of(context).appColors;
@@ -94,7 +94,9 @@ Widget stackWeatherProfit(
             child: Column(
               children: [
                 Text(
-                  'Сүт багытынын рентабелдүүлүгү',
+                  selectedDirectionId == 1
+                      ? 'Сүт багытынын рентабелдүүлүгү'
+                      : 'Эт багытынын рентабелдүүлүгү',
                   style: typography.p1.bold.copyWith(
                     color: colors.background,
                   ),

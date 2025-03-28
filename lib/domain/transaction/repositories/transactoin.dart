@@ -6,5 +6,6 @@ abstract class TransactoinRepository {
     required String endDate,
     required int breedId,
     required int directionId,
+    required String profit,
   });
 }

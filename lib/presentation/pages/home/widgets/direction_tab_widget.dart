@@ -28,13 +28,11 @@ Widget directionTabWidget(
       child: Builder(builder: (context) {
         final TabController tabController = DefaultTabController.of(context);
 
-        // Слушаем изменения индекса
         tabController.addListener(() {
           if (!tabController.indexIsChanging) {
             final selectedIndex = tabController.index;
             final selectedDirection = tabDirections[selectedIndex];
 
-            // Обновляем состояние Cubit
             context.read<HomeCubit>().updateDirection(selectedDirection);
           }
         });

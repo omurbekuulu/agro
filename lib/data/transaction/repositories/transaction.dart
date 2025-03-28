@@ -12,12 +12,14 @@ class TransactionRepositoryImpl extends TransactoinRepository {
     required String endDate,
     required int breedId,
     required int directionId,
+    required String profit,
   }) async {
     final responseTransactions = await sl<TransactionService>().getTransactions(
       startDate,
       endDate,
       breedId,
       directionId,
+      profit,
     );
 
     return responseTransactions.fold(

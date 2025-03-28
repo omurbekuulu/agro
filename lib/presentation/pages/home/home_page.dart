@@ -1,5 +1,3 @@
-import 'package:agro/domain/percent/entity/percent.dart';
-import 'package:agro/presentation/cubit/agro_cubit.dart';
 import 'package:agro/presentation/pages/home/cubit/home_cubit.dart';
 import 'package:agro/presentation/pages/home/widgets/direction_tab_widget.dart';
 import 'package:agro/presentation/pages/home/widgets/stack_weather_profit_widget.dart';
@@ -32,9 +30,9 @@ class _HomeViewState extends State<_HomeView> {
       body: SafeArea(
         child: BlocBuilder<HomeCubit, HomeState>(
           builder: (context, state) {
-            if (state.isLoaded == false) {
+            if (!state.isLoaded) {
               return const Center(
-                child: CircularProgressIndicator(),
+                child: CircularProgressIndicator(color: Colors.black),
               );
             }
             return Column(
@@ -42,20 +40,18 @@ class _HomeViewState extends State<_HomeView> {
               children: [
                 stackWeatherProfit(
                   context,
+                  selectedDirectionId: state.selectedDirectionId,
                   profitability: state.profitability,
                 ),
-                directionTabWidget(context,
-                    selectedDirectionId: state.selectedDirectionId,
-                    selectedPetsId: state.selectedPetsId!,
-                    tabDirections: state.directions,
-                    tabBreeds: state.userBreeds,
-                    percent: state.percent ??
-                        PercentEntity(
-                          expense: 0,
-                          income: 0,
-                          performance: 0,
-                        ),
-                    cards: state.cards),
+                directionTabWidget(
+                  context,
+                  selectedDirectionId: state.selectedDirectionId,
+                  selectedPetsId: state.selectedPetsId!,
+                  tabDirections: state.directions,
+                  tabBreeds: state.userBreeds,
+                  percent: state.percent!,
+                  cards: state.cards,
+                ),
                 const SizedBox(height: 24),
               ],
             );

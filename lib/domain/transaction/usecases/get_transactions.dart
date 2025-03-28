@@ -8,12 +8,14 @@ class GetTransactionsUseCase {
     required String endDate,
     required int breedId,
     required int directionId,
+    required String profit,
   }) async {
     return await sl<TransactoinRepository>().getTransactions(
       startDate: startDate,
       endDate: endDate,
       breedId: breedId,
       directionId: directionId,
+      profit: profit,
     );
   }
 }

@@ -10,6 +10,7 @@ abstract class TransactionService {
     String endDate,
     int breedId,
     int directionId,
+    String profit,
   );
 }
 
@@ -20,10 +21,11 @@ class TransactionServiceImpl extends TransactionService {
     String endDate,
     int breedId,
     int directionId,
+    String profit,
   ) async {
     try {
       final transactions = await sl<DioClient>().get(
-        '${ApiUrl.transactions}?startDate=$startDate&endDate=$endDate&breedId=$breedId&directionId=$directionId',
+        '${ApiUrl.transactions}/$directionId?sectionId=$breedId&startDate=$startDate&endDate=$endDate&profit=$profit',
       );
       return Right(transactions.data);
     } on DioException catch (e) {

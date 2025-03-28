@@ -6,6 +6,6 @@ class PercentEntity {
   PercentEntity({
     required this.expense,
     required this.income,
-    required this.performance,
+    this.performance,
   });
 }

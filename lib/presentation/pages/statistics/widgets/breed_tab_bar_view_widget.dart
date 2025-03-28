@@ -1,4 +1,5 @@
 import 'package:agro/common/helper/navigation/app_navigator.dart';
+import 'package:agro/domain/transaction/entities/transaction.dart';
 import 'package:agro/presentation/pages/statistics/cubit/statistics_cubit.dart';
 import 'package:flutter/material.dart';
 
@@ -12,13 +13,13 @@ import '../../../../common/widgets/customLogo.dart';
 import '../../../../common/widgets/recording_page.dart';
 import '../../../../domain/percent/entity/percent.dart';
 import '../../../../domain/transaction/entities/record.dart';
-import '../../landing/landing_page.dart';
 
 Widget breedTabBarViewWidget(
   BuildContext context, {
   required int selectedDirectionId,
   required int selectedPetsId,
   required PercentEntity percent,
+  required List<TransactionEntity> transactions,
 }) {
   final colors = Theme.of(context).appColors;
   final typography = Theme.of(context).appTypography;
@@ -44,9 +45,14 @@ Widget breedTabBarViewWidget(
                         context,
                         title: 'Киреше',
                         subTitle: 'Сумма',
-                        sum: percent.income.toString(),
+                        sum: percent.income ?? 0,
                         onTap: () {
-                          AppNavigator.push(context, const IncomeDataPage());
+                          AppNavigator.push(
+                              context,
+                               IncomeDataPage(
+                                userPetId: selectedPetsId,
+                                directionId: selectedDirectionId,
+                              ));
                         },
                       ),
                       const SizedBox(width: 21),
@@ -54,7 +60,7 @@ Widget breedTabBarViewWidget(
                         context,
                         title: 'Чыгаша',
                         subTitle: 'Сумма',
-                        sum: percent.expense.toString(),
+                        sum: percent.expense ?? 0,
                         onTap: () {
                           AppNavigator.push(context, const ExpenseDataPage());
                         },
@@ -66,27 +72,28 @@ Widget breedTabBarViewWidget(
                     onPressed: () {
                       AppNavigator.push(
                         context,
-                        RecordingPage(
-                          isInomce: true,
-                          priceController: priceController,
-                          descriptionController: descriptionController,
-                          quantityController: quantityController,
-                          isConflict: isConflict,
-                          onTap: () async {
-                            context.read<StatisticsCubit>().addIncome(
-                                  selectedPetId: selectedPetsId,
-                                  isDecreas:
-                                      selectedDirectionId == 1 ? true : false,
-                                  recordEntity: RecordEntity(
-                                    price: int.parse(priceController.text),
-                                    description: descriptionController.text,
-                                    quantity:
-                                        int.parse(quantityController.text),
-                                  ),
-                                );
-                            AppNavigator.pushAndRemove(
-                                context, const LandingPage());
-                          },
+                        BlocProvider.value(
+                          value: context.read<StatisticsCubit>(),
+                          child: RecordingPage(
+                            isInomce: true,
+                            priceController: priceController,
+                            descriptionController: descriptionController,
+                            quantityController: quantityController,
+                            isConflict: isConflict,
+                            onTap: () async {
+                              context.read<StatisticsCubit>().addIncome(
+                                    selectedPetId: selectedPetsId,
+                                    isDecreas:
+                                        selectedDirectionId == 1 ? false : true,
+                                    recordEntity: RecordEntity(
+                                      price: int.parse(priceController.text),
+                                      description: descriptionController.text,
+                                      quantity:
+                                          int.parse(quantityController.text),
+                                    ),
+                                  );
+                            },
+                          ),
                         ),
                       );
                     },
@@ -111,26 +118,28 @@ Widget breedTabBarViewWidget(
                     onPressed: () {
                       AppNavigator.push(
                         context,
-                        RecordingPage(
-                          isInomce: false,
-                          priceController: priceController,
-                          descriptionController: descriptionController,
-                          quantityController: quantityController,
-                          isConflict: isConflict,
-                          onTap: () async {
-                            context.read<StatisticsCubit>().addExpense(
-                                  selectedPetId: selectedPetsId,
-                                  recommId: -1,
-                                  recordEntity: RecordEntity(
-                                    price: int.parse(priceController.text),
-                                    description: descriptionController.text,
-                                    quantity:
-                                        int.parse(quantityController.text),
-                                  ),
-                                );
-                            AppNavigator.pushAndRemove(
-                                context, const LandingPage());
-                          },
+                        BlocProvider.value(
+                          value: context.read<StatisticsCubit>(),
+                          child: RecordingPage(
+                            isInomce: false,
+                            priceController: priceController,
+                            descriptionController: descriptionController,
+                            quantityController: quantityController,
+                            isConflict: isConflict,
+                            onTap: () async {
+                              context.read<StatisticsCubit>().addExpense(
+                                    selectedPetId: selectedPetsId,
+                                    recommId: -1,
+                                    recordEntity: RecordEntity(
+                                      price: int.parse(priceController.text),
+                                      description: descriptionController.text,
+                                      quantity:
+                                          int.parse(quantityController.text),
+                                    ),
+                                  );
+                              Navigator.of(context).pop();
+                            },
+                          ),
                         ),
                       );
                     },
@@ -154,7 +163,9 @@ Widget breedTabBarViewWidget(
                 ],
               ),
             ),
-            const CustomGrid(),
+            CustomGrid(
+              transactions: transactions,
+            ),
             const SliverToBoxAdapter(
               child: SizedBox(height: 24),
             ),
@@ -174,7 +185,7 @@ Widget _sumCard(
   BuildContext context, {
   required String title,
   required String subTitle,
-  required String sum,
+  required int sum,
   required Function() onTap,
 }) {
   final colors = Theme.of(context).appColors;
@@ -227,7 +238,7 @@ Widget _sumCard(
               ),
               const SizedBox(height: 4),
               Text(
-                sum,
+                sum.toString(),
                 style: typography.h1.bold.copyWith(color: colors.secondary1),
               )
             ],

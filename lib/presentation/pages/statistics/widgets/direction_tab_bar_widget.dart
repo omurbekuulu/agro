@@ -1,5 +1,6 @@
 import 'package:agro/domain/breeds/entities/breed.dart';
 import 'package:agro/domain/directions/entity/direction.dart';
+import 'package:agro/domain/transaction/entities/transaction.dart';
 import 'package:agro/presentation/pages/statistics/cubit/statistics_cubit.dart';
 import 'package:agro/presentation/pages/statistics/widgets/breed_tab_bar.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,7 @@ Widget directionTabBarWidget(
   required selectedDirectionId,
   required int selectedPetsId,
   required PercentEntity percent,
+  required List<TransactionEntity> transactions,
 }) {
   final colors = Theme.of(context).appColors;
   final typography = Theme.of(context).appTypography;
@@ -27,13 +29,11 @@ Widget directionTabBarWidget(
       child: Builder(builder: (context) {
         final TabController tabController = DefaultTabController.of(context);
 
-        // Слушаем изменения индекса
         tabController.addListener(() {
           if (!tabController.indexIsChanging) {
             final selectedIndex = tabController.index;
             final selectedDirection = tabDirections[selectedIndex];
 
-            // Обновляем состояние Cubit
             context.read<StatisticsCubit>().updateDirection(selectedDirection);
           }
         });
@@ -63,7 +63,9 @@ Widget directionTabBarWidget(
                       selectedDirectionId: selectedDirectionId,
                       selectedPetsId: selectedPetsId,
                       percent: percent,
+                      transactions: transactions,
                     ),
+                    selectedDirectionid: selectedDirectionId,
                   );
                 }),
               ),

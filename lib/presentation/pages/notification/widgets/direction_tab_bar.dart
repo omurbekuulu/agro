@@ -25,13 +25,11 @@ Widget directionTabWidget(
       child: Builder(builder: (context) {
         final TabController tabController = DefaultTabController.of(context);
 
-        // Слушаем изменения индекса
         tabController.addListener(() {
           if (!tabController.indexIsChanging) {
             final selectedIndex = tabController.index;
             final selectedDirection = tabDirections[selectedIndex];
 
-            // Обновляем состояние Cubit
             context
                 .read<NotificationCubit>()
                 .updateDirection(selectedDirection);
@@ -39,29 +37,33 @@ Widget directionTabWidget(
         });
         return Column(
           children: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+            ButtonsTabBar(
               height: 56,
-              child: ButtonsTabBar(
-                width: MediaQuery.sizeOf(context).width / 2.15,
-                contentCenter: true,
-                buttonMargin: const EdgeInsets.only(right: 5),
-                contentPadding:
-                    const EdgeInsets.symmetric(vertical: 0, horizontal: 8),
-                backgroundColor: colors.secondary1,
-                unselectedBackgroundColor: colors.onBackground,
-                unselectedLabelStyle:
-                    typography.h0.bold.copyWith(color: Colors.black),
-                labelStyle:
-                    typography.h0.bold.copyWith(color: colors.background),
-                tabs: List.generate(tabDirections.length, (index) {
-                  return Tab(
-                    text: tabDirections
-                        .map((direction) => direction.name)
-                        .toList()[index],
-                  );
-                }),
+              width: MediaQuery.sizeOf(context).width / 2.12,
+              contentCenter: true,
+              decoration: BoxDecoration(
+                color: colors.secondary1,
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Color.fromARGB(65, 0, 0, 40),
+                    offset: Offset(0, 8),
+                    blurRadius: 12,
+                    spreadRadius: 0,
+                  ),
+                ],
               ),
+              unselectedBackgroundColor: colors.onBackground,
+              unselectedLabelStyle:
+                  typography.h0.bold.copyWith(color: Colors.black),
+              labelStyle: typography.h0.bold.copyWith(color: colors.background),
+              tabs: List.generate(tabDirections.length, (index) {
+                return Tab(
+                  text: tabDirections
+                      .map((direction) => direction.name)
+                      .toList()[index],
+                );
+              }),
             ),
             const SizedBox(height: 24),
             Expanded(

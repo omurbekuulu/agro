@@ -9,7 +9,6 @@ import '../../../../common/widgets/recording_page.dart';
 import '../../../../domain/percent/entity/percent.dart';
 import '../../../../domain/recommendation/entity/recommentation.dart';
 import '../../../../domain/transaction/entities/record.dart';
-import '../../landing/landing_page.dart';
 import '../cubit/home_cubit.dart';
 import 'show_dialog_widgets.dart';
 
@@ -19,7 +18,6 @@ Widget breedTabBarViewWidget(
   required int selectedPetsId,
   required PercentEntity percent,
   required List<CardEntity> cards,
-
 }) {
   final colors = Theme.of(context).appColors;
   final typography = Theme.of(context).appTypography;
@@ -54,9 +52,9 @@ Widget breedTabBarViewWidget(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Чыгаша: ${percent.expense}'),
+                  Text('Чыгаша: ${percent.expense ?? 0}'),
                   const SizedBox(height: 12),
-                  Text('Киреше: ${percent.income}'),
+                  Text('Киреше: ${percent.income ?? 0}'),
                 ],
               ),
             ),
@@ -94,8 +92,7 @@ Widget breedTabBarViewWidget(
                                   quantity: int.parse(quantityController.text),
                                 ),
                               );
-                          AppNavigator.pushAndRemove(
-                              context, const LandingPage());
+                          Navigator.of(context).pop();
                         },
                       ),
                     );
@@ -139,8 +136,7 @@ Widget breedTabBarViewWidget(
                                   quantity: int.parse(quantityController.text),
                                 ),
                               );
-                          AppNavigator.pushAndRemove(
-                              context, const LandingPage());
+                          Navigator.of(context).pop();
                         },
                       ),
                     );

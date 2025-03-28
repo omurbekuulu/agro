@@ -17,7 +17,7 @@ Future showDialogWidget(
 
   return showDialog(
     context: context,
-    builder: (context) => AlertDialog(
+    builder: (contextDialog) => AlertDialog(
       actions: [
         FilledButton(
           onPressed: () async {
